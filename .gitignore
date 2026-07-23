@@ -1,0 +1,9 @@
+.next/
+dist/
+out/
+node_modules/
+.wrangler/
+.open-next/
+outputs/
+work/
+*.log
