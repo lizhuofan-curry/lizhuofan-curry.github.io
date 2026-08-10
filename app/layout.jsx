@@ -1,15 +1,15 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "r=a(1-sinθ) | AI Developer in Progress",
+  title: "Zhuofan Li — AI Field Notes",
   description:
-    "有目标的人才会迷路，我只是来地球散步的。记录机器学习、深度学习与 LLM 全栈开发的学习旅程。",
+    "李卓凡的 AI 实验现场：从 PyTorch 模型与计算机视觉，到有证据、可运行的 AI 产品。",
 };
 
 export const viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#eef9ff",
+  themeColor: "#07110f",
 };
 
 export default function RootLayout({ children }) {
