@@ -81,6 +81,8 @@ export default function Home() {
             <Link href="/projects">项目</Link>
             <Link href="/notes">笔记</Link>
             <Link href="/lab">实验台</Link>
+            <Link href="/museum">博物馆</Link>
+            <Link href="/map">地图</Link>
             <Link href="/now">Now</Link>
           </div>
           <a className="github-link" href="https://github.com/lizhuofan-curry" target="_blank" rel="noreferrer" aria-label="访问 Zhuofan Li 的 GitHub 主页">
@@ -101,7 +103,7 @@ export default function Home() {
               <em>编译成作品。</em>
             </h1>
             <p className="lead">
-              你好，我是李卓凡。<br />
+              <span className="hero-formula">r = a(1 − sinθ)</span><br />
               我在机器学习、深度学习与 AI 产品之间往返，
               用真实输出理解原理，用可运行系统记录成长。
             </p>

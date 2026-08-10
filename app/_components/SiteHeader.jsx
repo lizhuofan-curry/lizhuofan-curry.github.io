@@ -5,7 +5,7 @@ function GitHubMark() {
 }
 
 export function SiteHeader() {
-  return <header className="site-nav-wrap"><nav className="site-nav" aria-label="站点导航"><Link className="brand" href="/"><i />ZF / FIELD NOTES</Link><div className="site-nav-links"><Link href="/projects">项目</Link><Link href="/notes">笔记</Link><Link href="/lab">实验台</Link><Link href="/now">Now</Link></div><a className="github-link" href="https://github.com/lizhuofan-curry" target="_blank" rel="noreferrer" aria-label="访问 Zhuofan Li 的 GitHub 主页"><GitHubMark /><span>GitHub</span></a></nav></header>;
+  return <header className="site-nav-wrap"><nav className="site-nav" aria-label="站点导航"><Link className="brand" href="/"><i />ZF / FIELD NOTES</Link><div className="site-nav-links"><Link href="/projects">项目</Link><Link href="/notes">笔记</Link><Link href="/lab">实验台</Link><Link href="/museum">博物馆</Link><Link href="/map">地图</Link><Link href="/now">Now</Link></div><a className="github-link" href="https://github.com/lizhuofan-curry" target="_blank" rel="noreferrer" aria-label="访问 Zhuofan Li 的 GitHub 主页"><GitHubMark /><span>GitHub</span></a></nav></header>;
 }
 
 export function SiteFooter() {
