@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const projects = [
   {
     number: "01",
@@ -166,7 +168,14 @@ export default function Home() {
       <section className="about section" id="about">
         <div className="portrait-wrap">
           <div className="portrait-ring" />
-          <img src="https://avatars.githubusercontent.com/u/272723723?v=4" alt="Zhuofan Li 的 GitHub 头像" />
+          <Image
+            src="/profile-avatar.jpg"
+            alt="Zhuofan Li 的 GitHub 头像"
+            width={176}
+            height={176}
+            sizes="(max-width: 640px) 112px, 156px"
+            loading="eager"
+          />
           <span>HENU · SOFTWARE</span>
         </div>
         <div className="about-copy">

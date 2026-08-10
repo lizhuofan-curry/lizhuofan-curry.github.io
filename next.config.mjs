@@ -2,7 +2,9 @@
 const nextConfig = {
   output: "export",
   agentRules: false,
-  images: { unoptimized: true },
+  images: {
+    unoptimized: true,
+  },
 };
 
 export default nextConfig;
