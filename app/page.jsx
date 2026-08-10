@@ -79,7 +79,7 @@ export default function Home() {
           </a>
           <div className="nav-links">
             <Link href="/projects">项目</Link>
-            <Link href="/notes">笔记</Link>
+            <Link href="/garden">花园</Link>
             <Link href="/lab">实验台</Link>
             <Link href="/museum">博物馆</Link>
             <Link href="/map">地图</Link>
@@ -134,6 +134,13 @@ export default function Home() {
         <div className="hero-marquee" aria-hidden="true">
           <span>PYTORCH</span><i>✦</i><span>COMPUTER VISION</span><i>✦</i><span>LLM SYSTEMS</span><i>✦</i><span>EVIDENCE-DRIVEN</span><i>✦</i>
         </div>
+      </section>
+
+      <section className="field-coordinates" aria-label="当前实验坐标">
+        <div><span>NOW EXPLORING</span><strong>AI, people &amp; ideas</strong></div>
+        <div><span>COLLECTING</span><strong>books · cities · fragments</strong></div>
+        <div><span>RECORDING</span><strong>projects · notes · moments</strong></div>
+        <div><span>OPEN TO</span><strong>anything worth keeping</strong></div>
       </section>
 
       <section className="work section" id="work">
