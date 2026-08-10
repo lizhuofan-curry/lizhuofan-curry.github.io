@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const projects = [
   {
@@ -11,6 +12,7 @@ const projects = [
     demo: "https://wenqu-reading-room.vercel.app/",
     accent: "lime",
     signal: "LIVE / v.4",
+    slug: "wenqu",
   },
   {
     number: "02",
@@ -21,6 +23,7 @@ const projects = [
     href: "https://github.com/lizhuofan-curry/smart-image-treasure-hunt",
     accent: "orange",
     signal: "VAL ACC / 99.32%",
+    slug: "shop-vision",
   },
   {
     number: "03",
@@ -31,6 +34,7 @@ const projects = [
     href: "https://github.com/lizhuofan-curry/LiuErDaRenPyTorch/tree/main/Chapter11_AdvancedCNN/CIFAR10_Three_CNN_Architectures",
     accent: "blue",
     signal: "3 ARCHITECTURES",
+    slug: "cnn-architectures",
   },
   {
     number: "04",
@@ -41,6 +45,7 @@ const projects = [
     href: "https://github.com/lizhuofan-curry/LLM-FullStack-Journey",
     accent: "violet",
     signal: "BUILD → TEST → LEARN",
+    slug: "llm-fullstack",
   },
 ];
 
@@ -73,9 +78,10 @@ export default function Home() {
             ZF / FIELD NOTES
           </a>
           <div className="nav-links">
-            <a href="#work">作品</a>
-            <a href="#method">方法</a>
-            <a href="#about">关于</a>
+            <Link href="/projects">项目</Link>
+            <Link href="/notes">笔记</Link>
+            <Link href="/lab">实验台</Link>
+            <Link href="/now">Now</Link>
           </div>
           <a className="github-link" href="https://github.com/lizhuofan-curry" target="_blank" rel="noreferrer" aria-label="访问 Zhuofan Li 的 GitHub 主页">
             <GitHubMark />
@@ -101,7 +107,7 @@ export default function Home() {
             </p>
             <div className="hero-actions">
               <a className="button button-solid" href="#work">进入实验现场 <Arrow /></a>
-              <a className="text-link" href="https://github.com/lizhuofan-curry" target="_blank" rel="noreferrer">查看源代码 <Arrow /></a>
+              <Link className="text-link" href="/projects">打开项目档案 <Arrow /></Link>
             </div>
           </div>
 
@@ -142,6 +148,7 @@ export default function Home() {
               <p className="project-copy">{project.copy}</p>
               <div className="tags">{project.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
               <div className="project-links">
+                <Link href={`/projects/${project.slug}`}>CASE STUDY <Arrow /></Link>
                 <a href={project.href} target="_blank" rel="noreferrer">SOURCE <Arrow /></a>
                 {project.demo && <a href={project.demo} target="_blank" rel="noreferrer">LIVE DEMO <Arrow /></a>}
               </div>
