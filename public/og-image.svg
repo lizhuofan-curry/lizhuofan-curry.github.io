@@ -1,13 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <rect width="1200" height="630" fill="#edf4f7"/>
   <path d="M60 0v630M180 0v630M300 0v630M420 0v630M540 0v630M660 0v630M780 0v630M900 0v630M1020 0v630M1140 0v630M0 90h1200M0 210h1200M0 330h1200M0 450h1200M0 570h1200" stroke="#102f4f" stroke-opacity=".09"/>
-  <path d="M705 552c93-40 102-121 176-163 63-36 69-120 161-164" fill="none" stroke="#102f4f" stroke-width="12" stroke-linecap="round"/>
-  <path d="M862 397c-53-22-72-55-76-97M957 292c-2-57 24-88 61-108" fill="none" stroke="#9ecff2" stroke-width="8" stroke-linecap="round"/>
-  <ellipse cx="789" cy="307" rx="80" ry="35" transform="rotate(33 789 307)" fill="#176b87" stroke="#7ee7f2" stroke-width="5"/>
-  <ellipse cx="1027" cy="177" rx="94" ry="39" transform="rotate(-29 1027 177)" fill="#74506a" stroke="#ff7a68" stroke-width="5"/>
-  <circle cx="705" cy="552" r="25" fill="#ff7a68"/>
+  <ellipse cx="900" cy="315" rx="250" ry="128" fill="none" stroke="#9ecff2" stroke-width="3" stroke-dasharray="14 12"/>
+  <ellipse cx="900" cy="315" rx="170" ry="82" fill="none" stroke="#176b87" stroke-width="3" stroke-dasharray="9 14"/>
+  <path d="M692 447C761 391 817 352 878 336s113-102 223-160" fill="none" stroke="#7ee7f2" stroke-width="7" stroke-dasharray="12 10"/>
+  <circle cx="692" cy="447" r="23" fill="#ff7a68"/><circle cx="800" cy="377" r="20" fill="#176b87" stroke="#7ee7f2" stroke-width="5"/><circle cx="900" cy="315" r="27" fill="#245d9b" stroke="#9ecff2" stroke-width="5"/><circle cx="1010" cy="246" r="19" fill="#74506a" stroke="#ff7a68" stroke-width="5"/><circle cx="1101" cy="176" r="14" fill="#edf4f7" stroke="#7ee7f2" stroke-width="5"/>
   <text x="74" y="102" fill="#176b87" font-family="monospace" font-size="22" letter-spacing="4">ZHUOFAN'S LIVING INDEX</text>
   <text x="70" y="266" fill="#102f4f" font-family="Arial, sans-serif" font-weight="700" font-size="92" letter-spacing="-6">ZHUOFAN LI</text>
-  <text x="70" y="370" fill="#176b87" font-family="Arial, sans-serif" font-weight="700" font-size="110" letter-spacing="-7">CODE GARDEN.</text>
+  <text x="70" y="370" fill="#176b87" font-family="Arial, sans-serif" font-weight="700" font-size="110" letter-spacing="-7">SIGNAL FIELD.</text>
   <text x="75" y="514" fill="#375b74" font-family="Arial, sans-serif" font-size="26">ARTICLES · PROJECTS · A LIVING INDEX</text>
 </svg>
