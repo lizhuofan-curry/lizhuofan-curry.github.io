@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -96,7 +97,7 @@ export function SiteHeader() {
     <>
       <header className="site-header">
         <nav className="site-nav" aria-label="主导航">
-          <Link className="brand" href="/" aria-label="返回首页"><i aria-hidden="true" />Zhuo<small>个人档案</small></Link>
+          <Link className="brand" href="/" aria-label="返回首页"><Image src="/zhuo-avatar.png" alt="" width={32} height={32} priority />Zhuo<small>个人档案</small></Link>
           <div className="nav-links">
             {navigation.map((item) => {
               const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { SignalField } from "./_components/SignalField";
+import { PersonalPath } from "./_components/PersonalPath";
 import { articles } from "./_data/articles";
 import { projects } from "./_data/site-data";
 
@@ -12,6 +13,8 @@ export default function Home() {
     </section>
 
     <section className="manifesto"><span>SITE NOTE / 关于这个网站</span><p>我把个人网站当成一张持续更新的坐标图：项目标记做过的事，文章保存理解的过程，未解决的问题指向下一段路径。</p></section>
+
+    <PersonalPath />
 
     <section className="home-section projects-preview"><header className="section-heading"><p>SELECTED PROJECTS / 精选项目</p><h2>从模型实验，<br/>走向可运行的产品。</h2><Link href="/projects">浏览全部项目 →</Link></header><div className="project-rows">{projects.slice(0,3).map((project) => <Link href={`/projects/${project.slug}`} key={project.slug}><span>{project.number}</span><div><p>{project.category}</p><h3>{project.title}</h3><small>{project.summary}</small></div><strong>{project.signal}</strong><i>↗</i></Link>)}</div></section>
 
