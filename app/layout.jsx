@@ -20,7 +20,7 @@ export const metadata = {
     siteName: siteConfig.name,
     title: siteConfig.title,
     description: siteConfig.description,
-    images: [{ url: "/og-image.svg", width: 1200, height: 630, alt: "李卓凡的个人博客与项目档案" }],
+    images: [{ url: "/og-image.svg", width: 1200, height: 630, alt: "Zhuo 的个人博客与项目档案" }],
   },
   twitter: {
     card: "summary_large_image",
@@ -40,8 +40,7 @@ export default function RootLayout({ children }) {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Person",
-    name: "李卓凡",
-    alternateName: "Zhuofan Li",
+    name: "Zhuo",
     url: siteConfig.siteUrl,
     sameAs: [siteConfig.github],
     knowsAbout: ["人工智能", "计算机视觉", "深度学习", "LLM 工程"],
