@@ -9,6 +9,7 @@ import { searchItems } from "../_data/search";
 function SearchPanel({ open, onClose }) {
   const [query, setQuery] = useState("");
   const inputRef = useRef(null);
+  const panelRef = useRef(null);
   const normalized = query.trim().toLowerCase();
   const results = normalized
     ? searchItems.filter((item) =>
@@ -22,15 +23,37 @@ function SearchPanel({ open, onClose }) {
   useEffect(() => {
     if (!open) return;
     inputRef.current?.focus();
-    const closeOnEscape = (event) => event.key === "Escape" && onClose();
-    document.addEventListener("keydown", closeOnEscape);
-    return () => document.removeEventListener("keydown", closeOnEscape);
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const handleDialogKeys = (event) => {
+      if (event.key === "Escape") {
+        onClose();
+        return;
+      }
+      if (event.key !== "Tab") return;
+      const focusable = panelRef.current?.querySelectorAll('input, button, a[href]');
+      if (!focusable?.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener("keydown", handleDialogKeys);
+    return () => {
+      document.removeEventListener("keydown", handleDialogKeys);
+      document.body.style.overflow = previousOverflow;
+    };
   }, [open, onClose]);
 
   if (!open) return null;
   return (
     <div className="search-backdrop" role="presentation" onMouseDown={onClose}>
-      <section className="search-panel" role="dialog" aria-modal="true" aria-label="全站搜索" onMouseDown={(event) => event.stopPropagation()}>
+      <section ref={panelRef} className="search-panel" role="dialog" aria-modal="true" aria-label="全站搜索" onMouseDown={(event) => event.stopPropagation()}>
         <div className="search-input-row">
           <span aria-hidden="true">⌕</span>
           <label className="sr-only" htmlFor="site-search">搜索文章和项目</label>
@@ -80,7 +103,7 @@ export function SiteHeader() {
               return <Link href={item.href} key={item.href} aria-current={active ? "page" : undefined}>{item.label}</Link>;
             })}
           </div>
-          <button ref={triggerRef} className="search-trigger" type="button" onClick={() => setSearchOpen(true)} aria-haspopup="dialog" aria-label="打开全站搜索"><span>搜索</span><b aria-hidden="true">⌕</b><kbd>⌘ K</kbd></button>
+          <button ref={triggerRef} className="search-trigger" type="button" onClick={() => setSearchOpen(true)} aria-haspopup="dialog" aria-label="打开全站搜索"><span>搜索</span><b aria-hidden="true">⌕</b><kbd>Ctrl K</kbd></button>
         </nav>
       </header>
       <SearchPanel open={searchOpen} onClose={closeSearch} />
