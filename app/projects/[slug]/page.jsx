@@ -1,14 +1,9 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import { SiteFooter, SiteHeader } from "../../_components/SiteHeader";
+import Link from "next/link";
 import { getProject, projects } from "../../_data/site-data";
 
 export function generateStaticParams() { return projects.map(({ slug }) => ({ slug })); }
-export async function generateMetadata({ params }) { const { slug } = await params; const project = getProject(slug); return { title: project ? `${project.title} — Zhuofan Li` : "项目未找到" }; }
+export const dynamicParams = false;
+export async function generateMetadata({ params }) { const { slug } = await params; const project = getProject(slug); return project ? { title: project.title, description: project.summary, alternates: { canonical: `/projects/${slug}` } } : {}; }
 
-export default async function ProjectCasePage({ params }) {
-  const { slug } = await params;
-  const project = getProject(slug);
-  if (!project) notFound();
-  return <main className="knowledge-page"><SiteHeader /><article className="case-study"><Link className="back-link" href="/projects">← 返回项目档案</Link><p className="label">{project.number} / {project.eyebrow}</p><h1>{project.title}</h1><p className="case-intro">{project.summary}</p><div className="case-meta"><div><span>STARTING QUESTION</span><p>{project.question}</p></div><div><span>ROLE / FOCUS</span><p>{project.role}</p></div></div><section className="case-section"><p className="label">WHAT I BUILT</p><h2>从概念到<br /><em>可运行的路径。</em></h2><ul>{project.highlights.map((highlight) => <li key={highlight}>{highlight}</li>)}</ul></section><section className="case-evidence"><p className="label">EVIDENCE BOUNDARY</p><p>{project.slug === "cnn-architectures" ? "这个档案说明结构和已记录的训练设置；它不把验证曲线当成独立测试结果。" : "这里记录已实现的能力和设计取舍；未提供的数据不被包装成性能结论。"}</p></section><div className="case-actions"><a className="button button-solid" href={project.href} target="_blank" rel="noreferrer">查看源代码 <span>↗</span></a>{project.demo && <a className="button button-outline" href={project.demo} target="_blank" rel="noreferrer">访问在线版本 <span>↗</span></a>}</div></article><SiteFooter /></main>;
-}
+export default async function ProjectPage({ params }) { const { slug } = await params; const project = getProject(slug); if (!project) notFound(); return <main id="main-content" className="detail-page"><Link className="back-link" href="/projects">← 返回项目</Link><header className="detail-hero"><p>{project.eyebrow}</p><h1>{project.title}</h1><strong>{project.question}</strong><div className="detail-meta"><span>{project.category}</span><span>{project.role}</span><span>{project.signal}</span></div></header><div className="case-layout"><article><section><p className="section-label">01 / 项目简介</p><h2>{project.summary}</h2><p>{project.copy}</p></section><section><p className="section-label">02 / 实现亮点</p><ol className="highlight-list">{project.highlights.map((highlight) => <li key={highlight}>{highlight}</li>)}</ol></section><section><p className="section-label">03 / 技术栈</p><div className="large-tags">{project.tags.map((tag) => <span key={tag}>{tag}</span>)}</div></section></article><aside className="evidence-card"><p>EVIDENCE / 外部证据</p><h2>继续查看真实项目</h2><p>以下链接指向公开仓库或正在运行的演示，不在本站复制不可验证的成果。</p><a href={project.href} target="_blank" rel="noreferrer">打开 GitHub 仓库 ↗</a>{project.demo && <a href={project.demo} target="_blank" rel="noreferrer">访问在线演示 ↗</a>}</aside></div></main>; }

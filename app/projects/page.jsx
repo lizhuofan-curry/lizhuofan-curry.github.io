@@ -1,9 +1,7 @@
-import Link from "next/link";
-import { SiteFooter, SiteHeader } from "../_components/SiteHeader";
+import { Suspense } from "react";
+import { FilterableGrid } from "../_components/FilterableGrid";
 import { projects } from "../_data/site-data";
 
-export const metadata = { title: "项目档案 — Zhuofan Li" };
+export const metadata = { title: "项目", description: "李卓凡的人工智能、计算机视觉和 LLM 工程项目。", alternates: { canonical: "/projects" } };
 
-export default function ProjectsPage() {
-  return <main className="knowledge-page"><SiteHeader /><section className="page-hero"><p className="label">01 / PROJECT ARCHIVE</p><h1>每个作品，<br /><em>都有一个问题。</em></h1><p>这里不是项目截图墙，而是从问题、方法到证据边界的工作档案。</p></section><section className="archive-grid" aria-label="项目档案">{projects.map((project) => <article className={`archive-card ${project.accent}`} key={project.slug}><div><span>{project.number}</span><span>{project.category}</span></div><p>{project.eyebrow}</p><h2>{project.title}</h2><p className="archive-summary">{project.summary}</p><div className="tags">{project.tags.map((tag) => <span key={tag}>{tag}</span>)}</div><Link className="card-link" href={`/projects/${project.slug}`}>打开档案 <span>→</span></Link></article>)}</section><SiteFooter /></main>;
-}
+export default function ProjectsPage() { return <main id="main-content" className="index-page"><header className="page-hero"><p>PROJECT ARCHIVE / 项目档案</p><h1>做出来，<br/>再把证据留下。</h1><p>从模型结构实验到可运行的 AI 产品。每个项目只陈述能够由代码、页面或仓库验证的内容。</p></header><Suspense fallback={<p>正在整理项目…</p>}><FilterableGrid items={projects.map((project) => ({...project, description: project.summary}))} type="项目" /></Suspense></main>; }
