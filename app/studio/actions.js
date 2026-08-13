@@ -40,3 +40,25 @@ async function save(formData, publish) {
 
 export async function saveDraft(formData) { return save(formData, false); }
 export async function publishArticle(formData) { return save(formData, true); }
+
+export async function deleteArticle(formData) {
+  const viewer = await requireAdmin();
+  if (!viewer.configured) redirect("/studio?setup=required");
+  const id = Number(formData.get("id"));
+  if (!Number.isSafeInteger(id) || id < 1) redirect("/studio/articles?deleted=invalid");
+
+  const slug = await transaction(async (client) => {
+    const existing = await client.query("select slug from articles where id = $1 for update", [id]);
+    if (!existing.rows[0]) return null;
+    await client.query("delete from articles where id = $1", [id]);
+    return existing.rows[0].slug;
+  });
+
+  revalidatePath("/");
+  revalidatePath("/articles");
+  revalidatePath("/studio");
+  revalidatePath("/studio/articles");
+  revalidatePath("/sitemap.xml");
+  if (slug) revalidatePath(`/articles/${slug}`);
+  redirect("/studio/articles?deleted=1");
+}
