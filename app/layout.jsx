@@ -4,6 +4,7 @@ import { GeistMono } from "geist/font/mono";
 import { SiteFooter } from "./_components/SiteFooter";
 import { SiteHeader } from "./_components/SiteHeader";
 import { siteConfig } from "./_data/site";
+import { isAuthConfigured } from "../lib/auth";
 
 export const metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
@@ -46,13 +47,14 @@ export default function RootLayout({ children }) {
     knowsAbout: ["人工智能", "计算机视觉", "深度学习", "LLM 工程"],
   };
   return (
-    <html lang="zh-CN">
+    <html lang="zh-CN" suppressHydrationWarning>
       <body className={`${GeistSans.variable} ${GeistMono.variable}`}>
+        <script dangerouslySetInnerHTML={{ __html: `(function(){try{var t=localStorage.getItem('zhuo-theme');if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.dataset.theme=t}catch(e){}})()` }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }} />
         <a className="skip-link" href="#main-content">
           跳到主要内容
         </a>
-        <SiteHeader />
+        <SiteHeader authConfigured={isAuthConfigured()} />
         {children}
         <SiteFooter />
       </body>

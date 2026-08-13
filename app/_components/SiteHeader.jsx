@@ -4,15 +4,18 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { MagnifyingGlass, X } from "@phosphor-icons/react";
 import { navigation } from "../_data/site";
 import { searchItems } from "../_data/search";
+import { AuthMenu } from "./AuthMenu";
+import { ThemeToggle } from "./ThemeToggle";
 
 function SearchPanel({ open, onClose }) {
   const [query, setQuery] = useState("");
   const inputRef = useRef(null);
   const panelRef = useRef(null);
   const normalized = query.trim().toLowerCase();
-  const results = normalized
+  const localResults = normalized
     ? searchItems.filter((item) =>
         [item.title, item.description, ...item.tags, ...item.keywords]
           .join(" ")
@@ -20,6 +23,20 @@ function SearchPanel({ open, onClose }) {
           .includes(normalized),
       )
     : searchItems.slice(0, 6);
+  const [remoteResults, setRemoteResults] = useState([]);
+  const results = normalized && remoteResults.length ? remoteResults : localResults;
+
+  useEffect(() => {
+    if (!normalized) { setRemoteResults([]); return; }
+    const controller = new AbortController();
+    const timeout = setTimeout(async () => {
+      try {
+        const response = await fetch(`/api/search?q=${encodeURIComponent(normalized)}`, { signal: controller.signal });
+        if (response.ok) setRemoteResults((await response.json()).results || []);
+      } catch (error) { if (error.name !== "AbortError") setRemoteResults([]); }
+    }, 180);
+    return () => { clearTimeout(timeout); controller.abort(); };
+  }, [normalized]);
 
   useEffect(() => {
     if (!open) return;
@@ -56,10 +73,10 @@ function SearchPanel({ open, onClose }) {
     <div className="search-backdrop" role="presentation" onMouseDown={onClose}>
       <section ref={panelRef} className="search-panel" role="dialog" aria-modal="true" aria-label="全站搜索" onMouseDown={(event) => event.stopPropagation()}>
         <div className="search-input-row">
-          <span aria-hidden="true">⌕</span>
+          <MagnifyingGlass size={22} aria-hidden="true" />
           <label className="sr-only" htmlFor="site-search">搜索文章和项目</label>
           <input id="site-search" ref={inputRef} value={query} onChange={(event) => setQuery(event.target.value)} placeholder="搜索文章、项目或标签…" />
-          <button type="button" onClick={onClose}>关闭</button>
+          <button className="icon-button" type="button" onClick={onClose} aria-label="关闭搜索"><X size={18} /></button>
         </div>
         <p className="search-hint">{query ? `找到 ${results.length} 项结果` : "最近内容"}</p>
         <div className="search-results">
@@ -75,7 +92,7 @@ function SearchPanel({ open, onClose }) {
   );
 }
 
-export function SiteHeader() {
+export function SiteHeader({ authConfigured = false }) {
   const pathname = usePathname();
   const [searchOpen, setSearchOpen] = useState(false);
   const triggerRef = useRef(null);
@@ -104,7 +121,7 @@ export function SiteHeader() {
               return <Link href={item.href} key={item.href} aria-current={active ? "page" : undefined}>{item.label}</Link>;
             })}
           </div>
-          <button ref={triggerRef} className="search-trigger" type="button" onClick={() => setSearchOpen(true)} aria-haspopup="dialog" aria-label="打开全站搜索"><span>搜索</span><b aria-hidden="true">⌕</b><kbd>Ctrl K</kbd></button>
+          <div className="nav-actions"><button ref={triggerRef} className="search-trigger" type="button" onClick={() => setSearchOpen(true)} aria-haspopup="dialog" aria-label="打开全站搜索"><MagnifyingGlass size={18} /><span>搜索</span><kbd>Ctrl K</kbd></button><ThemeToggle /><AuthMenu configured={authConfigured} /></div>
         </nav>
       </header>
       <SearchPanel open={searchOpen} onClose={closeSearch} />
