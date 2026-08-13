@@ -129,4 +129,23 @@ create table if not exists media_assets (
   created_at timestamptz not null default now()
 );
 
+-- All browser-facing access goes through the Next.js server. Keep the public
+-- Supabase Data API closed: no anon/authenticated grants and no RLS policies.
+alter table "user" enable row level security;
+alter table session enable row level security;
+alter table account enable row level security;
+alter table verification enable row level security;
+alter table profiles enable row level security;
+alter table articles enable row level security;
+alter table article_revisions enable row level security;
+alter table article_views enable row level security;
+alter table article_likes enable row level security;
+alter table media_assets enable row level security;
+
+revoke all on table "user", session, account, verification, profiles,
+  articles, article_revisions, article_views, article_likes, media_assets
+  from anon, authenticated;
+revoke all on sequence articles_id_seq, article_revisions_id_seq, media_assets_id_seq
+  from anon, authenticated;
+
 commit;
