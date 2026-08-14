@@ -17,7 +17,7 @@ function sessionId() {
   }
 }
 
-export function OnlinePresence() {
+export function OnlinePresence({ compact = false }) {
   const [onlineCount, setOnlineCount] = useState(null);
   const idRef = useRef(null);
 
@@ -52,7 +52,7 @@ export function OnlinePresence() {
     };
   }, []);
 
-  return <div className={`online-presence${onlineCount === null ? " is-loading" : ""}`} aria-live="polite" title="90 秒内有活动的匿名访问会话；不记录 IP 或身份信息。">
+  return <div className={`online-presence${compact ? " online-presence-compact" : ""}${onlineCount === null ? " is-loading" : ""}`} aria-live="polite" title="90 秒内有活动的匿名访问会话；不记录 IP 或身份信息。">
     <span className="online-presence-ball" aria-hidden="true" />
     <span className="online-presence-copy" aria-hidden="true"><small>COURT LIVE</small><b>在线观测</b></span>
     <span className="online-presence-count" aria-hidden="true"><strong key={onlineCount ?? "loading"}>{onlineCount === null ? "…" : onlineCount}</strong><em>人在线</em></span>
