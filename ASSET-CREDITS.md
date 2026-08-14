@@ -1,11 +1,11 @@
 # Asset credits
 
-## Spider-Man pixel guide
+## Doraemon pixel guide
 
-- File: `public/spiderman-pixel-sprite.png`.
-- Source: supplied directly by the site owner on 2026-08-14; the owner confirmed public-use authorization.
-- Creator and upstream URL: not supplied by the owner.
-- Modification: displayed as a cropped floating guide image; no pixels in the supplied file were altered.
+- File: `public/doraemon-pixel-guide.png`.
+- Source: generated through the website owner's Codex image-generation session on 2026-08-15 and selected by the owner for this site's floating guide.
+- Creator and upstream URL: AI-generated asset; no upstream artwork was downloaded.
+- Modification: displayed at responsive sizes as a movable, non-avatar website guide; the stored source file is unmodified.
 
 ## Temporary site avatar
 

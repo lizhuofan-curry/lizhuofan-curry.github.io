@@ -621,15 +621,33 @@ h1, h2, h3 { letter-spacing: -.035em; }
   *, *::before, *::after { animation: none; transition: none; }
 }
 
-.site-assistant { position: fixed; z-index: 70; right: 22px; bottom: 22px; width: 92px; height: 92px; }
-.assistant-orb { width: 92px; height: 92px; padding: 0; overflow: hidden; border: 3px solid var(--court); border-radius: 50%; background: #9b1735; box-shadow: 4px 4px 0 var(--accent-strong); touch-action: none; }
-.assistant-crop { position: relative; display: block; width: 100%; height: 100%; overflow: hidden; }.assistant-crop img { object-fit: cover; object-position: 51% 54%; transform: scale(1.55); image-rendering: pixelated; }
-.assistant-panel { position: absolute; right: 0; bottom: 105px; width: min(320px, calc(100vw - 32px)); padding: 18px; border: 2px solid var(--line); background: var(--surface); box-shadow: var(--shadow); }.assistant-panel > button { float: right; border: 0; background: transparent; color: var(--muted); }.assistant-panel strong { display: block; color: var(--accent-strong); }.assistant-panel p { margin: 9px 0 0; color: var(--muted); font-size: 14px; }
-.assistant-web { position: absolute; z-index: -1; right: 38px; bottom: 68px; width: 3px; height: 0; background: #f7fbff; transform-origin: bottom; opacity: 0; }
-.site-assistant.is-webbing .assistant-web { height: 240px; opacity: 1; animation: assistant-web .7s var(--ease-out) both; }.site-assistant.is-webbing .assistant-orb { animation: assistant-shot .7s var(--ease-out) both; }.site-assistant.is-hanging { animation: assistant-hang .85s var(--ease-out) both; }.site-assistant.is-hopping .assistant-orb { animation: assistant-hop .65s var(--ease-out) both; }
-@keyframes assistant-web { from { height: 0; opacity: 0; } 35% { opacity: 1; } to { height: 250px; opacity: 0; } } @keyframes assistant-shot { 45% { transform: translate(-25px, -20px) rotate(-10deg); } } @keyframes assistant-hang { 45% { transform: translateY(-140px) rotate(180deg); } } @keyframes assistant-hop { 45% { transform: translateY(-42px) rotate(8deg); } }
+.site-assistant { position: fixed; z-index: 70; right: 22px; bottom: 18px; width: 132px; min-height: 156px; touch-action: none; }
+.assistant-pet { position: relative; display: block; width: 132px; height: 156px; padding: 0; overflow: visible; border: 0; background: transparent; cursor: grab; filter: drop-shadow(5px 6px 0 rgba(24, 63, 136, .28)); touch-action: none; user-select: none; }
+.assistant-pet:active { cursor: grabbing; }
+.assistant-pet img { object-fit: contain; image-rendering: pixelated; }
+.assistant-propeller { position: absolute; z-index: 1; top: 9%; left: 35%; width: 31%; height: 5%; pointer-events: none; transform-origin: 50% 50%; }
+.assistant-propeller::before, .assistant-propeller::after { position: absolute; top: 50%; left: 50%; width: 66%; height: 7px; content: ""; border: 2px solid #15243b; background: linear-gradient(90deg, #f7fbff 0 27%, #a6dcff 28% 72%, #f7fbff 73%); image-rendering: pixelated; transform: translate(-50%, -50%); }
+.assistant-propeller::after { transform: translate(-50%, -50%) rotate(90deg); }
+.assistant-panel { position: fixed; right: 18px; bottom: 18px; display: grid; grid-template-rows: auto minmax(130px, 1fr) auto auto; width: min(510px, calc(100vw - 24px)); max-height: min(560px, calc(100vh - 36px)); gap: 14px; padding: 22px; overflow: auto; border: 3px solid var(--line); border-radius: 8px; background: var(--surface); box-shadow: 8px 8px 0 var(--accent-strong); touch-action: pan-y; }
+.assistant-panel header, .assistant-panel footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.assistant-panel header small { display: block; color: var(--muted); font: 11px var(--mono); letter-spacing: .08em; }
+.assistant-panel strong { display: block; color: var(--accent-strong); font: 700 18px var(--mono); }
+.assistant-panel header > button { width: 36px; height: 36px; border: 2px solid var(--line); background: transparent; color: var(--muted); font-size: 24px; line-height: 1; }
+.assistant-reply { min-height: 132px; margin: 0; color: var(--ink); font-size: 16px; line-height: 1.8; white-space: pre-wrap; }
+.assistant-links { display: flex; flex-wrap: wrap; gap: 8px; }
+.assistant-links a { padding: 5px 8px; border: 1px solid var(--line); color: var(--accent-strong); background: var(--surface-soft); font-size: 13px; }
+.assistant-panel form { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; }
+.assistant-panel input { min-width: 0; min-height: 46px; padding: 10px 12px; border: 2px solid var(--line); background: var(--surface-soft); }
+.assistant-panel form button { min-width: 76px; border: 2px solid var(--accent-strong); background: var(--accent-strong); color: #fff; }
+.assistant-panel form button:disabled { cursor: not-allowed; opacity: .6; }
+.assistant-panel footer { color: var(--muted); font-size: 12px; }
+.assistant-panel footer button { padding: 0; border: 0; color: var(--accent); background: transparent; text-decoration: underline; }
+.site-assistant.is-spinning .assistant-propeller { animation: assistant-propeller-spin 680ms linear both; }
+.site-assistant.is-jumping .assistant-pet { animation: assistant-jump 620ms cubic-bezier(.3, .75, .35, 1) both; }
+@keyframes assistant-propeller-spin { to { transform: rotate(1080deg); } }
+@keyframes assistant-jump { 40% { transform: translateY(-34px) scale(1.02); } 66% { transform: translateY(2px) scale(.98, 1.03); } }
 @media (prefers-reduced-motion: reduce) { .site-assistant, .site-assistant * { animation: none !important; } }
-@media (max-width: 680px) { .site-assistant { right: 12px; bottom: 14px; width: 76px; height: 76px; }.assistant-orb { width: 76px; height: 76px; }.assistant-panel { right: -2px; bottom: 88px; } }
+@media (max-width: 680px) { .site-assistant { right: 8px; bottom: 8px; width: 104px; min-height: 124px; }.assistant-pet { width: 104px; height: 124px; }.assistant-panel { right: 10px; bottom: 10px; width: calc(100vw - 20px); max-height: min(510px, calc(100vh - 20px)); padding: 18px; }.assistant-reply { min-height: 108px; font-size: 15px; }.assistant-panel footer span { display: none; } }
 @view-transition { navigation: auto; }
 ::view-transition-old(root), ::view-transition-new(root) { animation-duration: 180ms; animation-timing-function: var(--ease-out); }
 @media (prefers-reduced-motion: reduce) { ::view-transition-old(root), ::view-transition-new(root) { animation: none; } }
