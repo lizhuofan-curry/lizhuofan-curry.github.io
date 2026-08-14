@@ -58,7 +58,9 @@ Old Museum, Garden, Lab, Map, and Now routes are intentionally unsupported and m
 - `app/articles/_content/*.mdx`: article bodies.
 - `app/sitemap.js` and `app/robots.js`: discovery metadata for public content only.
 - `lib/auth.js`, `lib/email.js`, `lib/db.js`, and `lib/media-storage.js`: replaceable server-side authentication, mail, database, and storage boundaries.
+- `app/_components/OnlinePresence.jsx`, `app/api/presence/route.js`, and `lib/presence.js`: optional anonymous online-presence indicator; it must never block page rendering.
 - `db/migrations/001_fullstack_blog.sql`: Better Auth and blog schema.
+- `db/migrations/002_site_presence.sql`: hashed anonymous presence-session table.
 - `docs/FULLSTACK_SETUP.md` and `docs/SELF_HOSTING.md`: Vercel setup and future self-hosting instructions.
 - `.github/workflows/deploy-pages.yml`: retired manual reminder; GitHub Pages cannot run this full-stack site.
 
@@ -92,6 +94,13 @@ Only add claims that can be checked through the linked repository or an explicit
 - The homepage personalized route uses `path` with up to three signal IDs.
 - Chinese IME input must be composition-safe. Never write intermediate Latin keystrokes to the URL while `compositionstart` is active; synchronize the final value on `compositionend`.
 - Search dialogs must trap keyboard focus while open, close with Escape, return focus to the trigger, and expose clear empty/reset states.
+
+## Online presence
+
+- The homepage indicator counts anonymous browser sessions active in the latest 90 seconds. It is a live activity signal, not a unique-visitor or analytics metric.
+- The browser creates a random `sessionStorage` UUID and sends a heartbeat at most once every 45 seconds; the server stores only an HMAC hash, never the raw UUID, IP address, or user identity.
+- `PRESENCE_HASH_SECRET` may be configured independently; `VIEW_HASH_SECRET` is the deliberate fallback. If the database or secret is unavailable, the indicator quietly remains unavailable and must not affect navigation or content.
+- Keep its visual language aligned with the pixel basketball theme. Motion is decorative only and must remain disabled by the existing `prefers-reduced-motion` policy.
 
 ## Development workflow
 

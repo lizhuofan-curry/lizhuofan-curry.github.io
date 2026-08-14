@@ -1,6 +1,5 @@
 "use client";
 
-import { UsersThree, WifiHigh } from "@phosphor-icons/react";
 import { useEffect, useRef, useState } from "react";
 
 const STORAGE_KEY = "zhuo-presence-session";
@@ -54,8 +53,8 @@ export function OnlinePresence() {
   }, []);
 
   return <div className={`online-presence${onlineCount === null ? " is-loading" : ""}`} aria-live="polite" title="90 秒内有活动的匿名访问会话；不记录 IP 或身份信息。">
-    <span className="online-presence-signal" aria-hidden="true"><WifiHigh size={15} /></span>
-    <span className="online-presence-copy" aria-hidden="true"><small>LIVE SIGNAL</small><b>在线观测</b></span>
-    <span className="online-presence-count" aria-hidden="true"><UsersThree size={15} /><strong key={onlineCount ?? "loading"}>{onlineCount === null ? "…" : onlineCount}</strong><em>人</em></span>
+    <span className="online-presence-ball" aria-hidden="true" />
+    <span className="online-presence-copy" aria-hidden="true"><small>COURT LIVE</small><b>在线观测</b></span>
+    <span className="online-presence-count" aria-hidden="true"><strong key={onlineCount ?? "loading"}>{onlineCount === null ? "…" : onlineCount}</strong><em>人在线</em></span>
   </div>;
 }
