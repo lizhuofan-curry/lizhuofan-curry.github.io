@@ -28,14 +28,13 @@ function clampPosition(x, y) {
 export function SiteAssistant() {
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
-  const [reply, setReply] = useState("");
-  const [links, setLinks] = useState([]);
+  const [messages, setMessages] = useState([{ role: "assistant", content: "拖动我到屏幕任意位置。想了解 Zhuo、文章或项目，也可以问我学习和技术问题。", links: [] }]);
   const [loading, setLoading] = useState(false);
-  const [action, setAction] = useState("");
   const [position, setPosition] = useState(null);
   const dragRef = useRef(null);
   const triggerRef = useRef(null);
   const inputRef = useRef(null);
+  const messagesRef = useRef(null);
 
   useEffect(() => {
     try {
@@ -58,6 +57,10 @@ export function SiteAssistant() {
   useEffect(() => {
     if (open) requestAnimationFrame(() => inputRef.current?.focus());
   }, [open]);
+
+  useEffect(() => {
+    if (open) messagesRef.current?.scrollTo({ top: messagesRef.current.scrollHeight, behavior: "smooth" });
+  }, [messages, loading, open]);
 
   const savePosition = (next) => {
     setPosition(next);
@@ -84,9 +87,6 @@ export function SiteAssistant() {
     if (!drag || drag.pointerId !== event.pointerId) return;
     dragRef.current = null;
     if (!drag.moved) {
-      const nextAction = ["is-spinning", "is-jumping"][Math.floor(Math.random() * 2)];
-      setAction(nextAction);
-      window.setTimeout(() => setAction(""), 850);
       setOpen(true);
     }
   };
@@ -104,8 +104,7 @@ export function SiteAssistant() {
     if (!question || loading) return;
     setText("");
     setLoading(true);
-    setReply("");
-    setLinks([]);
+    setMessages((current) => [...current, { role: "user", content: question, links: [] }]);
     try {
       let sessionId = sessionStorage.getItem(SESSION_KEY);
       if (!sessionId) {
@@ -114,24 +113,23 @@ export function SiteAssistant() {
       }
       const response = await fetch("/api/assistant", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ question, pagePath: location.pathname, sessionId }) });
       const data = await response.json();
-      setReply(cleanAnswer(data.answer || data.error));
-      setLinks(Array.isArray(data.links) ? data.links.filter((link) => typeof link?.href === "string" && link.href.startsWith("/")) : []);
+      const nextLinks = Array.isArray(data.links) ? data.links.filter((link) => typeof link?.href === "string" && link.href.startsWith("/")) : [];
+      setMessages((current) => [...current, { role: "assistant", content: cleanAnswer(data.answer || data.error), links: nextLinks }]);
     } catch {
-      setReply("网络暂时不可用，请稍后再试。");
+      setMessages((current) => [...current, { role: "assistant", content: "网络暂时不可用，请稍后再试。", links: [] }]);
     } finally {
       setLoading(false);
     }
   };
 
-  return <aside className={`site-assistant ${action}`} style={position ? { left: position.x, top: position.y, right: "auto", bottom: "auto" } : undefined} aria-label="哆啦A梦导览员">
+  return <aside className="site-assistant" style={position ? { left: position.x, top: position.y, right: "auto", bottom: "auto" } : undefined} aria-label="哆啦A梦导览员">
     <button ref={triggerRef} className="assistant-pet" type="button" onPointerDown={handlePointerDown} onPointerMove={handlePointerMove} onPointerUp={handlePointerEnd} onPointerCancel={handlePointerCancel} aria-label="拖动或打开哆啦A梦导览员" aria-expanded={open}>
       <Image src="/doraemon-pixel-guide.png" alt="" fill sizes="(max-width: 680px) 104px, 132px" priority />
       <span className="assistant-propeller" aria-hidden="true" />
     </button>
     {open && <section className="assistant-panel" role="dialog" aria-modal="false" aria-label="哆啦A梦导览">
       <header><div><small>网站导览</small><strong>哆啦A梦</strong></div><button type="button" onClick={() => setOpen(false)} aria-label="关闭对话">×</button></header>
-      <p className="assistant-reply">{loading ? "正在整理站内信息…" : reply || "拖动我到屏幕任意位置。想了解 Zhuo、文章或项目，都可以问我。"}</p>
-      {links.length > 0 && <nav className="assistant-links" aria-label="相关页面">{links.map((link) => <a key={link.href} href={link.href}>{cleanAnswer(link.title || link.href)}</a>)}</nav>}
+      <div className="assistant-messages" ref={messagesRef} aria-live="polite">{messages.map((message, index) => <article className={`assistant-message is-${message.role}`} key={`${message.role}-${index}`}><p>{message.content}</p>{message.links.length > 0 && <nav className="assistant-links" aria-label="相关页面">{message.links.map((link) => <a key={link.href} href={link.href}>{cleanAnswer(link.title || link.href)}</a>)}</nav>}</article>)}{loading && <article className="assistant-message is-assistant"><p>正在整理站内信息…</p></article>}</div>
       <form onSubmit={ask}><input ref={inputRef} value={text} onChange={(event) => setText(event.target.value)} placeholder="输入你的问题…" aria-label="问题" autoComplete="off" /><button disabled={loading || !text.trim()}>{loading ? "思考中…" : "发送"}</button></form>
       <footer><button type="button" onClick={resetPosition}>重置位置</button><span>按 Esc 关闭</span></footer>
     </section>}
