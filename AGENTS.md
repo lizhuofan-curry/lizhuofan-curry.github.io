@@ -28,6 +28,8 @@ This file records the durable project context and working rules for agents contr
 - Images use `next/image` with `images.unoptimized: true` for compatibility with the current asset pipeline.
 - Fonts come from the local `geist` package plus the Chinese system font stack. Do not add remote CSS font imports.
 - Public API routes include authentication, search, article views/likes, and administrator media upload. Studio routes and every write endpoint must verify the server-side session and role.
+- The optional site assistant uses an OpenAI-compatible provider through server-only `ASSISTANT_API_BASE_URL`, `ASSISTANT_API_KEY`, `ASSISTANT_MODEL`, and `ASSISTANT_HASH_SECRET` variables. Never expose or log these values in browser code, command output, or commits.
+- Assistant responses must be grounded in repository-backed public content and the reviewed assistant profile. Anonymous assistant messages store only an HMAC visitor digest and must be retained for no more than 30 days.
 - The administrator role is determined only by the `ADMIN_GITHUB_ID` environment variable; do not infer it from display names or email addresses.
 - The canonical site URL is defined once in `app/_data/site.js` as `siteConfig.siteUrl`.
 
@@ -127,3 +129,4 @@ Before handing off a change, test what is relevant to its risk:
 - Download external assets into the repository; do not depend on fragile hotlinks.
 - Record the asset name, creator, source URL, license, modifications, and download date in an asset-credits file.
 - Do not bypass a source site's access controls or download flow.
+- `public/spiderman-pixel-sprite.png` was supplied by the site owner, who confirmed public-use authorization on 2026-08-14. Preserve that attribution in `ASSET-CREDITS.md`; do not replace it with unverified artwork.
