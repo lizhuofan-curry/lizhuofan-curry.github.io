@@ -3,6 +3,7 @@ import { ArrowUpRight, BookOpenText, Code, GitBranch, Sparkle } from "@phosphor-
 import { getPublishedArticles } from "../lib/content";
 import { projects } from "./_data/site-data";
 import { PixelCourt } from "./_components/PixelCourt";
+import { OnlinePresence } from "./_components/OnlinePresence";
 
 export default async function Home() {
   const articles = await getPublishedArticles();
@@ -14,6 +15,7 @@ export default async function Home() {
         <PixelCourt />
         <div className="pixel-hero-copy">
           <p className="profile-kicker">当前存档：学习、构建与复盘</p>
+          <OnlinePresence />
           <h1>Zhuo 的<br />学习冒险</h1>
           <p>在人工智能、计算机视觉和软件工程之间，把每次调试、项目与理解认真存档。</p>
           <div className="profile-actions"><Link className="primary-button" href="/articles">打开文章日志 <ArrowUpRight size={18} /></Link><Link className="secondary-button" href="/projects">浏览项目地图</Link></div>
