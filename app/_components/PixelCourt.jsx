@@ -93,7 +93,6 @@ export function PixelCourt() {
       <div className="court-score-lights" aria-hidden="true"><i /><i /><i /></div>
       <small>投篮记分牌</small>
       <strong><b>{score.made}</b><em>/</em><b>{score.attempts}</b></strong>
-      <OnlinePresence compact />
       <span>{status}</span>
     </div>
     <CourtHoop court={court} />

@@ -8,6 +8,7 @@ import { navigation } from "../_data/site";
 import { searchItems } from "../_data/search";
 import { AuthMenu } from "./AuthMenu";
 import { ThemeToggle } from "./ThemeToggle";
+import { OnlinePresence } from "./OnlinePresence";
 import { PixelPlayer } from "./PixelPlayer";
 
 function SearchPanel({ open, onClose }) {
@@ -114,7 +115,10 @@ export function SiteHeader({ authConfigured = false }) {
     <>
       <header className="site-header">
         <nav className="site-nav" aria-label="主导航">
-          <div className="brand"><PixelPlayer className="brand-player" compact /><Link className="brand-link" href="/" aria-label="返回首页"><span className="brand-wordmark">Zhuo</span><small>个人档案</small></Link></div>
+          <div className="nav-identity">
+            <div className="brand"><PixelPlayer className="brand-player" compact /><Link className="brand-link" href="/" aria-label="返回首页"><span className="brand-wordmark">Zhuo</span><small>个人档案</small></Link></div>
+            <OnlinePresence compact />
+          </div>
           <div className="nav-links">
             {navigation.map((item) => {
               const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
@@ -123,7 +127,11 @@ export function SiteHeader({ authConfigured = false }) {
           </div>
           <div className="nav-actions"><button ref={triggerRef} className="search-trigger" type="button" onClick={() => setSearchOpen(true)} aria-haspopup="dialog" aria-label="打开全站搜索"><MagnifyingGlass size={18} /><span>搜索</span><kbd>Ctrl K</kbd></button><ThemeToggle /><AuthMenu configured={authConfigured} /></div>
         </nav>
-        <div className="pixel-statusbar" aria-label="网站状态"><div><span>● 在线存档</span><span>AI · CV · SOFTWARE</span><span>点击角色可以运球</span><span>记录正在持续更新</span><span aria-hidden="true">● 在线存档</span><span aria-hidden="true">AI · CV · SOFTWARE</span><span aria-hidden="true">点击角色可以运球</span><span aria-hidden="true">记录正在持续更新</span></div></div>
+        <div className="pixel-statusbar" aria-label="网站状态">
+          <div className="status-console" aria-hidden="true"><i /><b>ARCHIVE</b><em>REC</em></div>
+          <div className="status-viewport"><div className="status-track"><span>AI · CV · SOFTWARE</span><span>学习档案持续整理中</span><span>哆啦A梦导览已就位</span><span>文章 · 项目 · 公开证据</span><span>AI · CV · SOFTWARE</span><span>学习档案持续整理中</span><span>哆啦A梦导览已就位</span><span>文章 · 项目 · 公开证据</span></div></div>
+          <span className="sr-only">网站状态：AI、计算机视觉与软件工程学习档案；哆啦A梦导览已就位。</span>
+        </div>
       </header>
       <SearchPanel open={searchOpen} onClose={closeSearch} />
     </>
