@@ -1,5 +1,12 @@
 # Asset credits
 
+## Spider-Man pixel guide
+
+- File: `public/spiderman-pixel-sprite.png`.
+- Source: supplied directly by the site owner on 2026-08-14; the owner confirmed public-use authorization.
+- Creator and upstream URL: not supplied by the owner.
+- Modification: displayed as a cropped floating guide image; no pixels in the supplied file were altered.
+
 ## Temporary site avatar
 
 - File: `public/zhuo-avatar.png`, also adapted as the site and Apple icons.

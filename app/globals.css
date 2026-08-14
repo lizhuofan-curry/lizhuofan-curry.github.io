@@ -620,6 +620,16 @@ h1, h2, h3 { letter-spacing: -.035em; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none; transition: none; }
 }
+
+.site-assistant { position: fixed; z-index: 70; right: 22px; bottom: 22px; width: 92px; height: 92px; }
+.assistant-orb { width: 92px; height: 92px; padding: 0; overflow: hidden; border: 3px solid var(--court); border-radius: 50%; background: #9b1735; box-shadow: 4px 4px 0 var(--accent-strong); touch-action: none; }
+.assistant-crop { position: relative; display: block; width: 100%; height: 100%; overflow: hidden; }.assistant-crop img { object-fit: cover; object-position: 51% 54%; transform: scale(1.55); image-rendering: pixelated; }
+.assistant-panel { position: absolute; right: 0; bottom: 105px; width: min(320px, calc(100vw - 32px)); padding: 18px; border: 2px solid var(--line); background: var(--surface); box-shadow: var(--shadow); }.assistant-panel > button { float: right; border: 0; background: transparent; color: var(--muted); }.assistant-panel strong { display: block; color: var(--accent-strong); }.assistant-panel p { margin: 9px 0 0; color: var(--muted); font-size: 14px; }
+.assistant-web { position: absolute; z-index: -1; right: 38px; bottom: 68px; width: 3px; height: 0; background: #f7fbff; transform-origin: bottom; opacity: 0; }
+.site-assistant.is-webbing .assistant-web { height: 240px; opacity: 1; animation: assistant-web .7s var(--ease-out) both; }.site-assistant.is-webbing .assistant-orb { animation: assistant-shot .7s var(--ease-out) both; }.site-assistant.is-hanging { animation: assistant-hang .85s var(--ease-out) both; }.site-assistant.is-hopping .assistant-orb { animation: assistant-hop .65s var(--ease-out) both; }
+@keyframes assistant-web { from { height: 0; opacity: 0; } 35% { opacity: 1; } to { height: 250px; opacity: 0; } } @keyframes assistant-shot { 45% { transform: translate(-25px, -20px) rotate(-10deg); } } @keyframes assistant-hang { 45% { transform: translateY(-140px) rotate(180deg); } } @keyframes assistant-hop { 45% { transform: translateY(-42px) rotate(8deg); } }
+@media (prefers-reduced-motion: reduce) { .site-assistant, .site-assistant * { animation: none !important; } }
+@media (max-width: 680px) { .site-assistant { right: 12px; bottom: 14px; width: 76px; height: 76px; }.assistant-orb { width: 76px; height: 76px; }.assistant-panel { right: -2px; bottom: 88px; } }
 @view-transition { navigation: auto; }
 ::view-transition-old(root), ::view-transition-new(root) { animation-duration: 180ms; animation-timing-function: var(--ease-out); }
 @media (prefers-reduced-motion: reduce) { ::view-transition-old(root), ::view-transition-new(root) { animation: none; } }

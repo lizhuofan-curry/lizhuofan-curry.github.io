@@ -4,6 +4,7 @@ import { GeistMono } from "geist/font/mono";
 import { SiteFooter } from "./_components/SiteFooter";
 import { SiteHeader } from "./_components/SiteHeader";
 import { ThemeInitializer } from "./_components/ThemeInitializer";
+import { SiteAssistant } from "./_components/SiteAssistant";
 import { siteConfig } from "./_data/site";
 import { isAuthConfigured } from "../lib/auth";
 
@@ -49,6 +50,7 @@ export default function RootLayout({ children }) {
         <SiteHeader authConfigured={isAuthConfigured()} />
         {children}
         <SiteFooter />
+        <SiteAssistant />
       </body>
     </html>
   );
