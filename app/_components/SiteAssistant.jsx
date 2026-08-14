@@ -123,9 +123,9 @@ export function SiteAssistant() {
   };
 
   return <aside className="site-assistant" style={position ? { left: position.x, top: position.y, right: "auto", bottom: "auto" } : undefined} aria-label="哆啦A梦导览员">
-    <button ref={triggerRef} className="assistant-pet" type="button" onPointerDown={handlePointerDown} onPointerMove={handlePointerMove} onPointerUp={handlePointerEnd} onPointerCancel={handlePointerCancel} aria-label="拖动或打开哆啦A梦导览员" aria-expanded={open}>
+    <button ref={triggerRef} className={`assistant-pet${open ? " is-open" : ""}`} type="button" onPointerDown={handlePointerDown} onPointerMove={handlePointerMove} onPointerUp={handlePointerEnd} onPointerCancel={handlePointerCancel} aria-label="拖动或打开哆啦A梦导览员" aria-expanded={open}>
       <Image src="/doraemon-pixel-guide.png" alt="" fill sizes="(max-width: 680px) 104px, 132px" priority />
-      <span className="assistant-propeller" aria-hidden="true" />
+      <span className="assistant-shadow" aria-hidden="true" />
     </button>
     {open && <section className="assistant-panel" role="dialog" aria-modal="false" aria-label="哆啦A梦导览">
       <header><div><small>网站导览</small><strong>哆啦A梦</strong></div><button type="button" onClick={() => setOpen(false)} aria-label="关闭对话">×</button></header>

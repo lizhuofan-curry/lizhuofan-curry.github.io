@@ -128,9 +128,10 @@ export function SiteHeader({ authConfigured = false }) {
           <div className="nav-actions"><button ref={triggerRef} className="search-trigger" type="button" onClick={() => setSearchOpen(true)} aria-haspopup="dialog" aria-label="打开全站搜索"><MagnifyingGlass size={18} /><span>搜索</span><kbd>Ctrl K</kbd></button><ThemeToggle /><AuthMenu configured={authConfigured} /></div>
         </nav>
         <div className="pixel-statusbar" aria-label="网站状态">
-          <div className="status-console" aria-hidden="true"><i /><b>ARCHIVE</b><em>REC</em></div>
-          <div className="status-viewport"><div className="status-track"><span>AI · CV · SOFTWARE</span><span>学习档案持续整理中</span><span>哆啦A梦导览已就位</span><span>文章 · 项目 · 公开证据</span><span>AI · CV · SOFTWARE</span><span>学习档案持续整理中</span><span>哆啦A梦导览已就位</span><span>文章 · 项目 · 公开证据</span></div></div>
-          <span className="sr-only">网站状态：AI、计算机视觉与软件工程学习档案；哆啦A梦导览已就位。</span>
+          <span className="status-mark" aria-hidden="true"><i /><i /><i /></span>
+          <span className="status-copy"><b>FIELD NOTES</b><span>学习档案持续更新 · AI / CV / SOFTWARE</span></span>
+          <span className="status-scan" aria-hidden="true" />
+          <span className="sr-only">网站状态：AI、计算机视觉与软件工程学习档案持续更新。</span>
         </div>
       </header>
       <SearchPanel open={searchOpen} onClose={closeSearch} />
