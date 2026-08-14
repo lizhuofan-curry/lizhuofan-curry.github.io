@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -9,6 +8,7 @@ import { navigation } from "../_data/site";
 import { searchItems } from "../_data/search";
 import { AuthMenu } from "./AuthMenu";
 import { ThemeToggle } from "./ThemeToggle";
+import { PixelPlayer } from "./PixelPlayer";
 
 function SearchPanel({ open, onClose }) {
   const [query, setQuery] = useState("");
@@ -114,7 +114,7 @@ export function SiteHeader({ authConfigured = false }) {
     <>
       <header className="site-header">
         <nav className="site-nav" aria-label="主导航">
-          <Link className="brand" href="/" aria-label="返回首页"><Image src="/zhuo-avatar.png" alt="" width={32} height={32} priority />Zhuo<small>个人档案</small></Link>
+          <div className="brand"><PixelPlayer className="brand-player" compact /><Link className="brand-link" href="/" aria-label="返回首页"><span className="brand-wordmark">Zhuo</span><small>个人档案</small></Link></div>
           <div className="nav-links">
             {navigation.map((item) => {
               const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
@@ -123,6 +123,7 @@ export function SiteHeader({ authConfigured = false }) {
           </div>
           <div className="nav-actions"><button ref={triggerRef} className="search-trigger" type="button" onClick={() => setSearchOpen(true)} aria-haspopup="dialog" aria-label="打开全站搜索"><MagnifyingGlass size={18} /><span>搜索</span><kbd>Ctrl K</kbd></button><ThemeToggle /><AuthMenu configured={authConfigured} /></div>
         </nav>
+        <div className="pixel-statusbar" aria-label="网站状态"><div><span>● 在线存档</span><span>AI · CV · SOFTWARE</span><span>点击角色可以运球</span><span>记录正在持续更新</span><span aria-hidden="true">● 在线存档</span><span aria-hidden="true">AI · CV · SOFTWARE</span><span aria-hidden="true">点击角色可以运球</span><span aria-hidden="true">记录正在持续更新</span></div></div>
       </header>
       <SearchPanel open={searchOpen} onClose={closeSearch} />
     </>
