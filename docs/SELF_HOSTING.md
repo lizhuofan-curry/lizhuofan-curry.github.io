@@ -13,6 +13,7 @@
 
 - 将域名反向代理到 Next.js 服务，保留 HTTPS，并设置 `BETTER_AUTH_URL=https://www.zhuofan.me`。
 - 生产环境必须设置 `BETTER_AUTH_SECRET`、`VIEW_HASH_SECRET`、数据库连接、邮件凭据和 OAuth 凭据；不要把任何密钥提交进仓库。
+- 自建长驻进程保持 `DATABASE_ALLOW_EXIT_ON_IDLE=false`（默认值）；仅在确认无状态短进程需要快速退出时才设为 `true`。
 - 反向代理应正确转发单一可信客户端 IP 头；Better Auth 的限流依赖真实来源信息。
 - 数据库备份和媒体文件备份分别执行；迁移后先验证 GitHub 登录、邮箱验证、重置密码和现有文章访问。
 - 当前 Better Auth 内置限流适合单个应用实例；未来横向扩容时，应将认证邮件限流迁到 Redis 或网关层，确保多个实例共用同一计数。

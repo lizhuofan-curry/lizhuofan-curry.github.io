@@ -12,7 +12,7 @@ This file records the durable project context and working rules for agents contr
 
 ## Product and visual direction
 
-- Visual direction: a blue-toned computational editorial style with expressive composition and restrained interaction.
+- Visual direction: a blue-toned pixel-basketball learning archive with clear editorial reading surfaces and purposeful interaction.
 - Article reading surfaces should stay quieter and simpler than the homepage.
 - Prefer distinctive, useful interaction over decorative motion. Every interaction must work without hover.
 - Respect `prefers-reduced-motion`; motion is progressive enhancement, never required for navigation or comprehension.
@@ -23,10 +23,12 @@ This file records the durable project context and working rules for agents contr
 ## Technical baseline
 
 - Framework: Next.js 16 App Router, React 19, JavaScript/JSX, and MDX.
-- Rendering and hosting: static export via `output: "export"`; build output is `out/` and is deployed to GitHub Pages.
-- Images use `next/image` with `images.unoptimized: true`, which is required for static export.
+- Rendering and hosting: server-rendered Next.js application. Vercel is the current host; a future Alibaba Cloud deployment must preserve the same public routes and server APIs.
+- Runtime services: Better Auth, PostgreSQL via `pg`, Supabase Storage through a replaceable media adapter, and Resend email delivery. Browser code must never receive database, storage management, email, or OAuth secrets.
+- Images use `next/image` with `images.unoptimized: true` for compatibility with the current asset pipeline.
 - Fonts come from the local `geist` package plus the Chinese system font stack. Do not add remote CSS font imports.
-- There is no backend, database, CMS, authentication, analytics, runtime API, or server-side search. Do not introduce one unless the user explicitly expands the project scope.
+- Public API routes include authentication, search, article views/likes, and administrator media upload. Studio routes and every write endpoint must verify the server-side session and role.
+- The administrator role is determined only by the `ADMIN_GITHUB_ID` environment variable; do not infer it from display names or email addresses.
 - The canonical site URL is defined once in `app/_data/site.js` as `siteConfig.siteUrl`.
 
 ## Public routes
@@ -37,6 +39,8 @@ This file records the durable project context and working rules for agents contr
 - `/projects`
 - `/projects/[slug]`
 - `/about`
+- `/login`, `/register`, `/verify-email`, `/forgot-password`, `/reset-password`, `/account`, `/privacy`
+- `/studio` and `/studio/*` are administrator-only and must be `noindex`.
 
 Old Museum, Garden, Lab, Map, and Now routes are intentionally unsupported and may return 404. New public routes must be included in the sitemap when appropriate.
 
@@ -52,8 +56,11 @@ Old Museum, Garden, Lab, Map, and Now routes are intentionally unsupported and m
 - `app/_components/FilterableGrid.jsx`: article/project search, tags, and URL state.
 - `app/_components/PersonalPath.jsx`: homepage interest signals and shareable personalized route.
 - `app/articles/_content/*.mdx`: article bodies.
-- `app/sitemap.js` and `app/robots.js`: static discovery metadata.
-- `.github/workflows/deploy-pages.yml`: GitHub Pages deployment.
+- `app/sitemap.js` and `app/robots.js`: discovery metadata for public content only.
+- `lib/auth.js`, `lib/email.js`, `lib/db.js`, and `lib/media-storage.js`: replaceable server-side authentication, mail, database, and storage boundaries.
+- `db/migrations/001_fullstack_blog.sql`: Better Auth and blog schema.
+- `docs/FULLSTACK_SETUP.md` and `docs/SELF_HOSTING.md`: Vercel setup and future self-hosting instructions.
+- `.github/workflows/deploy-pages.yml`: retired manual reminder; GitHub Pages cannot run this full-stack site.
 
 ## Content models
 
@@ -80,7 +87,7 @@ Only add claims that can be checked through the linked repository or an explicit
 
 ## Search and URL-state rules
 
-- Search and filtering run entirely in the browser.
+- Filters keep their state in the browser and URL; the global search API returns only published database articles plus repository-backed projects.
 - Article/project filters use `q` and `tag` query parameters so refresh, browser history, and shared links restore the state.
 - The homepage personalized route uses `path` with up to three signal IDs.
 - Chinese IME input must be composition-safe. Never write intermediate Latin keystrokes to the URL while `compositionstart` is active; synchronize the final value on `compositionend`.
@@ -95,8 +102,8 @@ npm run build
 npm run start
 ```
 
-- `npm run build` is the required baseline verification and must complete with all static routes generated.
-- GitHub Pages uses Node.js 20, `npm ci`, `npm run build`, and uploads `out/`.
+- Node.js 20.9 or newer is required. `npm run build` is the required baseline verification and must complete with all public and dynamic routes compiled.
+- Vercel deploys `main` today. The legacy GitHub Pages workflow is intentionally retired; it must not be re-enabled without restoring a static-only architecture.
 - Preserve unrelated working-tree changes. Do not delete, reset, or rewrite user work to obtain a clean tree.
 - Do not commit generated `.next/`, `out/`, local caches, or temporary screenshots.
 - Do not push, open a pull request, merge, or deploy unless the user has asked for that publishing action.
@@ -112,6 +119,7 @@ Before handing off a change, test what is relevant to its risk:
 5. Test homepage personalized routes with zero to three signals, the maximum-selection state, copied URLs, refresh restoration, and reset behavior.
 6. Test `prefers-reduced-motion: reduce` and confirm content remains understandable without animation.
 7. Verify internal links and external evidence links. Do not silently replace broken evidence with unsupported copy.
+8. For authentication changes, test email registration, verification, session persistence, logout, reset-password flow, role checks, and safe `next` redirects in a deployed environment.
 
 ## Asset provenance
 
