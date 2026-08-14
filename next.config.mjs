@@ -9,6 +9,10 @@ const nextConfig = {
   },
 };
 
-const withMDX = createMDX({});
+const withMDX = createMDX({
+  options: {
+    rehypePlugins: ["rehype-highlight"],
+  },
+});
 
 export default withMDX(nextConfig);
