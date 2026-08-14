@@ -1,6 +1,6 @@
 # 李卓凡的个人博客与项目档案
 
-一个使用 Next.js 静态导出的中文个人网站，内容聚焦文章、项目与可验证的学习过程。
+一个使用 Next.js 的中文个人网站，内容聚焦文章、项目与可验证的学习过程。公开内容、写作后台、认证和媒体上传由同一应用提供。
 
 ## 本地运行
 
@@ -15,7 +15,14 @@ npm run dev
 npm run build
 ```
 
-构建结果位于 `out/`，可直接部署到 GitHub Pages。
+生产构建：
+
+```bash
+npm run build
+npm run start
+```
+
+完整的数据库、认证、邮箱和媒体配置见 [docs/FULLSTACK_SETUP.md](docs/FULLSTACK_SETUP.md)。后续迁移到阿里云服务器时，参见 [docs/SELF_HOSTING.md](docs/SELF_HOSTING.md)。
 
 ## 内容结构
 
