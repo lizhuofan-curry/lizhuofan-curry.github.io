@@ -44,7 +44,6 @@ export function AuthStation({ mode = "login", next, emailEnabled = false, token 
   const [consent, setConsent] = useState(false);
 
   const busy = Boolean(pending);
-  const verificationCallback = `/verify-email?next=${encodeURIComponent(callbackURL)}`;
 
   async function handleEmailLogin(event) {
     event.preventDefault();
@@ -63,7 +62,7 @@ export function AuthStation({ mode = "login", next, emailEnabled = false, token 
     if (password !== confirmPassword) return setStatus({ kind: "error", text: "两次输入的密码不一致。" });
     if (!consent) return setStatus({ kind: "error", text: "请先阅读并同意隐私说明。" });
     setPending("register"); setStatus(null);
-    const { error } = await authClient.signUp.email({ name, email, password, callbackURL: verificationCallback });
+    const { error } = await authClient.signUp.email({ name, email, password, callbackURL });
     setPending(null);
     if (error) return setStatus({ kind: "error", text: "暂时无法创建账号，请稍后重试。" });
     setStatus({ kind: "success", text: "如果该邮箱可以注册，验证链接已经发出。请前往邮箱完成验证。" });
@@ -72,7 +71,7 @@ export function AuthStation({ mode = "login", next, emailEnabled = false, token 
   async function resendVerification() {
     if (!email) return setStatus({ kind: "error", text: "请输入你的邮箱后再重新发送。" });
     setPending("verify"); setStatus(null);
-    const { error } = await authClient.sendVerificationEmail({ email, callbackURL: verificationCallback });
+    const { error } = await authClient.sendVerificationEmail({ email, callbackURL });
     setPending(null);
     setStatus(error ? { kind: "error", text: "暂时无法发送验证邮件，请稍后重试。" } : { kind: "success", text: "如果该邮箱尚未验证，新的验证链接已经发送。" });
   }
