@@ -10,7 +10,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "validate:content": "node scripts/validate-content.mjs"
+    "validate:content": "node scripts/validate-content.mjs",
+    "lint": "eslint .",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.1",
@@ -31,6 +33,10 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@types/mdx": "^2.0.13"
+    "@types/mdx": "^2.0.13",
+    "eslint": "^9.20.0",
+    "eslint-config-next": "16.3.0",
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "^3.5.0"
   }
 }

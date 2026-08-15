@@ -25,19 +25,21 @@ function SearchPanel({ open, onClose }) {
       )
     : searchItems.slice(0, 6);
   const [remoteResults, setRemoteResults] = useState([]);
-  const results = normalized && remoteResults.length ? remoteResults : localResults;
+  const results = remoteResults.length ? remoteResults : localResults;
 
   useEffect(() => {
-    if (!normalized) { setRemoteResults([]); return; }
+    if (!open) return;
+    setRemoteResults([]);
     const controller = new AbortController();
+    const q = normalized ? `?q=${encodeURIComponent(normalized)}` : "";
     const timeout = setTimeout(async () => {
       try {
-        const response = await fetch(`/api/search?q=${encodeURIComponent(normalized)}`, { signal: controller.signal });
+        const response = await fetch(`/api/search${q}`, { signal: controller.signal });
         if (response.ok) setRemoteResults((await response.json()).results || []);
       } catch (error) { if (error.name !== "AbortError") setRemoteResults([]); }
-    }, 180);
+    }, normalized ? 180 : 0);
     return () => { clearTimeout(timeout); controller.abort(); };
-  }, [normalized]);
+  }, [normalized, open]);
 
   useEffect(() => {
     if (!open) return;
