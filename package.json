@@ -9,7 +9,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "validate:content": "node scripts/validate-content.mjs"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.1",
