@@ -25,9 +25,9 @@ function CourtHoop({ court }) {
 function ThreePointLine({ court }) {
   const { width, height } = court;
   const rimY = Math.min(115, height * 0.28);
-  const sideX = width - 42;
-  const topY = Math.max(52, rimY - 34);
-  const baselineY = height - 78;
+  const sideX = width - 26;
+  const topY = Math.max(34, rimY - 40);
+  const baselineY = height - 72;
   const radius = (baselineY - topY) / 2;
   return <svg className="court-three-overlay" viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="none" aria-hidden="true">
     <path d={`M ${sideX} ${topY} A ${radius} ${radius} 0 0 0 ${sideX} ${baselineY}`} />
