@@ -20,3 +20,4 @@
 - **feat**：投篮练习场连击成就——新增命中率、最高连中（`bestStreak` 持久化到 localStorage）、连中徽章（≥3/5/8 解锁）。涉及 `PixelCourt.jsx`、`globals.css`。
 - **feat**：跨类型相关推荐——新增 `RelatedLinks` 组件（按证据链接/共享标签/类别打分，文章↔项目互推），接入文章与项目详情页。涉及 `RelatedLinks.jsx`、`articles/[slug]/page.jsx`、`projects/[slug]/page.jsx`、`globals.css`。
 - **feat**：登录/注册 UI 优化——打开自动聚焦首个输入框、错误提示置顶且 `role="alert"`、注册密码实时提示（长度/一致性）、弱化「AUTH.EXE」装饰面板并在手机端隐藏。涉及 `AuthStation.jsx`、`globals.css`。
+- **fix**：投篮场篮架/三分线随球场宽度缩放（`courtScale`），并让篮板右缘与三分线对齐——修复手机端篮板伸出三分线、比例失调。涉及 `PixelCourt.jsx`。
