@@ -1,3 +1,5 @@
+import { headingId } from "../../lib/headings";
+
 export const articles = [
   {
     slug: "read-traceback",
@@ -55,4 +57,3 @@ export const articleModules = {
   "resnet-identity": () => import("../articles/_content/resnet-identity.mdx"),
   "validation-is-not-test": () => import("../articles/_content/validation-is-not-test.mdx"),
 };
-import { headingId } from "../../lib/headings";
