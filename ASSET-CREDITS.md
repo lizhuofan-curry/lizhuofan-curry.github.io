@@ -17,11 +17,18 @@
 
 ## Temporary site avatar
 
-- File: `public/zhuo-avatar.png`, also adapted as the site and Apple icons.
+- File: `public/zhuo-avatar.png`.
 - Source: supplied directly by the site owner on 2026-08-12.
 - Status: temporary artwork; original creator and reuse license have not yet been documented.
-- Modification: used without visual alteration; the browser renders square copies at smaller sizes.
-- Replacement rule: replace this asset before broader commercial use if its provenance or permission cannot be confirmed.
+- Modification: used without visual alteration.
+- Content (vision review, 2026-08-15, Qwen qwen3.7-plus): flat vector / pop-art illustration of basketball player Stephen Curry (Warriors #30, holding a mouthguard); closest to a DiceBear-style flat geometric avatar. It depicts a real person's likeness rather than the site owner, and does not match the site's pixel-art theme.
+- Replacement rule: replace before broader commercial use; the unconfirmed provenance, the real-person likeness, and the DiceBear-adjacent style all argue for replacement.
+
+## Site and Apple icons
+
+- Files: `app/icon.png` and `app/apple-icon.png` (byte-identical; 512×512 RGBA).
+- Content (vision review, 2026-08-15, Qwen qwen3.7-plus): a pixel-art character in a blue #30 jersey holding a basketball on a blue grid — consistent with the site's pixel-basketball theme; not an AI portrait, robot mascot, or DiceBear avatar.
+- Source and license: not yet recorded; treat like the pixel player until provenance is confirmed.
 
 ## Pixel player
 
