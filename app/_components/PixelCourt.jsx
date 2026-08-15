@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
+const STREAK_ACHIEVEMENTS = [3, 5, 8];
+
 function CourtHoop({ court }) {
   const { width, height } = court;
   const rimX = width - 84;
@@ -60,13 +62,14 @@ export function PixelCourt() {
   const suppressClickRef = useRef(false);
   const [shooting, setShooting] = useState(false);
   const [result, setResult] = useState("ready");
-  const [score, setScore] = useState({ made: 0, attempts: 0 });
+  const [score, setScore] = useState({ made: 0, attempts: 0, bestStreak: 0 });
   const [court, setCourt] = useState({ width: 500, height: 420 });
   const [playerPosition, setPlayerPosition] = useState({ x: 25, y: 76 });
   const playerPositionRef = useRef(playerPosition);
   const [shotPosition, setShotPosition] = useState(playerPosition);
   const [dragging, setDragging] = useState(false);
   const timerRef = useRef(null);
+  const currentStreakRef = useRef(0);
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -86,7 +89,8 @@ export function PixelCourt() {
     try {
       const saved = JSON.parse(window.localStorage.getItem("pixel-court-score"));
       if (saved && Number.isInteger(saved.made) && saved.made >= 0 && Number.isInteger(saved.attempts) && saved.attempts >= 0) {
-        setScore({ made: saved.made, attempts: saved.attempts });
+        const bestStreak = Number.isInteger(saved.bestStreak) && saved.bestStreak >= 0 ? saved.bestStreak : 0;
+        setScore({ made: saved.made, attempts: saved.attempts, bestStreak });
       }
     } catch {
       // 忽略无效或不可读的本地记录
@@ -105,8 +109,14 @@ export function PixelCourt() {
   const shoot = (position = playerPositionRef.current) => {
     if (shooting) return;
     const made = Math.random() < 0.69;
+    const nextStreak = made ? currentStreakRef.current + 1 : 0;
+    currentStreakRef.current = nextStreak;
     setResult(made ? "score" : "miss");
-    setScore((current) => ({ made: current.made + (made ? 1 : 0), attempts: current.attempts + 1 }));
+    setScore((current) => ({
+      made: current.made + (made ? 1 : 0),
+      attempts: current.attempts + 1,
+      bestStreak: Math.max(current.bestStreak, nextStreak),
+    }));
     setShotPosition(position);
     setShooting(true);
     window.clearTimeout(timerRef.current);
@@ -191,6 +201,7 @@ export function PixelCourt() {
   };
 
   const status = result === "score" ? "命中！" : result === "miss" ? "差一点" : "准备投篮";
+  const hitRate = score.attempts > 0 ? Math.round((score.made / score.attempts) * 100) : 0;
 
   return <div ref={stageRef} className={`pixel-court-stage ${shooting ? "is-shooting" : ""} ${shooting ? `is-${result}` : ""}`} aria-label="像素投篮练习场">
     <span ref={surfaceRef} className="court-surface" aria-hidden="true" />
@@ -201,6 +212,17 @@ export function PixelCourt() {
       <small>投篮记分牌</small>
       <strong><b>{score.made}</b><em>/</em><b>{score.attempts}</b></strong>
       <span>{status}</span>
+      <div className="court-stats">
+        <span className="court-hitrate">命中率 {hitRate}%</span>
+        <span className="court-streak">最高连中 ×{score.bestStreak}</span>
+      </div>
+      {STREAK_ACHIEVEMENTS.some((n) => score.bestStreak >= n) ? (
+        <div className="court-achievements">
+          {STREAK_ACHIEVEMENTS.filter((n) => score.bestStreak >= n).map((n) => (
+            <span key={n} className="court-badge">连中 ×{n}</span>
+          ))}
+        </div>
+      ) : null}
     </div>
     <CourtHoop court={court} />
     {shooting ? <ShotOverlay made={result === "score"} shotKey={score.attempts} court={court} playerPosition={shotPosition} /> : null}

@@ -16,3 +16,7 @@
 - **feat**：全局搜索彻底统一到 DB 优先来源——`/api/search` 空查询返回最近 6 项，`SiteHeader` 搜索面板打开即拉取最近内容、优先用远端结果（静态 `searchItems` 仅作即时兜底）。涉及 `app/api/search/route.js`、`app/_components/SiteHeader.jsx`。
 - **feat**：工程化收尾——新增 ESLint flat config（`eslint.config.mjs`，Next 16 core-web-vitals，将 `react-hooks/set-state-in-effect` 与 `react-hooks/refs` 两条激进规则降级为警告）、Prettier 配置（`.prettierrc.json` / `.prettierignore`），并在 `package.json` 加 `lint` / `format` 脚本与 devDependencies（eslint、eslint-config-next、prettier）。涉及 `eslint.config.mjs`、`.prettierrc.json`、`.prettierignore`、`package.json`、`package-lock.json`。
 - **docs**：`ASSET-CREDITS.md` 补头像/图标视觉核验结论——`zhuo-avatar.png` 经 Qwen 视觉模型判定为「库里扁平插画、DiceBear 相邻风格、待替换」；`icon.png`/`apple-icon.png` 为像素风角色（合规）。涉及 `ASSET-CREDITS.md`。
+- **feat**：证据链标注——文章/项目卡片显示「证据 ×N」可核验链接数徽章；文章详情页新增「可核验证据」区列出 evidence 链接。涉及 `FilterableGrid.jsx`、`articles/[slug]/page.jsx`、`globals.css`。
+- **feat**：投篮练习场连击成就——新增命中率、最高连中（`bestStreak` 持久化到 localStorage）、连中徽章（≥3/5/8 解锁）。涉及 `PixelCourt.jsx`、`globals.css`。
+- **feat**：跨类型相关推荐——新增 `RelatedLinks` 组件（按证据链接/共享标签/类别打分，文章↔项目互推），接入文章与项目详情页。涉及 `RelatedLinks.jsx`、`articles/[slug]/page.jsx`、`projects/[slug]/page.jsx`、`globals.css`。
+- **feat**：登录/注册 UI 优化——打开自动聚焦首个输入框、错误提示置顶且 `role="alert"`、注册密码实时提示（长度/一致性）、弱化「AUTH.EXE」装饰面板并在手机端隐藏。涉及 `AuthStation.jsx`、`globals.css`。

@@ -685,3 +685,35 @@ h1, h2, h3 { letter-spacing: -.035em; }
 /* Tag rows read as a compact index rather than a horizontal chip strip. */
 @media (max-width: 900px) { .tag-list { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (max-width: 560px) { .tag-list { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 12px; }.large-tags { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* Evidence chain: a verifiable-link count badge on cards and an evidence list on articles. */
+.card-evidence { display: inline-block; width: max-content; margin-top: 9px; padding: 4px 8px; color: var(--accent-strong); border: 2px solid var(--accent-strong); border-radius: 2px; background: var(--court); font: 700 10px var(--mono); letter-spacing: .05em; box-shadow: 3px 3px 0 var(--accent-soft); }
+.article-evidence { margin: 26px 0; padding: 18px 20px; border: 3px dashed var(--line); background: var(--court-soft); }
+.article-evidence ul { margin: 10px 0 0; padding-left: 18px; }
+.article-evidence li { margin: 6px 0; }
+.article-evidence a { color: var(--accent-strong); text-decoration: underline; text-underline-offset: 3px; word-break: break-all; }
+
+/* Court achievement stats (inside the scoreboard). */
+.court-stats { display: flex; gap: 8px; justify-content: space-between; margin-top: 3px; font: 750 8px var(--mono); letter-spacing: .04em; }
+.court-hitrate { color: #a9f0b8; }
+.court-streak { color: #ffe178; }
+.court-achievements { display: flex; gap: 4px; margin-top: 3px; }
+.court-badge { padding: 2px 5px; color: #102f68; border: 1px solid #102f68; background: #f4b52e; font: 750 7px var(--mono); letter-spacing: .04em; }
+
+/* Cross-type related recommendations. */
+.related-links { margin-top: 34px; }
+.related-links-heading { display: flex; gap: 14px; align-items: baseline; margin-bottom: 16px; }
+.related-links-heading span { color: var(--accent-strong); font-size: clamp(22px, 3vw, 30px); }
+.related-links-heading small { color: var(--muted); font: 750 11px var(--mono); letter-spacing: .12em; }
+.related-links-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 0; padding: 0; list-style: none; }
+.related-links-card { display: flex; min-height: 150px; flex-direction: column; gap: 8px; padding: 20px; color: inherit; border: 2px solid var(--line); border-radius: var(--radius-card); background: var(--surface); box-shadow: 3px 3px 0 rgba(29,78,143,.16); text-decoration: none; }
+.related-links-card:hover { border-color: var(--accent); }
+.related-links-type { width: max-content; padding: 3px 7px; color: var(--accent-strong); border: 1px solid var(--accent); border-radius: 2px; font: 750 10px var(--mono); letter-spacing: .05em; }
+.related-links-title { color: var(--accent-strong); font-size: 18px; line-height: 1.2; }
+.related-links-desc { color: var(--muted); font-size: 13px; line-height: 1.5; }
+@media (max-width: 760px) { .related-links-list { grid-template-columns: 1fr; } }
+
+/* Auth station: calmer signal, live password hint, hide decorative panel on phones. */
+.identity-hint { display: block; margin: -6px 0 14px; color: var(--muted); font: 650 11px var(--mono); letter-spacing: .02em; }
+.identity-signal strong { font-size: clamp(56px, 7vw, 84px); }
+@media (max-width: 680px) { .identity-signal { display: none; } }
