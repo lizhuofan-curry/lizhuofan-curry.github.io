@@ -92,7 +92,7 @@ export function PixelCourt() {
     timerRef.current = window.setTimeout(() => setShooting(false), 1180);
   };
 
-  const updatePlayerPosition = (clientX, clientY) => {
+  const updatePlayerPosition = (clientX, clientY, grabOffset = { x: 0, y: 0 }) => {
     const stage = stageRef.current;
     const surface = surfaceRef.current;
     const player = playerRef.current;
@@ -102,8 +102,8 @@ export function PixelCourt() {
     const surfaceRect = surface.getBoundingClientRect();
     const halfWidth = Math.min(player.offsetWidth * 0.4, surfaceRect.width * 0.12);
     const halfHeight = Math.min(player.offsetHeight * 0.42, surfaceRect.height * 0.17);
-    const x = Math.min(surfaceRect.right - halfWidth, Math.max(surfaceRect.left + halfWidth, clientX));
-    const y = Math.min(surfaceRect.bottom - halfHeight, Math.max(surfaceRect.top + halfHeight, clientY));
+    const x = Math.min(surfaceRect.right - halfWidth, Math.max(surfaceRect.left + halfWidth, clientX - grabOffset.x));
+    const y = Math.min(surfaceRect.bottom - halfHeight, Math.max(surfaceRect.top + halfHeight, clientY - grabOffset.y));
     const position = {
       x: ((x - stageRect.left) / stageRect.width) * 100,
       y: ((y - stageRect.top) / stageRect.height) * 100,
@@ -118,8 +118,18 @@ export function PixelCourt() {
   const handlePlayerPointerDown = (event) => {
     if (shooting || event.button > 0) return;
     event.preventDefault();
+    const rect = event.currentTarget.getBoundingClientRect();
     event.currentTarget.setPointerCapture?.(event.pointerId);
-    dragRef.current = { pointerId: event.pointerId, clientX: event.clientX, clientY: event.clientY, moved: false };
+    dragRef.current = {
+      pointerId: event.pointerId,
+      clientX: event.clientX,
+      clientY: event.clientY,
+      grabOffset: {
+        x: event.clientX - (rect.left + rect.width / 2),
+        y: event.clientY - (rect.top + rect.height / 2),
+      },
+      moved: false,
+    };
   };
 
   const handlePlayerPointerMove = (event) => {
@@ -129,7 +139,7 @@ export function PixelCourt() {
       event.preventDefault();
       drag.moved = true;
       setDragging(true);
-      updatePlayerPosition(event.clientX, event.clientY);
+      updatePlayerPosition(event.clientX, event.clientY, drag.grabOffset);
     }
   };
 
