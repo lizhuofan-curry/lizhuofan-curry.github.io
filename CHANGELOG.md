@@ -26,3 +26,4 @@
 - **fix**：删除投篮场比分 localStorage 持久化（刷新即重置为 0:0）；蓝色油漆区（`.pixel-court-stage::after`）右缘对齐三分线、桌面与手机端均收进三分线内不再超出。涉及 `PixelCourt.jsx`、`globals.css`。
 - **fix**：回退三分线/篮架的 `courtScale` 缩放（恢复原固定几何，避免手机端三分线弧线探出球场 surface）；蓝色油漆区进一步缩小并收进三分线内。涉及 `PixelCourt.jsx`、`globals.css`。
 - **fix**：三分线弧线放大（sideX/topY/baselineY 向外扩）、蓝色油漆区等比例放大并对称居中于弧线内（桌面+手机）、记分牌缩小、像素小人放大。涉及 `PixelCourt.jsx`、`globals.css`。
+- **fix**：桌面端蓝色油漆区贴到球场右边缘（底线），并加大尺寸以匹配弧线比例。涉及 `globals.css`。
