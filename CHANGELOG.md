@@ -24,3 +24,4 @@
 - **fix**：投篮场——记分板精简（去掉标题/最高连中/常驻多枚勋章）、连击勋章改为只显示最高档且动态弹出约 2 秒后消失（尊重 `prefers-reduced-motion`）、移除「拖动站位·点击投篮」提示；蓝色油漆区（`.pixel-court-stage::after`）手机端等比缩小；记分板 `pointer-events: none` 不再挡住球员拖动。涉及 `PixelCourt.jsx`、`globals.css`。
 - **fix**：证据徽章文案「证据 ×N」改为「可核验证据 ×N」并加 tooltip 说明用途；文章详情证据区补一句解释——解决「证据」含义不明的问题。涉及 `FilterableGrid.jsx`、`articles/[slug]/page.jsx`、`globals.css`。
 - **fix**：删除投篮场比分 localStorage 持久化（刷新即重置为 0:0）；蓝色油漆区（`.pixel-court-stage::after`）右缘对齐三分线、桌面与手机端均收进三分线内不再超出。涉及 `PixelCourt.jsx`、`globals.css`。
+- **fix**：回退三分线/篮架的 `courtScale` 缩放（恢复原固定几何，避免手机端三分线弧线探出球场 surface）；蓝色油漆区进一步缩小并收进三分线内。涉及 `PixelCourt.jsx`、`globals.css`。

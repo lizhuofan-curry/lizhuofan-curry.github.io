@@ -5,35 +5,29 @@ import { useEffect, useRef, useState } from "react";
 
 const STREAK_ACHIEVEMENTS = [3, 5, 8];
 
-function courtScale(width) {
-  return Math.min(1.1, Math.max(0.62, width / 500));
-}
-
 function CourtHoop({ court }) {
   const { width, height } = court;
-  const s = courtScale(width);
-  const rimX = width - 84 * s;
+  const rimX = width - 84;
   const rimY = Math.min(115, height * 0.28);
-  const boardX = rimX - 34 * s;
+  const boardX = width - 117;
   return <svg className="court-hoop-overlay" viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="none" aria-hidden="true">
-    <path d={`M ${rimX + 9 * s} ${rimY - 79 * s} H ${rimX + 36 * s} L ${rimX + 14 * s} ${rimY - 53 * s}`} fill="none" stroke="#183f88" strokeWidth={8 * s} />
-    <rect x={boardX} y={rimY - 57 * s} width={76 * s} height={52 * s} fill="#dff3ff" stroke="#f7fbff" strokeWidth={5 * s} />
-    <rect x={boardX + 22 * s} y={rimY - 41 * s} width={34 * s} height={23 * s} fill="none" stroke="#183f88" strokeWidth={3 * s} />
-    <ellipse cx={rimX} cy={rimY} rx={27 * s} ry={8 * s} fill="rgba(247,251,255,.18)" stroke="#ea7029" strokeWidth={4 * s} />
-    <g className="court-svg-net" style={{ transformOrigin: `${rimX}px ${rimY}px` }} fill="none" stroke="rgba(247,251,255,.96)" strokeWidth={3 * s}>
-      <path d={`M ${rimX - 24 * s} ${rimY + 5 * s} L ${rimX - 17 * s} ${rimY + 36 * s} H ${rimX + 17 * s} L ${rimX + 24 * s} ${rimY + 5 * s}`} />
-      <path d={`M ${rimX - 19 * s} ${rimY + 7 * s} L ${rimX - 9 * s} ${rimY + 35 * s} M ${rimX - 10 * s} ${rimY + 6 * s} L ${rimX} ${rimY + 36 * s} M ${rimX} ${rimY + 6 * s} L ${rimX + 10 * s} ${rimY + 35 * s} M ${rimX + 10 * s} ${rimY + 7 * s} L ${rimX} ${rimY + 36 * s} M ${rimX + 19 * s} ${rimY + 7 * s} L ${rimX + 9 * s} ${rimY + 35 * s}`} />
+    <path d={`M ${rimX + 9} ${rimY - 79} H ${rimX + 36} L ${rimX + 14} ${rimY - 53}`} fill="none" stroke="#183f88" strokeWidth="8" />
+    <rect x={boardX} y={rimY - 57} width="76" height="52" fill="#dff3ff" stroke="#f7fbff" strokeWidth="5" />
+    <rect x={boardX + 22} y={rimY - 41} width="34" height="23" fill="none" stroke="#183f88" strokeWidth="3" />
+    <ellipse cx={rimX} cy={rimY} rx="27" ry="8" fill="rgba(247,251,255,.18)" stroke="#ea7029" strokeWidth="4" />
+    <g className="court-svg-net" style={{ transformOrigin: `${rimX}px ${rimY}px` }} fill="none" stroke="rgba(247,251,255,.96)" strokeWidth="3">
+      <path d={`M ${rimX - 24} ${rimY + 5} L ${rimX - 17} ${rimY + 36} H ${rimX + 17} L ${rimX + 24} ${rimY + 5}`} />
+      <path d={`M ${rimX - 19} ${rimY + 7} L ${rimX - 9} ${rimY + 35} M ${rimX - 10} ${rimY + 6} L ${rimX} ${rimY + 36} M ${rimX} ${rimY + 6} L ${rimX + 10} ${rimY + 35} M ${rimX + 10} ${rimY + 7} L ${rimX} ${rimY + 36} M ${rimX + 19} ${rimY + 7} L ${rimX + 9} ${rimY + 35}`} />
     </g>
   </svg>;
 }
 
 function ThreePointLine({ court }) {
   const { width, height } = court;
-  const s = courtScale(width);
   const rimY = Math.min(115, height * 0.28);
-  const sideX = width - 42 * s;
-  const topY = Math.max(52 * s, rimY - 34 * s);
-  const baselineY = height - 78 * s;
+  const sideX = width - 42;
+  const topY = Math.max(52, rimY - 34);
+  const baselineY = height - 78;
   const radius = (baselineY - topY) / 2;
   return <svg className="court-three-overlay" viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="none" aria-hidden="true">
     <path d={`M ${sideX} ${topY} A ${radius} ${radius} 0 0 0 ${sideX} ${baselineY}`} />
@@ -42,15 +36,14 @@ function ThreePointLine({ court }) {
 
 function ShotOverlay({ made, shotKey, court, playerPosition }) {
   const { width, height } = court;
-  const s = courtScale(width);
-  const rimX = width - 84 * s;
+  const rimX = width - 84;
   const rimY = Math.min(115, height * 0.28);
   const playerX = width * (playerPosition.x / 100) + Math.min(32, width * 0.065);
   const playerY = height * (playerPosition.y / 100) - Math.min(28, height * 0.07);
   const peakY = Math.max(28, rimY - Math.min(200, height * 0.42));
   const path = made
-    ? `M ${playerX} ${playerY} Q ${(playerX + rimX) / 2} ${peakY} ${rimX} ${rimY} L ${rimX} ${rimY + 36 * s}`
-    : `M ${playerX} ${playerY} Q ${(playerX + rimX) / 2} ${peakY} ${rimX + 7 * s} ${rimY + 2 * s} Q ${rimX + 42 * s} ${rimY + 32 * s} ${rimX + 52 * s} ${rimY + 76 * s}`;
+    ? `M ${playerX} ${playerY} Q ${(playerX + rimX) / 2} ${peakY} ${rimX} ${rimY} L ${rimX} ${rimY + 36}`
+    : `M ${playerX} ${playerY} Q ${(playerX + rimX) / 2} ${peakY} ${rimX + 7} ${rimY + 2} Q ${rimX + 42} ${rimY + 32} ${rimX + 52} ${rimY + 76}`;
   return <svg className="court-shot-overlay" viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="none" aria-hidden="true">
     <g key={shotKey}>
       <circle cx="0" cy="0" r="11" fill="#f47a20" stroke="#8e3b18" strokeWidth="3" />
