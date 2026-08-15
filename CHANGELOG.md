@@ -14,4 +14,4 @@
 - **feat**：新增 GitHub Actions 工作流 `.github/workflows/validate.yml`，在 push/PR 时运行 `node scripts/validate-content.mjs` 做内容一致性校验。
 - **feat**：投篮练习场（`PixelCourt`）比分持久化到 `localStorage`（键 `pixel-court-score`），刷新后保留命中/出手数；无效记录静默忽略。涉及 `app/_components/PixelCourt.jsx`。
 - **feat**：全局搜索彻底统一到 DB 优先来源——`/api/search` 空查询返回最近 6 项，`SiteHeader` 搜索面板打开即拉取最近内容、优先用远端结果（静态 `searchItems` 仅作即时兜底）。涉及 `app/api/search/route.js`、`app/_components/SiteHeader.jsx`。
-- **feat**：工程化收尾——新增 ESLint flat config（`eslint.config.mjs`，Next 16 core-web-vitals + eslint-config-prettier）、Prettier 配置（`.prettierrc.json` / `.prettierignore`），并在 `package.json` 加 `lint` / `format` 脚本与相应 devDependencies（需 `npm install` 生效）。涉及 `eslint.config.mjs`、`.prettierrc.json`、`.prettierignore`、`package.json`。
+- **feat**：工程化收尾——新增 ESLint flat config（`eslint.config.mjs`，Next 16 core-web-vitals，将 `react-hooks/set-state-in-effect` 与 `react-hooks/refs` 两条激进规则降级为警告）、Prettier 配置（`.prettierrc.json` / `.prettierignore`），并在 `package.json` 加 `lint` / `format` 脚本与 devDependencies（eslint、eslint-config-next、prettier）。涉及 `eslint.config.mjs`、`.prettierrc.json`、`.prettierignore`、`package.json`、`package-lock.json`。
