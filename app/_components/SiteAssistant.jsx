@@ -68,6 +68,7 @@ export function SiteAssistant() {
   };
 
   const handlePointerDown = (event) => {
+    if (event.button > 0) return;
     const rect = event.currentTarget.getBoundingClientRect();
     dragRef.current = { pointerId: event.pointerId, startX: event.clientX, startY: event.clientY, offsetX: event.clientX - rect.left, offsetY: event.clientY - rect.top, moved: false };
     event.currentTarget.setPointerCapture?.(event.pointerId);
@@ -86,12 +87,16 @@ export function SiteAssistant() {
     const drag = dragRef.current;
     if (!drag || drag.pointerId !== event.pointerId) return;
     dragRef.current = null;
+    event.currentTarget.releasePointerCapture?.(event.pointerId);
     if (!drag.moved) {
       setOpen(true);
     }
   };
 
-  const handlePointerCancel = () => { dragRef.current = null; };
+  const handlePointerCancel = (event) => {
+    dragRef.current = null;
+    event.currentTarget.releasePointerCapture?.(event.pointerId);
+  };
 
   const resetPosition = () => {
     setPosition(null);
@@ -123,8 +128,8 @@ export function SiteAssistant() {
   };
 
   return <aside className="site-assistant" style={position ? { left: position.x, top: position.y, right: "auto", bottom: "auto" } : undefined} aria-label="哆啦A梦导览员">
-    <button ref={triggerRef} className={`assistant-pet${open ? " is-open" : ""}`} type="button" onPointerDown={handlePointerDown} onPointerMove={handlePointerMove} onPointerUp={handlePointerEnd} onPointerCancel={handlePointerCancel} aria-label="拖动或打开哆啦A梦导览员" aria-expanded={open}>
-      <Image src="/doraemon-pixel-guide.png" alt="" fill sizes="(max-width: 680px) 104px, 132px" priority />
+    <button ref={triggerRef} className={`assistant-pet${open ? " is-open" : ""}`} type="button" onPointerDown={handlePointerDown} onPointerMove={handlePointerMove} onPointerUp={handlePointerEnd} onPointerCancel={handlePointerCancel} onDragStart={(event) => event.preventDefault()} aria-label="拖动或打开哆啦A梦导览员" aria-expanded={open}>
+      <Image src="/doraemon-pixel-guide.png" alt="" fill sizes="(max-width: 680px) 104px, 132px" priority draggable={false} />
       <span className="assistant-shadow" aria-hidden="true" />
     </button>
     {open && <section className="assistant-panel" role="dialog" aria-modal="false" aria-label="哆啦A梦导览">

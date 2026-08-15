@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { OnlinePresence } from "./OnlinePresence";
 
 function CourtHoop({ court }) {
   const { width, height } = court;
@@ -28,18 +27,17 @@ function ThreePointLine({ court }) {
   const topY = Math.max(52, rimY - 34);
   const baselineY = height - 78;
   const radius = (baselineY - topY) / 2;
-
   return <svg className="court-three-overlay" viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="none" aria-hidden="true">
     <path d={`M ${sideX} ${topY} A ${radius} ${radius} 0 0 0 ${sideX} ${baselineY}`} />
   </svg>;
 }
 
-function ShotOverlay({ made, shotKey, court }) {
+function ShotOverlay({ made, shotKey, court, playerPosition }) {
   const { width, height } = court;
   const rimX = width - 84;
   const rimY = Math.min(115, height * 0.28);
-  const playerX = width * 0.1 + 96;
-  const playerY = height - 124;
+  const playerX = width * (playerPosition.x / 100) + 24;
+  const playerY = height * (playerPosition.y / 100) - 30;
   const peakY = Math.max(28, rimY - Math.min(200, height * 0.42));
   const path = made
     ? `M ${playerX} ${playerY} Q ${(playerX + rimX) / 2} ${peakY} ${rimX} ${rimY} L ${rimX} ${rimY + 36}`
@@ -56,10 +54,14 @@ function ShotOverlay({ made, shotKey, court }) {
 
 export function PixelCourt() {
   const stageRef = useRef(null);
+  const dragRef = useRef(null);
+  const suppressClickRef = useRef(false);
   const [shooting, setShooting] = useState(false);
   const [result, setResult] = useState("ready");
   const [score, setScore] = useState({ made: 0, attempts: 0 });
   const [court, setCourt] = useState({ width: 500, height: 420 });
+  const [playerPosition, setPlayerPosition] = useState({ x: 25, y: 76 });
+  const [dragging, setDragging] = useState(false);
   const timerRef = useRef(null);
 
   useEffect(() => {
@@ -73,6 +75,8 @@ export function PixelCourt() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => () => window.clearTimeout(timerRef.current), []);
+
   const shoot = () => {
     if (shooting) return;
     const made = Math.random() < 0.69;
@@ -83,11 +87,60 @@ export function PixelCourt() {
     timerRef.current = window.setTimeout(() => setShooting(false), 1180);
   };
 
+  const updatePlayerPosition = (clientX, clientY, start) => {
+    const stage = stageRef.current;
+    if (!stage) return;
+    const rect = stage.getBoundingClientRect();
+    const x = start.x + ((clientX - start.clientX) / rect.width) * 100;
+    const y = start.y + ((clientY - start.clientY) / rect.height) * 100;
+    setPlayerPosition({ x: Math.min(71, Math.max(14, x)), y: Math.min(80, Math.max(47, y)) });
+  };
+
+  const handlePlayerPointerDown = (event) => {
+    if (shooting) return;
+    event.currentTarget.setPointerCapture(event.pointerId);
+    dragRef.current = { pointerId: event.pointerId, clientX: event.clientX, clientY: event.clientY, x: playerPosition.x, y: playerPosition.y, moved: false };
+  };
+
+  const handlePlayerPointerMove = (event) => {
+    const drag = dragRef.current;
+    if (!drag || drag.pointerId !== event.pointerId) return;
+    if (Math.hypot(event.clientX - drag.clientX, event.clientY - drag.clientY) > 8) {
+      drag.moved = true;
+      setDragging(true);
+      updatePlayerPosition(event.clientX, event.clientY, drag);
+    }
+  };
+
+  const handlePlayerPointerEnd = (event) => {
+    const drag = dragRef.current;
+    if (!drag || drag.pointerId !== event.pointerId) return;
+    dragRef.current = null;
+    setDragging(false);
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
+    suppressClickRef.current = true;
+    if (!drag.moved) shoot();
+    window.setTimeout(() => { suppressClickRef.current = false; }, 0);
+  };
+
+  const handlePlayerClick = () => {
+    if (suppressClickRef.current) {
+      suppressClickRef.current = false;
+      return;
+    }
+    shoot();
+  };
+
+  const cancelDrag = () => {
+    dragRef.current = null;
+    setDragging(false);
+  };
+
   const status = result === "score" ? "命中！" : result === "miss" ? "差一点" : "准备投篮";
 
   return <div ref={stageRef} className={`pixel-court-stage ${shooting ? "is-shooting" : ""} ${shooting ? `is-${result}` : ""}`} aria-label="像素投篮练习场">
     <span className="court-surface" aria-hidden="true" />
-    <div className="court-label"><span>SHOOTING LAB</span><b>点击角色投篮</b></div>
+    <div className="court-label"><span>SHOOTING LAB</span><b>拖动站位 · 点击投篮</b></div>
     <ThreePointLine court={court} />
     <div className="court-score" aria-live="polite">
       <div className="court-score-lights" aria-hidden="true"><i /><i /><i /></div>
@@ -96,8 +149,8 @@ export function PixelCourt() {
       <span>{status}</span>
     </div>
     <CourtHoop court={court} />
-    {shooting ? <ShotOverlay made={result === "score"} shotKey={score.attempts} court={court} /> : null}
-    <button type="button" className="court-player" onClick={shoot} aria-label="让 Zhuo 投篮" title="点击投篮">
+    {shooting ? <ShotOverlay made={result === "score"} shotKey={score.attempts} court={court} playerPosition={playerPosition} /> : null}
+    <button type="button" className={`court-player${dragging ? " is-dragging" : ""}`} style={{ "--player-x": playerPosition.x, "--player-y": playerPosition.y }} onPointerDown={handlePlayerPointerDown} onPointerMove={handlePlayerPointerMove} onPointerUp={handlePlayerPointerEnd} onPointerCancel={cancelDrag} onClick={handlePlayerClick} aria-label="拖动 Zhuo 调整投篮站位，点击投篮" title="拖动调整站位，点击投篮">
       <Image src="/zhuo-pixel-player.png" alt="" width={512} height={512} priority />
     </button>
     <span className="court-floor" aria-hidden="true" />
