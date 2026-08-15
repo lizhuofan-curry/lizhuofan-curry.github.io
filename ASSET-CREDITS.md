@@ -1,5 +1,12 @@
 # Asset credits
 
+## Spiderman pixel sprite
+
+- File: `public/spiderman-pixel-sprite.png`.
+- Source: supplied directly by the site owner; public-use authorization confirmed on 2026-08-14.
+- Creator and upstream URL: not recorded (owner-supplied asset).
+- Modification: not recorded.
+
 ## Doraemon pixel guide
 
 - File: `public/doraemon-pixel-guide.png`.

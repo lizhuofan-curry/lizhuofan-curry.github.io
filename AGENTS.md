@@ -57,7 +57,7 @@
 - `app/_components/SiteHeader.jsx`：导航、可访问全局搜索对话框与像素档案状态栏。
 - `app/_components/FilterableGrid.jsx`：文章/项目搜索、标签与 URL 状态。
 - `app/_components/PersonalPath.jsx`：首页兴趣信号与可分享的个性化路线。
-- `app/_components/SiteAssistant.jsx`、`app/api/assistant/route.js`、`lib/assistant.js`：可拖动哆啦A梦导览、受保护的服务端模型边界、匿名会话限制与审核上下文。
+- `app/_components/SiteAssistant.jsx`、`app/_data/assistant-profile.js`、`app/api/assistant/route.js`、`lib/assistant.js`：可拖动哆啦A梦导览及其导览资料、受保护的服务端模型边界、匿名会话限制与审核上下文。
 - `app/articles/_content/*.mdx`：文章正文。
 - `app/sitemap.js` 与 `app/robots.js`：仅供公开内容的发现元数据。
 - `lib/auth.js`、`lib/email.js`、`lib/db.js`、`lib/media-storage.js`：可替换的认证、邮件、数据库与存储服务端边界。
@@ -78,6 +78,8 @@
 - `category`
 - `readingTime`
 - `keywords`
+- `evidence`（可核验的证据链接数组）
+- `toc`（由 `lib/headings.js` 的 `headingId` 生成的目录数组）
 
 每篇新文章都必须在 `app/articles/_content/` 中有 MDX 文件，并在 `articleModules` 中有对应条目。slug、注册表键、文件名、链接、元数据、搜索索引与静态参数必须一致。
 
@@ -89,6 +91,8 @@
 - `accent`、`signal`、`question`、`role`、`highlights`
 
 只能加入可由链接仓库或用户明确来源核验的主张。证据不足时，应使用简洁项目卡，而不是编造详细案例。
+
+`app/_data/site-data.js` 还导出 `notes`（首页学习笔记卡片），使用 `number`、`title`、`tag`、`lead`、`points` 字段。
 
 ## 搜索与 URL 状态规则
 
