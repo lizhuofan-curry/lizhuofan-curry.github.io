@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import { articles } from "../_data/articles";
+import { projects } from "../_data/site-data";
 
 const signals = [
   { id: "product", label: "AI 产品" },
@@ -12,16 +14,31 @@ const signals = [
   { id: "evidence", label: "实验与证据" },
 ];
 
-const stops = [
-  { type: "文章", title: "把 Traceback 读成下一步", description: "先学会把失败缩小成一个可以继续行动的问题。", href: "/articles/read-traceback", signals: ["debug", "evidence"] },
-  { type: "项目", title: "问渠 Wenqu", description: "看 AI 阅读如何回到原文，并留下学习过程的证据。", href: "/projects/wenqu", signals: ["product", "llm", "evidence"] },
-  { type: "项目", title: "智图寻宝 · Shop Vision", description: "从模型能力走到一次完整、可操作的视觉产品流程。", href: "/projects/shop-vision", signals: ["product", "vision"] },
-  { type: "文章", title: "Inception：分支为什么能汇合", description: "从 torch.cat 理解多尺度分支与通道变化。", href: "/articles/inception-branches", signals: ["vision", "structure"] },
-  { type: "文章", title: "ResNet：identity 留下了什么", description: "顺着残差路径理解信息如何穿过更深的网络。", href: "/articles/resnet-identity", signals: ["vision", "structure"] },
-  { type: "项目", title: "CNN × Inception × ResNet", description: "在统一实验流程里对照三种经典视觉网络。", href: "/projects/cnn-architectures", signals: ["vision", "structure", "evidence"] },
-  { type: "文章", title: "验证集不是测试集", description: "把模型选择、训练曲线和最终结论的边界分清楚。", href: "/articles/validation-is-not-test", signals: ["evidence", "debug"] },
-  { type: "项目", title: "LLM FullStack Journey", description: "沿着 Provider、测试、RAG 与 Agent 走向可靠软件。", href: "/projects/llm-fullstack", signals: ["llm", "product", "debug"] },
+const stopSeeds = [
+  { slug: "read-traceback", type: "文章", description: "先学会把失败缩小成一个可以继续行动的问题。", signals: ["debug", "evidence"] },
+  { slug: "wenqu", type: "项目", description: "看 AI 阅读如何回到原文，并留下学习过程的证据。", signals: ["product", "llm", "evidence"] },
+  { slug: "shop-vision", type: "项目", description: "从模型能力走到一次完整、可操作的视觉产品流程。", signals: ["product", "vision"] },
+  { slug: "inception-branches", type: "文章", description: "从 torch.cat 理解多尺度分支与通道变化。", signals: ["vision", "structure"] },
+  { slug: "resnet-identity", type: "文章", description: "顺着残差路径理解信息如何穿过更深的网络。", signals: ["vision", "structure"] },
+  { slug: "cnn-architectures", type: "项目", description: "在统一实验流程里对照三种经典视觉网络。", signals: ["vision", "structure", "evidence"] },
+  { slug: "validation-is-not-test", type: "文章", description: "把模型选择、训练曲线和最终结论的边界分清楚。", signals: ["evidence", "debug"] },
+  { slug: "llm-fullstack", type: "项目", description: "沿着 Provider、测试、RAG 与 Agent 走向可靠软件。", signals: ["llm", "product", "debug"] },
 ];
+
+const articleBySlug = new Map(articles.map((article) => [article.slug, article]));
+const projectBySlug = new Map(projects.map((project) => [project.slug, project]));
+
+const stops = stopSeeds.map((seed) => {
+  const isArticle = seed.type === "文章";
+  const source = (isArticle ? articleBySlug : projectBySlug).get(seed.slug);
+  return {
+    type: seed.type,
+    title: source?.title ?? seed.slug,
+    description: seed.description,
+    href: `/${isArticle ? "articles" : "projects"}/${seed.slug}`,
+    signals: seed.signals,
+  };
+});
 
 const defaultRoute = ["read-traceback", "cnn-architectures", "wenqu"];
 
