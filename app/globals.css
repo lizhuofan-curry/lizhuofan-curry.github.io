@@ -471,7 +471,7 @@ h1, h2, h3 { letter-spacing: -.035em; }
   .project-tile:hover { box-shadow: 8px 8px 0 var(--court); }.nav-links a:hover { color: #f7fbff; background: var(--accent); transform: translateY(-2px); }.about-values article:hover { transform: translateY(-6px) rotate(-1deg); }
   .article-list > a:hover { transform: translateX(4px); }
 }
-.primary-button:active, .secondary-button:active, button:active { transform: scale(.97); }
+.primary-button:active, .secondary-button:active, button:active:not(.court-player) { transform: scale(.97); }
 
 @media (max-width: 900px) {
   .site-nav { grid-template-columns: auto 1fr auto; }
