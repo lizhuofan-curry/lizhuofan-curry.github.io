@@ -77,6 +77,8 @@ export function PixelCourt() {
   const [dragging, setDragging] = useState(false);
   const timerRef = useRef(null);
   const currentStreakRef = useRef(0);
+  const [streakBadge, setStreakBadge] = useState(null);
+  const badgeTimerRef = useRef(null);
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -89,7 +91,7 @@ export function PixelCourt() {
     return () => observer.disconnect();
   }, []);
 
-  useEffect(() => () => window.clearTimeout(timerRef.current), []);
+  useEffect(() => () => { window.clearTimeout(timerRef.current); window.clearTimeout(badgeTimerRef.current); }, []);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -118,6 +120,11 @@ export function PixelCourt() {
     const made = Math.random() < 0.69;
     const nextStreak = made ? currentStreakRef.current + 1 : 0;
     currentStreakRef.current = nextStreak;
+    if (made && STREAK_ACHIEVEMENTS.includes(nextStreak)) {
+      setStreakBadge({ level: nextStreak, key: Date.now() });
+      window.clearTimeout(badgeTimerRef.current);
+      badgeTimerRef.current = window.setTimeout(() => setStreakBadge(null), 2300);
+    }
     setResult(made ? "score" : "miss");
     setScore((current) => ({
       made: current.made + (made ? 1 : 0),
@@ -212,25 +219,15 @@ export function PixelCourt() {
 
   return <div ref={stageRef} className={`pixel-court-stage ${shooting ? "is-shooting" : ""} ${shooting ? `is-${result}` : ""}`} aria-label="像素投篮练习场">
     <span ref={surfaceRef} className="court-surface" aria-hidden="true" />
-    <div className="court-label"><span>SHOOTING LAB</span><b>拖动站位 · 点击投篮</b></div>
+    <div className="court-label"><span>SHOOTING LAB</span></div>
     <ThreePointLine court={court} />
     <div className="court-score" aria-live="polite">
       <div className="court-score-lights" aria-hidden="true"><i /><i /><i /></div>
-      <small>投篮记分牌</small>
       <strong><b>{score.made}</b><em>/</em><b>{score.attempts}</b></strong>
       <span>{status}</span>
-      <div className="court-stats">
-        <span className="court-hitrate">命中率 {hitRate}%</span>
-        <span className="court-streak">最高连中 ×{score.bestStreak}</span>
-      </div>
-      {STREAK_ACHIEVEMENTS.some((n) => score.bestStreak >= n) ? (
-        <div className="court-achievements">
-          {STREAK_ACHIEVEMENTS.filter((n) => score.bestStreak >= n).map((n) => (
-            <span key={n} className="court-badge">连中 ×{n}</span>
-          ))}
-        </div>
-      ) : null}
+      <span className="court-hitrate">命中率 {hitRate}%</span>
     </div>
+    {streakBadge && <div className="court-badge-pop" key={streakBadge.key}>连中 ×{streakBadge.level}</div>}
     <CourtHoop court={court} />
     {shooting ? <ShotOverlay made={result === "score"} shotKey={score.attempts} court={court} playerPosition={shotPosition} /> : null}
     <button ref={playerRef} type="button" className={`court-player${dragging ? " is-dragging" : ""}`} style={{ "--player-x": playerPositionRef.current.x, "--player-y": playerPositionRef.current.y }} onPointerDown={handlePlayerPointerDown} onPointerMove={handlePlayerPointerMove} onPointerUp={handlePlayerPointerEnd} onPointerCancel={cancelDrag} onLostPointerCapture={cancelDrag} onClick={handlePlayerClick} onDragStart={(event) => event.preventDefault()} aria-label="拖动 Zhuo 调整投篮站位，点击投篮" title="拖动调整站位，点击投篮">

@@ -21,3 +21,4 @@
 - **feat**：跨类型相关推荐——新增 `RelatedLinks` 组件（按证据链接/共享标签/类别打分，文章↔项目互推），接入文章与项目详情页。涉及 `RelatedLinks.jsx`、`articles/[slug]/page.jsx`、`projects/[slug]/page.jsx`、`globals.css`。
 - **feat**：登录/注册 UI 优化——打开自动聚焦首个输入框、错误提示置顶且 `role="alert"`、注册密码实时提示（长度/一致性）、弱化「AUTH.EXE」装饰面板并在手机端隐藏。涉及 `AuthStation.jsx`、`globals.css`。
 - **fix**：投篮场篮架/三分线随球场宽度缩放（`courtScale`），并让篮板右缘与三分线对齐——修复手机端篮板伸出三分线、比例失调。涉及 `PixelCourt.jsx`。
+- **fix**：投篮场——记分板精简（去掉标题/最高连中/常驻多枚勋章）、连击勋章改为只显示最高档且动态弹出约 2 秒后消失（尊重 `prefers-reduced-motion`）、移除「拖动站位·点击投篮」提示；蓝色油漆区（`.pixel-court-stage::after`）手机端等比缩小；记分板 `pointer-events: none` 不再挡住球员拖动。涉及 `PixelCourt.jsx`、`globals.css`。
