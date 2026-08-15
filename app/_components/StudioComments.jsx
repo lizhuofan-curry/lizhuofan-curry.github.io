@@ -4,6 +4,10 @@ import Link from "next/link";
 import { Trash } from "@phosphor-icons/react";
 import { useState } from "react";
 
+function dateTimeLabel(value) {
+  return new Intl.DateTimeFormat("zh-CN", { timeZone: "Asia/Shanghai", dateStyle: "medium", timeStyle: "short", hour12: false }).format(new Date(value));
+}
+
 export function StudioComments({ initialComments = [] }) {
   const [comments, setComments] = useState(initialComments);
   const [pendingId, setPendingId] = useState(null);
@@ -29,5 +33,5 @@ export function StudioComments({ initialComments = [] }) {
     }
   }
 
-  return <main id="main-content" className="studio-page studio-comments-page"><header><p>评论管理</p><h1>阅读公开讨论，必要时及时移除不合适的内容。</h1></header>{status && <p className={`comment-message ${status.kind}`} role="status">{status.text}</p>}<div className="studio-comment-list">{comments.length ? comments.map((comment) => <article className={`studio-comment-item${comment.deletedAt ? " is-deleted" : ""}`} key={comment.id}><div className="studio-comment-meta"><div><strong>{comment.authorName}</strong><span>{comment.createdAt.slice(0, 10)}</span></div><Link href={`/articles/${comment.article.slug}`}>{comment.article.title || comment.article.slug}</Link></div><p>{comment.body}</p>{comment.deletedAt ? <small>已删除，不会在公开页面显示。</small> : <button className="danger-button" type="button" onClick={() => removeComment(comment.id)} disabled={pendingId === comment.id}>{pendingId === comment.id ? "正在删除…" : <><Trash size={17} />删除评论</>}</button>}</article>) : <section className="setup-notice"><h2>还没有评论</h2><p>公开文章收到评论后，会在这里统一显示。</p></section>}</div></main>;
+  return <main id="main-content" className="studio-page studio-comments-page"><header><p>评论管理</p><h1>阅读公开讨论，必要时及时移除不合适的内容。</h1></header>{status && <p className={`comment-message ${status.kind}`} role="status">{status.text}</p>}<div className="studio-comment-list">{comments.length ? comments.map((comment) => <article className={`studio-comment-item${comment.deletedAt ? " is-deleted" : ""}`} key={comment.id}><div className="studio-comment-meta"><div><strong>{comment.authorName}</strong><span>{dateTimeLabel(comment.createdAt)}</span></div><Link href={`/articles/${comment.article.slug}`}>{comment.article.title || comment.article.slug}</Link></div><p>{comment.body}</p>{comment.deletedAt ? <small>已删除，不会在公开页面显示。</small> : <button className="danger-button" type="button" onClick={() => removeComment(comment.id)} disabled={pendingId === comment.id}>{pendingId === comment.id ? "正在删除…" : <><Trash size={17} />删除评论</>}</button>}</article>) : <section className="setup-notice"><h2>还没有评论</h2><p>公开文章收到评论后，会在这里统一显示。</p></section>}</div></main>;
 }

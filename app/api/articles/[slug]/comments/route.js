@@ -7,7 +7,8 @@ import { commentInputSchema } from "../../../../../lib/validation";
 
 export async function GET(_request, { params }) {
   const { slug } = await params;
-  return NextResponse.json({ comments: await getPublicComments(slug) });
+  const viewer = await getCurrentViewer();
+  return NextResponse.json({ comments: await getPublicComments(slug, viewer.session?.user.id) });
 }
 
 export async function POST(request, { params }) {
