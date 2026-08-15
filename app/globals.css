@@ -692,6 +692,7 @@ h1, h2, h3 { letter-spacing: -.035em; }
 .article-evidence { margin: 26px 0; padding: 18px 20px; border: 3px dashed var(--line); background: var(--court-soft); }
 .article-evidence ul { margin: 10px 0 0; padding-left: 18px; }
 .article-evidence li { margin: 6px 0; }
+.article-evidence-note { margin: 0 0 12px; color: var(--muted); font-size: 13px; line-height: 1.55; }
 .article-evidence a { color: var(--accent-strong); text-decoration: underline; text-underline-offset: 3px; word-break: break-all; }
 
 /* Court scoreboard: hit-rate line + transient streak badge. */
