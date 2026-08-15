@@ -81,6 +81,27 @@ export function PixelCourt() {
 
   useEffect(() => () => window.clearTimeout(timerRef.current), []);
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      const saved = JSON.parse(window.localStorage.getItem("pixel-court-score"));
+      if (saved && Number.isInteger(saved.made) && saved.made >= 0 && Number.isInteger(saved.attempts) && saved.attempts >= 0) {
+        setScore({ made: saved.made, attempts: saved.attempts });
+      }
+    } catch {
+      // 忽略无效或不可读的本地记录
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      window.localStorage.setItem("pixel-court-score", JSON.stringify(score));
+    } catch {
+      // 忽略写入失败（如隐私模式）
+    }
+  }, [score]);
+
   const shoot = (position = playerPositionRef.current) => {
     if (shooting) return;
     const made = Math.random() < 0.69;

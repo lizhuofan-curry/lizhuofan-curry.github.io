@@ -12,3 +12,4 @@
 - **refactor**：`PersonalPath.jsx` 的路线标题与链接改为从 `articles.js`/`site-data.js` 注册表按 slug 派生，消除第二份硬编码副本的漂移风险（保留首页专用的短描述与兴趣信号）。涉及 `app/_components/PersonalPath.jsx`。
 - **fix/docs**：`globals.css` 为 `button:active:not(.court-player)` 补注释说明排除原因（防回归）；`articles.js` 补 `source` 字段注入约定说明；`ASSET-CREDITS.md` 为 doraemon 条目补许可说明。涉及 `app/globals.css`、`app/_data/articles.js`、`ASSET-CREDITS.md`。
 - **feat**：新增 GitHub Actions 工作流 `.github/workflows/validate.yml`，在 push/PR 时运行 `node scripts/validate-content.mjs` 做内容一致性校验。
+- **feat**：投篮练习场（`PixelCourt`）比分持久化到 `localStorage`（键 `pixel-court-score`），刷新后保留命中/出手数；无效记录静默忽略。涉及 `app/_components/PixelCourt.jsx`。
