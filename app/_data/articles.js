@@ -1,5 +1,6 @@
 import { headingId } from "../../lib/headings";
 
+// 说明：注册表条目本身不含 `source` 字段；渲染时由 lib/content.js 的回退路径注入 `source: "mdx"`。
 export const articles = [
   {
     slug: "read-traceback",

@@ -471,6 +471,7 @@ h1, h2, h3 { letter-spacing: -.035em; }
   .project-tile:hover { box-shadow: 8px 8px 0 var(--court); }.nav-links a:hover { color: #f7fbff; background: var(--accent); transform: translateY(-2px); }.about-values article:hover { transform: translateY(-6px) rotate(-1deg); }
   .article-list > a:hover { transform: translateX(4px); }
 }
+/* 按压反馈。.court-player 依赖 transform: translate(-50%,-50%) 居中，故在此排除，避免按下时覆盖其 transform 导致角色瞬移。 */
 .primary-button:active, .secondary-button:active, button:active:not(.court-player) { transform: scale(.97); }
 
 @media (max-width: 900px) {
