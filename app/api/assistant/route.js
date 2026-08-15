@@ -1,4 +1,4 @@
-import { askModel, assistantSessionId, checkLimits, fallbackReply, hashAssistantVisitor, isAssistantConfigured, saveMessage } from "../../../lib/assistant";
+import { askModel, assistantSessionId, checkLimits, fallbackReply, hashAssistantVisitor, isAssistantConfigured, pruneAssistantMessages, saveMessage } from "../../../lib/assistant";
 
 export const dynamic = "force-dynamic";
 export async function POST(request) {
@@ -12,6 +12,7 @@ export async function POST(request) {
     const visitorHash = hashAssistantVisitor(request.headers.get("x-forwarded-for")?.split(",")[0] || request.headers.get("x-real-ip") || "unknown");
     const limit = await checkLimits(sessionId, visitorHash);
     if (!limit.allowed) return Response.json({ ...fallbackReply(question), configured: true, limited: true, reason: limit.reason, sessionId }, { headers: { "Cache-Control": "no-store" } });
+    await pruneAssistantMessages();
     await saveMessage({ sessionId, visitorHash, role: "user", content: question });
     try {
       const result = await askModel(question, pagePath);

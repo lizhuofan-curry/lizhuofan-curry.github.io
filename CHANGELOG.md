@@ -4,6 +4,8 @@
 
 ## 2026-08-15
 
+- **fix**：补匿名助手消息 30 天保留期清理——新增 `pruneAssistantMessages()`（惰性删除 `created_at` 早于 30 天前的 `assistant_messages`），在 `/api/assistant` 每次成功写入前顺带执行，满足 AGENTS.md「匿名助手消息保留期不超过 30 天」要求。涉及 `lib/assistant.js`、`app/api/assistant/route.js`。
+
 - **fix**：修复篮球像素小人（`PixelCourt`）点击/拖动时瞬移。根因：全局 `button:active` 的 `scale(.97)` 覆盖了 `.court-player` 的居中 `transform: translate(-50%, -50%)`，按下瞬间居中位移丢失导致跳位。改为 `button:active:not(.court-player)`。涉及 `app/globals.css`（commit `ec6379c`）。
 - **docs**：同步 `AGENTS.md` 内容模型——补文章 `evidence`/`toc` 字段、`site-data.js` 的 `notes` 导出、`assistant-profile.js` 重要文件；`ASSET-CREDITS.md` 补 `spiderman-pixel-sprite.png` 署名。涉及 `AGENTS.md`、`ASSET-CREDITS.md`（commit `ad5a3df`）。
 - **fix**：`robots.js` 的 `disallow` 去掉 `/studio` 尾斜杠并补 4 个认证页路径；`README.md` 对外姓名统一为 `Zhuo`；`articles.js` 的 `headingId` import 移到文件顶部。涉及 `app/robots.js`、`README.md`、`app/_data/articles.js`。
