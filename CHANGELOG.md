@@ -4,6 +4,7 @@
 
 ## 2026-08-15
 
+- **feat/docs**：新增 `/roadmap` 学习路线页面，将算法基础、PyTorch/机器学习、AI 应用产品和作品集沉淀串成公开路线；导航与 sitemap 同步加入路线入口，并补充路线页样式。涉及 `app/roadmap/page.jsx`、`app/_data/site.js`、`app/sitemap.js`、`app/globals.css`。
 - **fix**：补匿名助手消息 30 天保留期清理——新增 `pruneAssistantMessages()`（惰性删除 `created_at` 早于 30 天前的 `assistant_messages`），在 `/api/assistant` 每次成功写入前顺带执行，满足 AGENTS.md「匿名助手消息保留期不超过 30 天」要求。涉及 `lib/assistant.js`、`app/api/assistant/route.js`。
 
 - **fix**：修复篮球像素小人（`PixelCourt`）点击/拖动时瞬移。根因：全局 `button:active` 的 `scale(.97)` 覆盖了 `.court-player` 的居中 `transform: translate(-50%, -50%)`，按下瞬间居中位移丢失导致跳位。改为 `button:active:not(.court-player)`。涉及 `app/globals.css`（commit `ec6379c`）。
