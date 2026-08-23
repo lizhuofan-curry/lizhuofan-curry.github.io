@@ -3,6 +3,7 @@ import { ArrowUpRight, BookOpenText, Code, GitBranch, Sparkle } from "@phosphor-
 import { getPublishedArticles } from "../lib/content";
 import { projects } from "./_data/site-data";
 import { PixelCourt } from "./_components/PixelCourt";
+import { PersonalPath } from "./_components/PersonalPath";
 
 export default async function Home() {
   const articles = await getPublishedArticles();
@@ -25,6 +26,7 @@ export default async function Home() {
       <header className="section-title"><div><p className="section-kicker">任务日志</p><h2>最近文章</h2><p>从一个具体问题出发，把过程和依据写清楚。</p></div><Link href="/articles">打开完整日志 <ArrowUpRight size={16} /></Link></header>
       <div className="article-list">{articles.slice(0, 4).map((article) => <Link href={`/articles/${article.slug}`} key={article.slug}><span className="article-list-marker" /><div><span>{article.category}</span><h3>{article.title}</h3><p>{article.description}</p></div><small>{article.readingTime}</small></Link>)}</div>
     </section>
+    <PersonalPath articles={articles} />
     <section className="home-signal-grid">
       <aside className="focus-card"><Code size={25} /><p className="section-kicker">本周练习</p><h2>继续把模型做成能解释、能维护的软件。</h2><dl><div><dt>模型</dt><dd>PyTorch、CNN、视觉任务</dd></div><div><dt>产品</dt><dd>React、FastAPI、数据库</dd></div><div><dt>方法</dt><dd>调试、证据、复盘</dd></div></dl></aside>
       <section className="selected-projects"><header className="section-title"><div><p className="section-kicker">已解锁项目</p><h2>项目地图</h2></div><Link href="/projects">查看全部 <ArrowUpRight size={16} /></Link></header><div className="project-mosaic">{projects.slice(0, 3).map((project, index) => { const Icon = icons[index]; return <Link className={`project-tile tile-${index + 1}`} href={`/projects/${project.slug}`} key={project.slug}><div className="project-icon"><Icon size={24} /></div><span>{project.category}</span><h3>{project.title}</h3><p>{project.summary}</p><strong>进入项目 <ArrowUpRight size={17} /></strong></Link>; })}</div></section>

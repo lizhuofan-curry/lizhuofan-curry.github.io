@@ -24,22 +24,22 @@ function SearchPanel({ open, onClose }) {
           .includes(normalized),
       )
     : searchItems.slice(0, 6);
-  const [remoteResults, setRemoteResults] = useState([]);
-  const results = remoteResults.length ? remoteResults : localResults;
+  const requestKey = `${open ? "open" : "closed"}:${normalized}`;
+  const [remoteResults, setRemoteResults] = useState({ key: "", items: [] });
+  const results = remoteResults.key === requestKey && remoteResults.items.length ? remoteResults.items : localResults;
 
   useEffect(() => {
     if (!open) return;
-    setRemoteResults([]);
     const controller = new AbortController();
     const q = normalized ? `?q=${encodeURIComponent(normalized)}` : "";
     const timeout = setTimeout(async () => {
       try {
         const response = await fetch(`/api/search${q}`, { signal: controller.signal });
-        if (response.ok) setRemoteResults((await response.json()).results || []);
-      } catch (error) { if (error.name !== "AbortError") setRemoteResults([]); }
+        if (response.ok) setRemoteResults({ key: requestKey, items: (await response.json()).results || [] });
+      } catch (error) { if (error.name !== "AbortError") setRemoteResults({ key: requestKey, items: [] }); }
     }, normalized ? 180 : 0);
     return () => { clearTimeout(timeout); controller.abort(); };
-  }, [normalized, open]);
+  }, [normalized, open, requestKey]);
 
   useEffect(() => {
     if (!open) return;

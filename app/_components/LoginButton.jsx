@@ -1,6 +1,7 @@
 "use client";
 
 import { GithubLogo } from "@phosphor-icons/react";
+import { useRouter } from "next/navigation";
 import { authClient } from "../../lib/auth-client";
 
 export function LoginButton({ callbackURL = "/account" }) {
@@ -8,5 +9,6 @@ export function LoginButton({ callbackURL = "/account" }) {
 }
 
 export function LogoutButton() {
-  return <button className="secondary-button" type="button" onClick={() => authClient.signOut({ fetchOptions: { onSuccess: () => location.assign("/") } })}>退出登录</button>;
+  const router = useRouter();
+  return <button className="secondary-button" type="button" onClick={() => authClient.signOut({ fetchOptions: { onSuccess: () => { router.push("/"); router.refresh(); } } })}>退出登录</button>;
 }

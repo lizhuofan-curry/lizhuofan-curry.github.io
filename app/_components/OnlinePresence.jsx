@@ -53,6 +53,7 @@ export function OnlinePresence({ compact = false }) {
   }, []);
 
   return <div className={`online-presence${compact ? " online-presence-compact" : ""}${onlineCount === null ? " is-loading" : ""}`} aria-live="polite" title="90 秒内有活动的匿名访问会话；不记录 IP 或身份信息。">
+    <span className="sr-only">{onlineCount === null ? "正在读取在线状态" : `当前 ${onlineCount} 个活跃会话`}</span>
     <span className="online-presence-ball" aria-hidden="true" />
     <span className="online-presence-copy" aria-hidden="true"><small>COURT LIVE</small><b>在线观测</b></span>
     <span className="online-presence-count" aria-hidden="true"><strong key={onlineCount ?? "loading"}>{onlineCount === null ? "…" : onlineCount}</strong><em>人在线</em></span>

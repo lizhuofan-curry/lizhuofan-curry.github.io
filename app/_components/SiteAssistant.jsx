@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const POSITION_KEY = "zhuo-web-guide-position";
 const SESSION_KEY = "zhuo-web-guide-session";
@@ -19,9 +19,11 @@ function cleanAnswer(value) {
 }
 
 function clampPosition(x, y) {
+  const width = window.innerWidth <= 680 ? 104 : PET_WIDTH;
+  const height = window.innerWidth <= 680 ? 124 : PET_HEIGHT;
   return {
-    x: Math.max(MARGIN, Math.min(x, window.innerWidth - PET_WIDTH - MARGIN)),
-    y: Math.max(MARGIN, Math.min(y, window.innerHeight - PET_HEIGHT - MARGIN)),
+    x: Math.max(MARGIN, Math.min(x, window.innerWidth - width - MARGIN)),
+    y: Math.max(MARGIN, Math.min(y, window.innerHeight - height - MARGIN)),
   };
 }
 
@@ -36,30 +38,45 @@ export function SiteAssistant() {
   const inputRef = useRef(null);
   const messagesRef = useRef(null);
 
+  const closePanel = useCallback(() => {
+    setOpen(false);
+    requestAnimationFrame(() => triggerRef.current?.focus());
+  }, []);
+
   useEffect(() => {
+    let frame;
     try {
       const saved = JSON.parse(localStorage.getItem(POSITION_KEY));
-      if (saved && Number.isFinite(saved.x) && Number.isFinite(saved.y)) setPosition(clampPosition(saved.x, saved.y));
+      if (saved && Number.isFinite(saved.x) && Number.isFinite(saved.y)) frame = requestAnimationFrame(() => setPosition(clampPosition(saved.x, saved.y)));
     } catch {}
+    return () => cancelAnimationFrame(frame);
   }, []);
 
   useEffect(() => {
     const onKeyDown = (event) => {
       if (event.key === "Escape" && open) {
-        setOpen(false);
-        requestAnimationFrame(() => triggerRef.current?.focus());
+        closePanel();
       }
     };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [open]);
+  }, [closePanel, open]);
+
+  useEffect(() => {
+    const keepInViewport = () => setPosition((current) => current ? clampPosition(current.x, current.y) : current);
+    window.addEventListener("resize", keepInViewport);
+    return () => window.removeEventListener("resize", keepInViewport);
+  }, []);
 
   useEffect(() => {
     if (open) requestAnimationFrame(() => inputRef.current?.focus());
   }, [open]);
 
   useEffect(() => {
-    if (open) messagesRef.current?.scrollTo({ top: messagesRef.current.scrollHeight, behavior: "smooth" });
+    if (open) messagesRef.current?.scrollTo({
+      top: messagesRef.current.scrollHeight,
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+    });
   }, [messages, loading, open]);
 
   const savePosition = (next) => {
@@ -133,7 +150,7 @@ export function SiteAssistant() {
       <span className="assistant-shadow" aria-hidden="true" />
     </button>
     {open && <section className="assistant-panel" role="dialog" aria-modal="false" aria-label="哆啦A梦导览">
-      <header><div><small>网站导览</small><strong>哆啦A梦</strong></div><button type="button" onClick={() => setOpen(false)} aria-label="关闭对话">×</button></header>
+      <header><div><small>网站导览</small><strong>哆啦A梦</strong></div><button type="button" onClick={closePanel} aria-label="关闭对话">×</button></header>
       <div className="assistant-messages" ref={messagesRef} aria-live="polite">{messages.map((message, index) => <article className={`assistant-message is-${message.role}`} key={`${message.role}-${index}`}><p>{message.content}</p>{message.links.length > 0 && <nav className="assistant-links" aria-label="相关页面">{message.links.map((link) => <a key={link.href} href={link.href}>{cleanAnswer(link.title || link.href)}</a>)}</nav>}</article>)}{loading && <article className="assistant-message is-assistant"><p>正在整理站内信息…</p></article>}</div>
       <form onSubmit={ask}><input ref={inputRef} value={text} onChange={(event) => setText(event.target.value)} placeholder="输入你的问题…" aria-label="问题" autoComplete="off" /><button disabled={loading || !text.trim()}>{loading ? "思考中…" : "发送"}</button></form>
       <footer><button type="button" onClick={resetPosition}>重置位置</button><span>按 Esc 关闭</span></footer>

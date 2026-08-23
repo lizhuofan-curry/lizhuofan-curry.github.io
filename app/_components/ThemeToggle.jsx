@@ -9,7 +9,8 @@ export function ThemeToggle() {
     const saved = localStorage.getItem("zhuo-theme");
     const next = saved || "light";
     document.documentElement.dataset.theme = next;
-    setTheme(next);
+    const frame = requestAnimationFrame(() => setTheme(next));
+    return () => cancelAnimationFrame(frame);
   }, []);
   function toggle() {
     const next = theme === "dark" ? "light" : "dark";

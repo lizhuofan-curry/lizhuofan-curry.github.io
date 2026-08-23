@@ -201,7 +201,7 @@ export function PixelCourt() {
     {streakBadge && <div className="court-badge-pop" key={streakBadge.key}>连中 ×{streakBadge.level}</div>}
     <CourtHoop court={court} />
     {shooting ? <ShotOverlay made={result === "score"} shotKey={score.attempts} court={court} playerPosition={shotPosition} /> : null}
-    <button ref={playerRef} type="button" className={`court-player${dragging ? " is-dragging" : ""}`} style={{ "--player-x": playerPositionRef.current.x, "--player-y": playerPositionRef.current.y }} onPointerDown={handlePlayerPointerDown} onPointerMove={handlePlayerPointerMove} onPointerUp={handlePlayerPointerEnd} onPointerCancel={cancelDrag} onLostPointerCapture={cancelDrag} onClick={handlePlayerClick} onDragStart={(event) => event.preventDefault()} aria-label="拖动 Zhuo 调整投篮站位，点击投篮" title="拖动调整站位，点击投篮">
+    <button ref={playerRef} type="button" className={`court-player${dragging ? " is-dragging" : ""}`} style={{ "--player-x": playerPosition.x, "--player-y": playerPosition.y }} onPointerDown={handlePlayerPointerDown} onPointerMove={handlePlayerPointerMove} onPointerUp={handlePlayerPointerEnd} onPointerCancel={cancelDrag} onLostPointerCapture={cancelDrag} onClick={handlePlayerClick} onDragStart={(event) => event.preventDefault()} aria-label="拖动 Zhuo 调整投篮站位，点击投篮" title="拖动调整站位，点击投篮">
       <Image src="/zhuo-pixel-player.png" alt="" width={512} height={512} priority draggable={false} />
     </button>
     <span className="court-floor" aria-hidden="true" />

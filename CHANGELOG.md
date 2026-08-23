@@ -2,6 +2,13 @@
 
 本站的 bug 修复与功能/创新改动记录。每次改动先在此登记（日期、内容、涉及文件与提交），再提交。
 
+## 2026-08-24
+
+- **fix/security**：后台认证改为 fail closed，认证未配置时不再继续渲染 Studio；登录回跳严格限制为同源站内 URL，拒绝反斜杠与控制字符绕过。涉及 `lib/session.js`、`app/_components/AuthStation.jsx`。
+- **fix/a11y**：修复手机端投篮场和导览助手的触摸滚动范围、深色主题强调按钮文字对比度、搜索输入焦点、在线状态读屏播报及筛选结果动态播报。涉及 `app/globals.css`、`app/_components/OnlinePresence.jsx`、`app/_components/FilterableGrid.jsx`。
+- **fix**：消除筛选器 URL 同步的级联状态更新与投篮场渲染时读取 ref，保持中文输入法、历史导航和拖动站位行为。涉及 `app/_components/FilterableGrid.jsx`、`app/_components/PixelCourt.jsx`。
+- **feat**：恢复首页“按兴趣探索路线”，直接使用当前已发布文章和项目生成可分享的三站路线，避免数据库内容与静态候选脱节；补桌面、手机和减少动态效果样式。涉及 `app/page.jsx`、`app/_components/PersonalPath.jsx`、`app/globals.css`。
+
 ## 2026-08-15
 
 - **feat/docs**：新增 `/roadmap` 学习路线页面，将算法基础、PyTorch/机器学习、AI 应用产品和作品集沉淀串成公开路线；导航与 sitemap 同步加入路线入口，并补充路线页样式。涉及 `app/roadmap/page.jsx`、`app/_data/site.js`、`app/sitemap.js`、`app/globals.css`。
