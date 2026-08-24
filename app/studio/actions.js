@@ -34,7 +34,7 @@ async function save(formData, publish) {
     }
     return id;
   });
-  revalidatePath("/"); revalidatePath("/articles"); revalidatePath(`/articles/${input.slug}`); revalidatePath("/sitemap.xml");
+  revalidatePath("/"); revalidatePath("/articles"); revalidatePath(`/articles/${input.slug}`); revalidatePath("/saved"); revalidatePath("/sitemap.xml");
   redirect(`/studio/articles/${articleId}?saved=${publish ? "published" : "draft"}`);
 }
 
@@ -56,6 +56,7 @@ export async function deleteArticle(formData) {
 
   revalidatePath("/");
   revalidatePath("/articles");
+  revalidatePath("/saved");
   revalidatePath("/studio");
   revalidatePath("/studio/articles");
   revalidatePath("/sitemap.xml");

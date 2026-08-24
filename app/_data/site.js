@@ -14,5 +14,6 @@ export const navigation = [
   { href: "/articles", label: "文章" },
   { href: "/projects", label: "项目" },
   { href: "/roadmap", label: "路线" },
+  { href: "/saved", label: "收藏" },
   { href: "/about", label: "关于" },
 ];

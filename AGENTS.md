@@ -40,6 +40,7 @@
 - `/articles/[slug]`
 - `/projects`
 - `/projects/[slug]`
+- `/saved`（个性化本机收藏，`noindex`）
 - `/about`
 - `/login`、`/register`、`/verify-email`、`/forgot-password`、`/reset-password`、`/account`、`/privacy`
 - `/studio` 与 `/studio/*` 仅限管理员，且必须 `noindex`。
@@ -57,6 +58,7 @@
 - `app/_components/SiteHeader.jsx`：导航、可访问全局搜索对话框与像素档案状态栏。
 - `app/_components/FilterableGrid.jsx`：文章/项目搜索、标签与 URL 状态。
 - `app/_components/PersonalPath.jsx`：首页兴趣信号与可分享的个性化路线。
+- `app/_components/SaveButton.jsx`、`app/_components/SavedItems.jsx`、`lib/saved-items.client.js`：仅保存在当前浏览器的文章/项目收藏、收藏页与跨标签页同步。
 - `app/_components/SiteAssistant.jsx`、`app/_data/assistant-profile.js`、`app/api/assistant/route.js`、`lib/assistant.js`：可拖动哆啦A梦导览及其导览资料、受保护的服务端模型边界、匿名会话限制与审核上下文。
 - `app/articles/_content/*.mdx`：文章正文。
 - `app/sitemap.js` 与 `app/robots.js`：仅供公开内容的发现元数据。

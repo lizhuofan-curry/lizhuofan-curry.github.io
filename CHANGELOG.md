@@ -4,6 +4,7 @@
 
 ## 2026-08-24
 
+- **feat**：新增浏览器本地“收藏”功能——文章与项目详情页可收藏/取消收藏，新增 `/saved` 个性化收藏页，支持跨标签页同步、空状态、失效条目提示、逐项移除、移除后焦点衔接与内联确认清空；收藏只保存类型、slug 和时间，不上传服务器。同步补主导航、页脚、手机端 3×2 导航、文章发布后刷新收藏目录、无障碍状态与项目文档。涉及 `lib/saved-items.client.js`、`app/_components/SaveButton.jsx`、`app/_components/SavedItems.jsx`、`app/saved/page.jsx`、文章/项目详情页、`SiteFooter.jsx`、`site.js`、`app/studio/actions.js`、`globals.css`、`AGENTS.md`。
 - **fix/security**：后台认证改为 fail closed，认证未配置时不再继续渲染 Studio；登录回跳严格限制为同源站内 URL，拒绝反斜杠与控制字符绕过。涉及 `lib/session.js`、`app/_components/AuthStation.jsx`。
 - **fix/a11y**：修复手机端投篮场和导览助手的触摸滚动范围、深色主题强调按钮文字对比度、搜索输入焦点、在线状态读屏播报及筛选结果动态播报。涉及 `app/globals.css`、`app/_components/OnlinePresence.jsx`、`app/_components/FilterableGrid.jsx`。
 - **fix**：消除筛选器 URL 同步的级联状态更新与投篮场渲染时读取 ref，保持中文输入法、历史导航和拖动站位行为。涉及 `app/_components/FilterableGrid.jsx`、`app/_components/PixelCourt.jsx`。
