@@ -4,6 +4,7 @@
 
 ## 2026-08-26
 
+- **fix/design**：首页名片卡的邮件入口由 ✉️ 表情换成 Phosphor `EnvelopeSimple` 图标，与 GitHub 入口风格统一。涉及 `app/_components/HomeCard.jsx`。
 - **fix/design**：首页名片卡的 GitHub 入口由 🐙 表情换成 Phosphor `GithubLogo` 官方风格图标（与登录页 GitHub 按钮一致），悬停变色与提示气泡行为不变。涉及 `app/_components/HomeCard.jsx`。
 - 以下首页重构、列表页、详情页/关于页、认证页/路线页四期设计改动与文档同步统一为单笔提交（`feat: restyle site as dual-theme rounded card language`）。
 - **docs**：同步 `AGENTS.md` 与重构后现状——视觉方向更新为蓝白/slate 双模式圆角卡片语言，重要文件改列 `HomeCard.jsx`/`GuestCount.jsx` 并标注 `PersonalPath.jsx`/`PixelCourt.jsx` 已从首页移除，`notes` 标注为暂无引用，URL 状态规则移除首页 `path` 参数，在线状态与验证清单第 5 条改为名片卡口径。涉及 `AGENTS.md`。
