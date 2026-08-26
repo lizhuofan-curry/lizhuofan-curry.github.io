@@ -4,6 +4,7 @@
 
 ## 2026-08-26
 
+- **fix/design**：首页名片卡的 GitHub 入口由 🐙 表情换成 Phosphor `GithubLogo` 官方风格图标（与登录页 GitHub 按钮一致），悬停变色与提示气泡行为不变。涉及 `app/_components/HomeCard.jsx`。
 - 以下首页重构、列表页、详情页/关于页、认证页/路线页四期设计改动与文档同步统一为单笔提交（`feat: restyle site as dual-theme rounded card language`）。
 - **docs**：同步 `AGENTS.md` 与重构后现状——视觉方向更新为蓝白/slate 双模式圆角卡片语言，重要文件改列 `HomeCard.jsx`/`GuestCount.jsx` 并标注 `PersonalPath.jsx`/`PixelCourt.jsx` 已从首页移除，`notes` 标注为暂无引用，URL 状态规则移除首页 `path` 参数，在线状态与验证清单第 5 条改为名片卡口径。涉及 `AGENTS.md`。
 - **feat/design**：认证页（登录/注册/找回与重置密码/验证邮箱）、账户页与学习路线页统一为新卡片语言——认证卡去掉 3px 描边与硬阴影，左侧信号面板改为柔和蓝色渐变 + 白色大号字符（去掉黄色球场色装饰与文字描影），Tab 与社交登录按钮胶囊化，输入框 1px 圆角描边 + 柔和聚焦环，表单提示条圆角化并适配深色模式；`.surface-card` 全站统一为 1px 描边；路线页去掉像素虚线轨道与节点硬阴影，链接徽章胶囊化。以追加覆盖方式实现，不改组件结构。涉及 `app/globals.css`。

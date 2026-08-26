@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { GithubLogo } from "@phosphor-icons/react";
 import { ThemeToggle } from "./ThemeToggle";
 import { siteConfig } from "../_data/site";
 
@@ -158,7 +159,7 @@ export function HomeCard({ articles, projects }) {
             <button className="home-entry" type="button" onClick={() => goto("articles")} aria-label="查看文章">📖<span className="tip">文章</span></button>
             <button className="home-entry" type="button" onClick={() => goto("projects")} aria-label="查看项目">🗺️<span className="tip">项目</span></button>
             <button className="home-entry" type="button" onClick={() => goto("about")} aria-label="关于 Zhuo">👤<span className="tip">关于</span></button>
-            <a className="home-entry" href={siteConfig.github} target="_blank" rel="noreferrer" aria-label="GitHub 主页">🐙<span className="tip">GitHub</span></a>
+            <a className="home-entry" href={siteConfig.github} target="_blank" rel="noreferrer" aria-label="GitHub 主页"><GithubLogo size={22} weight="duotone" /><span className="tip">GitHub</span></a>
             <a className="home-entry" href={`mailto:${siteConfig.email}`} aria-label="发送邮件">✉️<span className="tip">邮件</span></a>
           </div>
           <div className="home-notice">
