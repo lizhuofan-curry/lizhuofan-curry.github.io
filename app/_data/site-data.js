@@ -9,7 +9,7 @@ export const projects = [
     tags: ["React 19", "FastAPI", "DeepSeek", "Supabase"],
     category: "AI 产品",
     href: "https://github.com/lizhuofan-curry/wenqu",
-    demo: "https://wenqu-reading-room.vercel.app/",
+    demo: "https://wenqu.zhuofan.me/",
     accent: "lime",
     signal: "LIVE / v.4",
     question: "如何让 AI 阅读回到原文，并让学习过程留下可复盘的证据？",

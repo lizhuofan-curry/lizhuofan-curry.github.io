@@ -2,6 +2,10 @@
 
 本站的 bug 修复与功能/创新改动记录。每次改动先在此登记（日期、内容、涉及文件与提交），再提交。
 
+## 2026-08-26
+
+- **fix/content**：问渠项目的在线体验入口更新为新域名 `https://wenqu.zhuofan.me/`。涉及 `app/_data/site-data.js`。
+
 ## 2026-08-24
 
 - **feat**：新增浏览器本地“收藏”功能——文章与项目详情页可收藏/取消收藏，新增 `/saved` 个性化收藏页，支持跨标签页同步、空状态、失效条目提示、逐项移除、移除后焦点衔接与内联确认清空；收藏只保存类型、slug 和时间，不上传服务器。同步补主导航、页脚、手机端 3×2 导航、文章发布后刷新收藏目录、无障碍状态与项目文档。涉及 `lib/saved-items.client.js`、`app/_components/SaveButton.jsx`、`app/_components/SavedItems.jsx`、`app/saved/page.jsx`、文章/项目详情页、`SiteFooter.jsx`、`site.js`、`app/studio/actions.js`、`globals.css`、`AGENTS.md`（commit `7ccb479`）。
