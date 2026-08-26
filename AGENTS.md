@@ -12,8 +12,8 @@
 
 ## 产品与视觉方向
 
-- 整体风格为蓝调像素篮球学习档案，阅读页面保持清晰、克制。
-- 文章阅读面应比首页更安静、更简单。
+- 整体风格为蓝白浅色 / slate 深色双模式的圆角卡片档案（2026-08 重构，参考戴兜的小屋的克制卡片语言）；像素篮球作为遗产保留在素材与头像中，不再是界面主语言。
+- 首页为居中的可互动名片卡（我/文章/项目/关于 Tab），阅读页面保持清晰、克制。
 - 优先做有辨识度且有用途的交互；所有交互不能依赖悬停才能使用。
 - 必须尊重 `prefers-reduced-motion`；动画只作渐进增强，不能成为理解或导航的前提。
 - 手机端不得产生横向溢出，需保留舒适触控目标、可见焦点、语义标题与可读对比度。
@@ -55,9 +55,11 @@
 - `app/_data/articles.js`：文章元数据及 MDX 模块注册。
 - `app/_data/site-data.js`：项目元数据与经验证的项目证据。
 - `app/_data/search.js`：由文章和项目生成的共享浏览器端搜索索引。
-- `app/_components/SiteHeader.jsx`：导航、可访问全局搜索对话框与像素档案状态栏。
+- `app/_components/SiteHeader.jsx`：导航、可访问全局搜索对话框与像素档案状态栏（首页不显示状态栏）。
 - `app/_components/FilterableGrid.jsx`：文章/项目搜索、标签与 URL 状态。
-- `app/_components/PersonalPath.jsx`：首页兴趣信号与可分享的个性化路线。
+- `app/_components/HomeCard.jsx`：首页「一屏一卡」互动名片——我/文章/项目/关于四个 Tab、方向滑入动画、可互动像素头像、入口按钮与公告跑马灯。
+- `app/_components/GuestCount.jsx`：首页底部真实在线人数，与 `OnlinePresence` 共用会话 ID 不重复计数。
+- `app/_components/PersonalPath.jsx`、`app/_components/PixelCourt.jsx`：2026-08 起从首页移除，组件文件保留但全站无引用。
 - `app/_components/SaveButton.jsx`、`app/_components/SavedItems.jsx`、`lib/saved-items.client.js`：仅保存在当前浏览器的文章/项目收藏、收藏页与跨标签页同步。
 - `app/_components/SiteAssistant.jsx`、`app/_data/assistant-profile.js`、`app/api/assistant/route.js`、`lib/assistant.js`：可拖动哆啦A梦导览及其导览资料、受保护的服务端模型边界、匿名会话限制与审核上下文。
 - `app/articles/_content/*.mdx`：文章正文。
@@ -94,13 +96,13 @@
 
 只能加入可由链接仓库或用户明确来源核验的主张。证据不足时，应使用简洁项目卡，而不是编造详细案例。
 
-`app/_data/site-data.js` 还导出 `notes`（首页学习笔记卡片），使用 `number`、`title`、`tag`、`lead`、`points` 字段。
+`app/_data/site-data.js` 还导出 `notes`（原首页学习笔记卡片；2026-08 首页重构后暂无引用，保留供后续使用），使用 `number`、`title`、`tag`、`lead`、`points` 字段。
 
 ## 搜索与 URL 状态规则
 
 - 筛选状态保存在浏览器与 URL 中；全局搜索 API 只返回已发布数据库文章和仓库项目。
 - 文章/项目筛选使用 `q` 与 `tag` 查询参数，以便刷新、浏览历史和分享链接恢复状态。
-- 首页个性化路线使用最多三个信号 ID 的 `path` 参数。
+- 首页名片卡的 Tab 状态保存在组件内，不写入 URL（2026-08 起取代原 `path` 个性化路线参数）。
 - 中文输入法必须安全处理组合输入：`compositionstart` 期间不得把中间拉丁字母写入 URL；应在 `compositionend` 后同步最终值。
 - 搜索对话框打开时必须捕获键盘焦点，Escape 关闭后将焦点返还给触发器，并提供明确的空状态与重置状态。
 
@@ -109,7 +111,7 @@
 - 首页指示器统计最近 90 秒活跃的匿名浏览器会话；它是实时活动信号，不是独立访客或分析指标。
 - 浏览器创建随机 `sessionStorage` UUID，并且最多每 45 秒发送一次心跳；服务端仅保存 HMAC 哈希，不保存原始 UUID、IP 或身份。
 - `PRESENCE_HASH_SECRET` 可独立配置；`VIEW_HASH_SECRET` 是有意设置的后备项。数据库或密钥不可用时，指示器应静默不可用，不能影响导航或内容。
-- 视觉语言需和像素篮球主题一致；动画仅作装饰，必须被现有 `prefers-reduced-motion` 策略禁用。
+- 视觉语言需和全站圆角卡片语言一致；动画仅作装饰，必须被现有 `prefers-reduced-motion` 策略禁用。
 
 ## 站点导览助手
 
@@ -143,7 +145,7 @@ npm run start
 2. 检查桌面和常见手机宽度的溢出、布局、焦点可见性和触控可用性。
 3. 测试全局搜索、空结果、Escape 关闭、焦点恢复和键盘导航。
 4. 用中文输入法测试文章/项目搜索，包括组合文本、清除、查询参数恢复、刷新和前进/后退。
-5. 测试首页个性化路线的零到三个信号、最大选择状态、复制 URL、刷新恢复与重置。
+5. 测试首页名片卡：四个 Tab 切换与方向滑入、头像互动（看向鼠标/点击反馈）、主题切换后深浅模式、公告与在线人数的降级表现。
 6. 测试 `prefers-reduced-motion: reduce`，确认没有动画时内容仍可理解。
 7. 验证站内链接和外部证据链接；不得静默替换损坏证据或用未经支持的文案代替。
 8. 涉及认证时，在部署环境测试邮件注册、验证、会话持久化、退出、重置密码、角色检查和安全的 `next` 跳转。

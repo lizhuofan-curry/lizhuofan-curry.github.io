@@ -97,6 +97,7 @@ function SearchPanel({ open, onClose }) {
 
 export function SiteHeader({ authConfigured = false }) {
   const pathname = usePathname();
+  const isHome = pathname === "/";
   const [searchOpen, setSearchOpen] = useState(false);
   const triggerRef = useRef(null);
   const closeSearch = () => {
@@ -129,12 +130,12 @@ export function SiteHeader({ authConfigured = false }) {
           </div>
           <div className="nav-actions"><button ref={triggerRef} className="search-trigger" type="button" onClick={() => setSearchOpen(true)} aria-haspopup="dialog" aria-label="打开全站搜索"><MagnifyingGlass size={18} /><span>搜索</span><kbd>Ctrl K</kbd></button><ThemeToggle /><AuthMenu configured={authConfigured} /></div>
         </nav>
-        <div className="pixel-statusbar" aria-label="网站状态">
+        {!isHome && <div className="pixel-statusbar" aria-label="网站状态">
           <span className="status-mark" aria-hidden="true"><i /><i /><i /></span>
           <span className="status-copy"><b>FIELD NOTES</b><span>学习档案持续更新 · AI / CV / SOFTWARE</span></span>
           <span className="status-scan" aria-hidden="true" />
           <span className="sr-only">网站状态：AI、计算机视觉与软件工程学习档案持续更新。</span>
-        </div>
+        </div>}
       </header>
       <SearchPanel open={searchOpen} onClose={closeSearch} />
     </>
