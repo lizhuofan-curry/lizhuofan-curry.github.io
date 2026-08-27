@@ -4,7 +4,7 @@
 
 ## 2026-08-27
 
-- **feat/design**：首页视觉大幅重构，向 daidr.me 极简克制风格靠拢——保留「首页/文章/项目/关于」四模块 Tab 结构，但去掉厚重边框与阴影、缩小头像至 96px、增大姓名字号、社交入口改为简洁胶囊链接、文章/项目列表改为无边框简洁行、关于面板改为段落 + 标签云。涉及 `app/_components/HomeCard.jsx`、`app/globals.css`。
+- **feat/design**：首页视觉二次大幅重构，完全对标 daidr.me 风格——去掉卡片包裹感，改为开放居中布局；顶部导航改为 32px 大圆角胶囊菜单；社交入口改为 44px 圆形图标按钮，hover 时有扩散边框动画与 tooltip；头像放大至 120px 并去掉边框；名字与签名排版对齐参考站（32px/700 + 17px muted）。涉及 `app/_components/HomeCard.jsx`、`app/globals.css`。
 - **feat/design**：首页隐藏全局导航栏，非首页导航去掉登录/注册入口（暂时隐藏 `AuthMenu`），保留搜索与主题切换。涉及 `app/_components/SiteHeader.jsx`、`app/layout.jsx`。
 - **refactor**：清理 `globals.css` 中已废弃的 `.home-hero`、`.hero-court`、`.pixel-court-stage`、`.personal-path`、`.basketball-cursor` 等样式块及媒体查询残留，减少约 18KB 无用 CSS。涉及 `app/globals.css`。
 - **style**：全局令牌微调——`--radius-card` 从 16px 增至 20px，`--shadow` 强度降低，让整体更轻盈。涉及 `app/globals.css`。
