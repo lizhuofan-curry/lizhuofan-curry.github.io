@@ -6,7 +6,6 @@ import { useEffect, useRef, useState } from "react";
 import { MagnifyingGlass, X } from "@phosphor-icons/react";
 import { navigation } from "../_data/site";
 import { searchItems } from "../_data/search";
-import { AuthMenu } from "./AuthMenu";
 import { ThemeToggle } from "./ThemeToggle";
 import { OnlinePresence } from "./OnlinePresence";
 import { PixelPlayer } from "./PixelPlayer";
@@ -95,7 +94,7 @@ function SearchPanel({ open, onClose }) {
   );
 }
 
-export function SiteHeader({ authConfigured = false }) {
+export function SiteHeader() {
   const pathname = usePathname();
   const isHome = pathname === "/";
   const [searchOpen, setSearchOpen] = useState(false);
@@ -114,6 +113,11 @@ export function SiteHeader({ authConfigured = false }) {
     document.addEventListener("keydown", openSearch);
     return () => document.removeEventListener("keydown", openSearch);
   }, []);
+
+  if (isHome) {
+    return <SearchPanel open={searchOpen} onClose={closeSearch} />;
+  }
+
   return (
     <>
       <header className="site-header">
@@ -128,14 +132,14 @@ export function SiteHeader({ authConfigured = false }) {
               return <Link href={item.href} key={item.href} aria-current={active ? "page" : undefined}>{item.label}</Link>;
             })}
           </div>
-          <div className="nav-actions"><button ref={triggerRef} className="search-trigger" type="button" onClick={() => setSearchOpen(true)} aria-haspopup="dialog" aria-label="打开全站搜索"><MagnifyingGlass size={18} /><span>搜索</span><kbd>Ctrl K</kbd></button><ThemeToggle /><AuthMenu configured={authConfigured} /></div>
+          <div className="nav-actions"><button ref={triggerRef} className="search-trigger" type="button" onClick={() => setSearchOpen(true)} aria-haspopup="dialog" aria-label="打开全站搜索"><MagnifyingGlass size={18} /><span>搜索</span><kbd>Ctrl K</kbd></button><ThemeToggle /></div>
         </nav>
-        {!isHome && <div className="pixel-statusbar" aria-label="网站状态">
+        <div className="pixel-statusbar" aria-label="网站状态">
           <span className="status-mark" aria-hidden="true"><i /><i /><i /></span>
           <span className="status-copy"><b>FIELD NOTES</b><span>学习档案持续更新 · AI / CV / SOFTWARE</span></span>
           <span className="status-scan" aria-hidden="true" />
           <span className="sr-only">网站状态：AI、计算机视觉与软件工程学习档案持续更新。</span>
-        </div>}
+        </div>
       </header>
       <SearchPanel open={searchOpen} onClose={closeSearch} />
     </>

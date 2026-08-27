@@ -6,7 +6,6 @@ import { SiteHeader } from "./_components/SiteHeader";
 import { ThemeInitializer } from "./_components/ThemeInitializer";
 import { SiteAssistant } from "./_components/SiteAssistant";
 import { siteConfig } from "./_data/site";
-import { isAuthConfigured } from "../lib/auth";
 
 export const metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
@@ -47,7 +46,7 @@ export default function RootLayout({ children }) {
         <a className="skip-link" href="#main-content">
           跳到主要内容
         </a>
-        <SiteHeader authConfigured={isAuthConfigured()} />
+        <SiteHeader />
         {children}
         <SiteFooter />
         <SiteAssistant />

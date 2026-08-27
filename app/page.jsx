@@ -31,7 +31,7 @@ export default async function Home() {
         </div>
         <HomeCard articles={articles} projects={featuredProjects} />
         <div className="home-stage-foot">
-          <div className="house">@ 2026 ZHUO'S HOUSE</div>
+          <div className="house">@ 2026 ZHUO&apos;S HOUSE</div>
           <GuestCount />
         </div>
       </div>
