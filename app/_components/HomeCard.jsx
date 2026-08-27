@@ -192,12 +192,12 @@ export function HomeCard({ articles, projects }) {
           <span className="count">@zhuo</span>
         </div>
         <div className="home-about-copy">
-          <p><strong>Zhuo</strong>，在人工智能、计算机视觉和软件工程之间来回折腾。这个站不是答案陈列，而是<em>一次理解如何形成</em>的记录——每篇文章都尽量附上可核验的过程与证据。</p>
+          <p><strong>Zhuo</strong>，在人工智能、计算机视觉和软件工程之间来回折腾。这个站记录<em>我做过的事和学到的东西</em>。</p>
         </div>
         <div className="home-about-tags">
           <span>AI · CV · LLM</span>
           <span>代码 · 文章</span>
-          <span>证据优先</span>
+          <span>持续构建</span>
         </div>
         <Link className="home-panel-more" href="/about">完整介绍 →</Link>
       </div>

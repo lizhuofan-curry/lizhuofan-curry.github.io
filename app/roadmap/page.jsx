@@ -39,8 +39,8 @@ const roadmapStages = [
   {
     icon: GitBranch,
     label: "04 / 作品集沉淀",
-    title: "个人网站、文章和可核验证据",
-    body: "将公开项目、文章和学习路线串起来，让访问者能从一个入口理解成长过程。",
+    title: "个人网站、文章和项目沉淀",
+    body: "将公开项目、文章和学习路线串起来，让访问者能从一个入口了解做过的事。",
     links: [
       { href: "/projects", text: "项目地图" },
       { href: "/articles", text: "文章日志" },

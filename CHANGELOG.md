@@ -5,6 +5,7 @@
 ## 2026-08-27
 
 - **feat/design**：首页视觉二次大幅重构，完全对标 daidr.me 风格——去掉卡片包裹感，改为开放居中布局；顶部导航改为 32px 大圆角胶囊菜单；社交入口改为 44px 圆形图标按钮，hover 时有扩散边框动画与 tooltip；头像放大至 120px 并去掉边框；名字与签名排版对齐参考站（32px/700 + 17px muted）。涉及 `app/_components/HomeCard.jsx`、`app/globals.css`。
+- **content**：移除全站「学习留下痕迹，作品保留证据」相关文案与「可核验证据」徽章/区域——页脚改为简洁签名，文章/项目卡片去掉证据计数徽章，文章详情页去掉证据列表区，项目详情页证据卡改为「项目链接」，关于页「证据」价值观改为「记录」。涉及 `SiteFooter.jsx`、`FilterableGrid.jsx`、`articles/[slug]/page.jsx`、`projects/[slug]/page.jsx`、`about/page.jsx`、`articles/page.jsx`、`projects/page.jsx`、`roadmap/page.jsx`、`HomeCard.jsx`。
 - **feat/design**：首页隐藏全局导航栏，非首页导航去掉登录/注册入口（暂时隐藏 `AuthMenu`），保留搜索与主题切换。涉及 `app/_components/SiteHeader.jsx`、`app/layout.jsx`。
 - **refactor**：清理 `globals.css` 中已废弃的 `.home-hero`、`.hero-court`、`.pixel-court-stage`、`.personal-path`、`.basketball-cursor` 等样式块及媒体查询残留，减少约 18KB 无用 CSS。涉及 `app/globals.css`。
 - **style**：全局令牌微调——`--radius-card` 从 16px 增至 20px，`--shadow` 强度降低，让整体更轻盈。涉及 `app/globals.css`。
