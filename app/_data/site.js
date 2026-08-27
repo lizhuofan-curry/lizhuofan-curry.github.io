@@ -10,10 +10,8 @@ export const siteConfig = {
 };
 
 export const navigation = [
-  { href: "/", label: "首页" },
+  { href: "/", label: "我" },
   { href: "/articles", label: "文章" },
-  { href: "/projects", label: "项目" },
-  { href: "/roadmap", label: "路线" },
-  { href: "/saved", label: "收藏" },
-  { href: "/about", label: "关于" },
+  { href: "/projects", label: "小项目" },
+  { href: "/about", label: "更多" },
 ];

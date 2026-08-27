@@ -9,6 +9,9 @@
 - **feat/design**：首页隐藏全局导航栏，非首页导航去掉登录/注册入口（暂时隐藏 `AuthMenu`），保留搜索与主题切换。涉及 `app/_components/SiteHeader.jsx`、`app/layout.jsx`。
 - **refactor**：清理 `globals.css` 中已废弃的 `.home-hero`、`.hero-court`、`.pixel-court-stage`、`.personal-path`、`.basketball-cursor` 等样式块及媒体查询残留，减少约 18KB 无用 CSS。涉及 `app/globals.css`。
 - **style**：全局令牌微调——`--radius-card` 从 16px 增至 20px，`--shadow` 强度降低，让整体更轻盈。涉及 `app/globals.css`。
+- **refactor**：全站移除认证、收藏、路线、Studio、评论、点赞、在线人数与站点助手功能——删除对应路由目录（`app/login`、`app/register`、`app/forgot-password`、`app/reset-password`、`app/verify-email`、`app/account`、`app/saved`、`app/roadmap`、`app/studio`）、API 路由（`app/api/auth|studio|media|articles|presence|assistant`）、21 个组件与 11 个 `lib` 服务端模块及 `app/_data/assistant-profile.js`；`lib/content.js` 简化为仅本地 MDX 回退；导航精简为 我/文章/小项目/更多 四项；`package.json` 移除 `@supabase/supabase-js`、`better-auth`、`pg`、`resend`、`zod`。涉及 `app/`、`lib/`、`package.json`、`package-lock.json`、`AGENTS.md`。
+- **feat/design**：文章列表页与项目列表页重构为 daidr.me 风格极简列表（大标题 header + 逐条渐入的 `article-item` 卡片，hover 时主色渐变从左扫过、边框变色）；非首页头部重构为 daidr MainNav 风格（左侧 32px 圆形头像 + 名字，右侧 `menu-item` 导航——hover/active 时底部 3px 小条向上铺满按钮背景，以及搜索按钮与主题切换）；新增 `app/template.jsx` 页面过渡动画；清理 `globals.css` 中认证/Studio/收藏/路线/评论/在线状态等死样式。涉及 `app/articles/page.jsx`、`app/projects/page.jsx`、`app/_components/SiteHeader.jsx`、`app/template.jsx`、`app/globals.css`。
+- **docs/chore**：同步移除后端功能的周边——`app/robots.js` 的 disallow 精简为 `/api/`；`app/privacy/page.jsx` 改写为纯静态站点口径；`README.md` 移除后台/认证/导览助手说明；`ASSET-CREDITS.md` 更新哆啦A梦（首页名片与导航头像）与像素小人（暂无 UI 引用）的用途说明；删除仅描述已移除后端的 `db/` 与 `docs/FULLSTACK_SETUP.md`、`docs/SELF_HOSTING.md`。涉及 `app/robots.js`、`app/privacy/page.jsx`、`README.md`、`ASSET-CREDITS.md`。
 
 ## 2026-08-26
 

@@ -1,5 +1,0 @@
-import Link from "next/link";
-import { isDatabaseConfigured } from "../../lib/db";
-import { getStudioArticles } from "../../lib/content";
-
-export default async function StudioPage({ searchParams }) { const params = await searchParams; const configured = isDatabaseConfigured(); const articles = configured ? await getStudioArticles() : []; return <main id="main-content" className="studio-page"><header><p>写作后台</p><h1>文章和媒体，都从这里进入公开网站。</h1></header>{!configured || params?.setup === "required" ? <section className="setup-notice"><h2>还差云端配置</h2><p>代码骨架已经完成。创建 Supabase 项目、执行 `db/migrations/001_fullstack_blog.sql`，再将 `.env.example` 中的变量写入本地和 Vercel。</p></section> : <div className="studio-stats"><article><strong>{articles.length}</strong><span>全部文章</span></article><article><strong>{articles.filter((item) => item.status === "published").length}</strong><span>已发布</span></article><article><strong>{articles.filter((item) => item.status === "draft").length}</strong><span>草稿</span></article></div>}<Link className="primary-button" href="/studio/articles/new">开始写文章</Link></main>; }

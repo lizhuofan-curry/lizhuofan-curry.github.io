@@ -4,7 +4,6 @@ import { GeistMono } from "geist/font/mono";
 import { SiteFooter } from "./_components/SiteFooter";
 import { SiteHeader } from "./_components/SiteHeader";
 import { ThemeInitializer } from "./_components/ThemeInitializer";
-import { SiteAssistant } from "./_components/SiteAssistant";
 import { siteConfig } from "./_data/site";
 
 export const metadata = {
@@ -49,7 +48,6 @@ export default function RootLayout({ children }) {
         <SiteHeader />
         {children}
         <SiteFooter />
-        <SiteAssistant />
       </body>
     </html>
   );

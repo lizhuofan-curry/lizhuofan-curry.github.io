@@ -8,7 +8,6 @@ export default async function sitemap() {
     "",
     "/articles",
     "/projects",
-    "/roadmap",
     "/about",
     "/privacy",
     ...articles.map(({ slug }) => `/articles/${slug}`),

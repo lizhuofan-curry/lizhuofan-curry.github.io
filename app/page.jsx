@@ -1,7 +1,6 @@
 import { getPublishedArticles } from "../lib/content";
 import { projects } from "./_data/site-data";
 import { HomeCard } from "./_components/HomeCard";
-import { GuestCount } from "./_components/GuestCount";
 
 export default async function Home() {
   const articles = (await getPublishedArticles()).slice(0, 4).map((article) => ({
@@ -32,7 +31,6 @@ export default async function Home() {
         <HomeCard articles={articles} projects={featuredProjects} />
         <div className="home-stage-foot">
           <div className="house">@ 2026 ZHUO&apos;S HOUSE</div>
-          <GuestCount />
         </div>
       </div>
     </main>

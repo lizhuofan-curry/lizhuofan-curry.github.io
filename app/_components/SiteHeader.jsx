@@ -1,14 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { MagnifyingGlass, X } from "@phosphor-icons/react";
 import { navigation } from "../_data/site";
 import { searchItems } from "../_data/search";
 import { ThemeToggle } from "./ThemeToggle";
-import { OnlinePresence } from "./OnlinePresence";
-import { PixelPlayer } from "./PixelPlayer";
 
 function SearchPanel({ open, onClose }) {
   const [query, setQuery] = useState("");
@@ -122,24 +121,21 @@ export function SiteHeader() {
     <>
       <header className="site-header">
         <nav className="site-nav" aria-label="主导航">
-          <div className="nav-identity">
-            <div className="brand"><PixelPlayer className="brand-player" compact /><Link className="brand-link" href="/" aria-label="返回首页"><span className="brand-wordmark">Zhuo</span><small>个人档案</small></Link></div>
-            <OnlinePresence compact />
-          </div>
+          <Link className="nav-brand" href="/" aria-label="返回首页">
+            <Image src="/doraemon-pixel-guide.png" alt="" width={32} height={32} className="nav-avatar" />
+            <span className="nav-name">Zhuo</span>
+          </Link>
           <div className="nav-links">
             {navigation.map((item) => {
               const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
-              return <Link href={item.href} key={item.href} aria-current={active ? "page" : undefined}>{item.label}</Link>;
+              return <Link href={item.href} key={item.href} className={`menu-item${active ? " active" : ""}`} aria-current={active ? "page" : undefined}>{item.label}</Link>;
             })}
           </div>
-          <div className="nav-actions"><button ref={triggerRef} className="search-trigger" type="button" onClick={() => setSearchOpen(true)} aria-haspopup="dialog" aria-label="打开全站搜索"><MagnifyingGlass size={18} /><span>搜索</span><kbd>Ctrl K</kbd></button><ThemeToggle /></div>
+          <div className="nav-actions">
+            <button ref={triggerRef} className="search-trigger" type="button" onClick={() => setSearchOpen(true)} aria-haspopup="dialog" aria-label="打开全站搜索"><MagnifyingGlass size={18} /><span>搜索</span><kbd>Ctrl K</kbd></button>
+            <ThemeToggle />
+          </div>
         </nav>
-        <div className="pixel-statusbar" aria-label="网站状态">
-          <span className="status-mark" aria-hidden="true"><i /><i /><i /></span>
-          <span className="status-copy"><b>FIELD NOTES</b><span>学习档案持续更新 · AI / CV / SOFTWARE</span></span>
-          <span className="status-scan" aria-hidden="true" />
-          <span className="sr-only">网站状态：AI、计算机视觉与软件工程学习档案持续更新。</span>
-        </div>
       </header>
       <SearchPanel open={searchOpen} onClose={closeSearch} />
     </>

@@ -1,7 +1,33 @@
-import { Suspense } from "react";
-import { FilterableGrid } from "../_components/FilterableGrid";
+import Link from "next/link";
 import { projects } from "../_data/site-data";
 
-export const metadata = { title: "项目", description: "Zhuo 的人工智能、计算机视觉和 LLM 工程项目。", alternates: { canonical: "/projects" } };
+export const metadata = { title: "小项目", description: "Zhuo 的人工智能、计算机视觉和 LLM 工程项目。", alternates: { canonical: "/projects" } };
 
-export default function ProjectsPage() { return <main id="main-content" className="index-page page-shell"><header className="pixel-page-hero surface-card"><div className="pixel-hero-copy"><p>项目地图</p><h1>做出来，再写下来。</h1><p>从模型结构实验到可运行的 AI 产品。</p></div><aside className="pixel-page-badge map-badge" aria-label="项目地图关卡"><span>MAP</span><strong>{String(projects.length).padStart(2, "0")}</strong><small>个已解锁项目</small></aside></header><Suspense fallback={<p>正在整理项目...</p>}><FilterableGrid items={projects.map((project) => ({...project, description: project.summary}))} type="项目" /></Suspense></main>; }
+export default function ProjectsPage() {
+  return (
+    <main id="main-content" className="blog-page">
+      <header className="blog-header">
+        <h1>小项目</h1>
+        <p>做出来，再写下来。</p>
+        <p className="blog-count">共 {projects.length} 个项目</p>
+      </header>
+      <div className="article-list">
+        {projects.map((project, index) => (
+          <Link href={`/projects/${project.slug}`} className="article-item" style={{ "--i": index }} key={project.slug}>
+            <h2 className="title">
+              <span className="item-number">{project.number}</span>
+              {project.title}
+            </h2>
+            <p className="summary">{project.summary}</p>
+            <div className="details">
+              <span className="detail-item">#{project.category}</span>
+              {project.tags.slice(0, 3).map((tag) => (
+                <span className="detail-item" key={tag}>{tag}</span>
+              ))}
+            </div>
+          </Link>
+        ))}
+      </div>
+    </main>
+  );
+}
