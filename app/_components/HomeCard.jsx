@@ -163,7 +163,6 @@ export function HomeCard({ articles, projects }) {
             </Link>
           ))}
         </div>
-        <Link className="home-panel-more" href="/articles">全部文章 →</Link>
       </div>
 
       {/* 项目面板 */}
@@ -182,7 +181,6 @@ export function HomeCard({ articles, projects }) {
             </Link>
           ))}
         </div>
-        <Link className="home-panel-more" href="/projects">全部项目 →</Link>
       </div>
 
       {/* 关于面板 */}
@@ -199,7 +197,6 @@ export function HomeCard({ articles, projects }) {
           <span>代码 · 文章</span>
           <span>持续构建</span>
         </div>
-        <Link className="home-panel-more" href="/about">完整介绍 →</Link>
       </div>
     </div>
   );
