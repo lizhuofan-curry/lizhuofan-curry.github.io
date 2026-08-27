@@ -3,44 +3,37 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { EnvelopeSimple, GithubLogo } from "@phosphor-icons/react";
+import { EnvelopeSimple, GithubLogo, XLogo, BilibiliLogo } from "@phosphor-icons/react";
 import { ThemeToggle } from "./ThemeToggle";
 import { siteConfig } from "../_data/site";
 
-const TAB_ORDER = ["me", "articles", "projects", "about"];
-const TAB_LABELS = { me: "首页", articles: "文章", projects: "项目", about: "关于" };
-const SPEECH_LINES = ["你好呀！", "今天也在写代码。", "点上面 Tab 看看 ↗", "点我可以再跳一次～", "欢迎来做客！"];
+const TABS = [
+  { id: "me", label: "我" },
+  { id: "articles", label: "文章" },
+  { id: "projects", label: "小项目" },
+  { id: "more", label: "更多" },
+];
 
 export function HomeCard({ articles, projects }) {
   const [active, setActive] = useState("me");
   const [dir, setDir] = useState("");
   const [speech, setSpeech] = useState({ text: "", show: false });
-  const [clock, setClock] = useState("--:--");
   const [sparkles, setSparkles] = useState([]);
   const avatarRef = useRef(null);
   const speechTimer = useRef(null);
-  const envRef = useRef({ reduced: false, fine: false });
+  const envRef = useRef({ reduced: false });
 
   useEffect(() => {
     envRef.current = {
       reduced: window.matchMedia("(prefers-reduced-motion: reduce)").matches,
-      fine: window.matchMedia("(pointer:fine)").matches,
     };
-    const tick = () => {
-      const d = new Date();
-      setClock(`${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`);
-    };
-    tick();
-    const timer = window.setInterval(tick, 15000);
-    return () => {
-      window.clearInterval(timer);
-      window.clearTimeout(speechTimer.current);
-    };
+    return () => window.clearTimeout(speechTimer.current);
   }, []);
 
   function goto(tab) {
     if (tab === active) return;
-    setDir(TAB_ORDER.indexOf(tab) > TAB_ORDER.indexOf(active) ? "slide-r" : "slide-l");
+    const order = TABS.map((t) => t.id);
+    setDir(order.indexOf(tab) > order.indexOf(active) ? "slide-r" : "slide-l");
     setActive(tab);
   }
 
@@ -53,57 +46,61 @@ export function HomeCard({ articles, projects }) {
     avatar.classList.add("hop");
     const frame = avatar.parentElement?.getBoundingClientRect();
     if (!frame) return;
-    const newSparkles = Array.from({ length: 6 }, (_, i) => {
-      const angle = (i / 6) * Math.PI * 2 + Math.random() * 0.5;
-      const dist = 36 + Math.random() * 28;
-      return {
-        id: Date.now() + i,
-        sx: Math.cos(angle) * dist,
-        sy: Math.sin(angle) * dist,
-        x: frame.width / 2 - 5,
-        y: frame.height / 2 - 5,
-      };
-    });
-    setSparkles(newSparkles);
-    window.setTimeout(() => setSparkles([]), 750);
-    setSpeech({ text: SPEECH_LINES[Math.floor(Math.random() * SPEECH_LINES.length)], show: true });
+    setSparkles(
+      Array.from({ length: 6 }, (_, i) => {
+        const angle = (i / 6) * Math.PI * 2 + Math.random() * 0.5;
+        const dist = 32 + Math.random() * 24;
+        return {
+          id: Date.now() + i,
+          sx: Math.cos(angle) * dist,
+          sy: Math.sin(angle) * dist,
+          x: frame.width / 2 - 4,
+          y: frame.height / 2 - 4,
+        };
+      })
+    );
+    window.setTimeout(() => setSparkles([]), 700);
+    const lines = ["你好呀！", "今天也在写代码。", "点上面 Tab 看看", "欢迎来做客！"];
+    setSpeech({ text: lines[Math.floor(Math.random() * lines.length)], show: true });
     window.clearTimeout(speechTimer.current);
-    speechTimer.current = window.setTimeout(() => setSpeech((prev) => ({ ...prev, show: false })), 1700);
+    speechTimer.current = window.setTimeout(() => setSpeech((p) => ({ ...p, show: false })), 1600);
   }
 
   return (
-    <div className="home-wrapper" data-active={active}>
+    <div className="home-card" data-active={active}>
       {/* 顶部导航 */}
       <nav className="home-nav" aria-label="首页导航">
-        <div className="home-nav-inner">
-          {TAB_ORDER.map((tab) => (
+        <div className="home-nav-tabs" role="tablist">
+          {TABS.map((tab) => (
             <button
-              key={tab}
+              key={tab.id}
               type="button"
               role="tab"
-              aria-selected={active === tab}
-              className={`home-nav-item${active === tab ? " active" : ""}`}
-              onClick={() => goto(tab)}
+              aria-selected={active === tab.id}
+              className={active === tab.id ? "active" : ""}
+              onClick={() => goto(tab.id)}
             >
-              {TAB_LABELS[tab]}
+              {tab.label}
             </button>
           ))}
         </div>
         <ThemeToggle />
       </nav>
 
-      {/* 首页面板 */}
+      {/* 我 */}
       <div className={`home-panel home-panel-me${active === "me" ? ` active ${dir}` : ""}`} role="tabpanel">
-        <div className="home-avatar-side">
-          <div className={`home-speech${speech.show ? " show" : ""}`} role="status">{speech.text || "你好呀！"}</div>
+        <div className="home-avatar-wrap">
+          <div className={`home-speech${speech.show ? " show" : ""}`} role="status">
+            {speech.text || "你好呀！"}
+          </div>
           <div className="home-avatar-frame">
             <Image
               ref={avatarRef}
               className="home-avatar"
               src="/doraemon-pixel-guide.png"
               alt="Zhuo 的像素头像"
-              width={120}
-              height={120}
+              width={128}
+              height={128}
               draggable={false}
               onClick={handleAvatarClick}
               priority
@@ -115,21 +112,13 @@ export function HomeCard({ articles, projects }) {
                 style={{ "--sx": `${s.sx}px`, "--sy": `${s.sy}px`, left: s.x, top: s.y }}
               />
             ))}
-            <span className="home-live-dot" title="在线" />
           </div>
         </div>
-        <h1 className="home-name">Zhuo<span>@zhuo</span></h1>
-        <p className="home-tagline">写代码，也把过程写下来。</p>
+        <h1 className="home-name">
+          Zhuo<span>@zhuo</span>
+        </h1>
+        <p className="home-bio">写代码，也把过程写下来。</p>
         <div className="home-social">
-          <button type="button" onClick={() => goto("articles")} data-name="文章">
-            <span>文</span>
-          </button>
-          <button type="button" onClick={() => goto("projects")} data-name="项目">
-            <span>项</span>
-          </button>
-          <button type="button" onClick={() => goto("about")} data-name="关于">
-            <span>关</span>
-          </button>
           <a href={siteConfig.github} target="_blank" rel="noreferrer" aria-label="GitHub" data-name="GitHub">
             <GithubLogo size={20} weight="duotone" />
           </a>
@@ -137,45 +126,35 @@ export function HomeCard({ articles, projects }) {
             <EnvelopeSimple size={20} weight="duotone" />
           </a>
         </div>
-        <div className="home-mini-status">
-          <span><i className="home-dot-live" />正在写代码</span>
-          <span>当地时间 <b>{clock}</b></span>
-        </div>
       </div>
 
-      {/* 文章面板 */}
+      {/* 文章 */}
       <div className={`home-panel home-panel-list${active === "articles" ? ` active ${dir}` : ""}`} role="tabpanel">
-        <div className="home-panel-head">
-          <h2>文章</h2>
-          <span className="count">最近更新 {articles.length} 篇</span>
-        </div>
-        <div className="home-article-rows">
+        <h2 className="home-panel-title">文章</h2>
+        <div className="home-list">
           {articles.map((article) => (
-            <Link className="home-article-row" href={`/articles/${article.slug}`} key={article.slug}>
-              <span className="r-dot" aria-hidden="true" />
-              <div className="r-body">
+            <Link className="home-list-item" href={`/articles/${article.slug}`} key={article.slug}>
+              <span className="home-list-dot" />
+              <div className="home-list-body">
                 <h3>{article.title}</h3>
-                <div className="meta">
-                  <span className="tag">#{article.category}</span>
+                <p>
+                  <span>#{article.category}</span>
                   <span>{article.readingTime}</span>
-                </div>
+                </p>
               </div>
             </Link>
           ))}
         </div>
       </div>
 
-      {/* 项目面板 */}
+      {/* 小项目 */}
       <div className={`home-panel home-panel-list${active === "projects" ? ` active ${dir}` : ""}`} role="tabpanel">
-        <div className="home-panel-head">
-          <h2>项目</h2>
-          <span className="count">{projects.length} 个已解锁</span>
-        </div>
+        <h2 className="home-panel-title">小项目</h2>
         <div className="home-project-grid">
           {projects.map((project) => (
-            <Link className="home-project-tile" href={`/projects/${project.slug}`} key={project.slug}>
-              <span className="num">{project.number}</span>
-              <span className="pill">{project.category}</span>
+            <Link className="home-project-card" href={`/projects/${project.slug}`} key={project.slug}>
+              <span className="home-project-num">{project.number}</span>
+              <span className="home-project-tag">{project.category}</span>
               <h3>{project.title}</h3>
               <p>{project.summary}</p>
             </Link>
@@ -183,19 +162,23 @@ export function HomeCard({ articles, projects }) {
         </div>
       </div>
 
-      {/* 关于面板 */}
-      <div className={`home-panel home-panel-about${active === "about" ? ` active ${dir}` : ""}`} role="tabpanel">
-        <div className="home-panel-head">
-          <h2>关于</h2>
-          <span className="count">@zhuo</span>
-        </div>
-        <div className="home-about-copy">
-          <p><strong>Zhuo</strong>，在人工智能、计算机视觉和软件工程之间来回折腾。这个站记录<em>我做过的事和学到的东西</em>。</p>
-        </div>
-        <div className="home-about-tags">
-          <span>AI · CV · LLM</span>
-          <span>代码 · 文章</span>
-          <span>持续构建</span>
+      {/* 更多 */}
+      <div className={`home-panel home-panel-more${active === "more" ? ` active ${dir}` : ""}`} role="tabpanel">
+        <h2 className="home-panel-title">更多</h2>
+        <div className="home-more-content">
+          <p>在人工智能、计算机视觉和软件工程之间来回折腾。</p>
+          <div className="home-more-tags">
+            <span>AI</span>
+            <span>CV</span>
+            <span>LLM</span>
+            <span>代码</span>
+            <span>文章</span>
+          </div>
+          <div className="home-more-links">
+            <Link href="/about">关于我</Link>
+            <Link href="/articles">全部文章</Link>
+            <Link href="/projects">全部项目</Link>
+          </div>
         </div>
       </div>
     </div>
