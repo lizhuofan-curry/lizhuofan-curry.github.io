@@ -3,7 +3,8 @@ import { projects } from "./site-data";
 
 export const searchItems = [
   ...articles.map((article) => ({
-    type: "文章",
+    type: "笔记",
+    archived: article.archived,
     title: article.title,
     description: article.description,
     tags: article.tags,
@@ -11,11 +12,12 @@ export const searchItems = [
     href: `/articles/${article.slug}`,
   })),
   ...projects.map((project) => ({
-    type: "项目",
+    type: "作品",
+    archived: project.archived,
     title: project.title,
     description: project.summary,
     tags: [project.category, ...project.tags],
-    keywords: [project.eyebrow, project.question, project.role],
+    keywords: [project.eyebrow, project.question, project.role].filter(Boolean),
     href: `/projects/${project.slug}`,
   })),
 ];

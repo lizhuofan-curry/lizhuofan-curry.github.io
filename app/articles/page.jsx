@@ -1,29 +1,4 @@
-import Link from "next/link";
-import { getPublishedArticles } from "../../lib/content";
-
-export const metadata = { title: "文章", description: "关于调试、深度学习结构和实验的中文短文。", alternates: { canonical: "/articles" } };
-
-export default async function ArticlesPage() {
-  const articles = await getPublishedArticles();
-  return (
-    <main id="main-content" className="blog-page">
-      <header className="blog-header">
-        <h1>博客</h1>
-        <p>把问题写下来，直到它变得清楚。</p>
-        <p className="blog-count">共 {articles.length} 篇文章</p>
-      </header>
-      <div className="article-list">
-        {articles.map((article, index) => (
-          <Link href={`/articles/${article.slug}`} className="article-item" style={{ "--i": index }} key={article.slug}>
-            <h2 className="title">{article.title}</h2>
-            <p className="summary">{article.description}</p>
-            <div className="details">
-              <span className="detail-item">#{article.category}</span>
-              <span className="detail-item">{article.readingTime}</span>
-            </div>
-          </Link>
-        ))}
-      </div>
-    </main>
-  );
-}
+import { articles } from "../_data/articles";
+import { Icon } from "../_components/Icon";
+export const metadata={title:"笔记",description:"从公开项目出发，记录 AI、工具设计与学习实验中的思考。",alternates:{canonical:"/articles"}};
+export default function Articles(){return <main id="main-content" className="page-shell inner-page writing-page"><header className="page-title"><span className="section-icon"><Icon name="book" size={28}/></span><h1>把零散的发现，<br/>慢慢连起来。</h1><p>项目里的思考，学习中的拆解。每篇笔记都保留可以继续追溯的出处。</p></header><div className="writing-list">{articles.filter(a=>!a.archived).map(a=><a className="note-row" key={a.slug} href={`/articles/${a.slug}`}><div><span className="small-label">{a.category} / {a.readingTime}</span><h2>{a.title}</h2><p>{a.description}</p><div className="tags">{a.tags.map(t=><span key={t}>{t}</span>)}</div></div><Icon name="diagonal"/></a>)}</div><details className="archive"><summary>早期笔记归档</summary><p>保留原有地址，方便继续查阅。</p>{articles.filter(a=>a.archived).map(a=><a href={`/articles/${a.slug}`} key={a.slug}>{a.title}<Icon name="diagonal" size={16}/></a>)}</details></main>;}

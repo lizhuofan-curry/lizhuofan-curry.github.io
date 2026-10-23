@@ -1,3 +1,1 @@
-export default function Template({ children }) {
-  return <div className="page-transition">{children}</div>;
-}
+export default function Template({ children }) { return <div className="page-transition">{children}</div>; }

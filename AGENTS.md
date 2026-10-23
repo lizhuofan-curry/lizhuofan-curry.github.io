@@ -1,3 +1,14 @@
+# Current design agreement · 2026-10-23
+
+The owner explicitly approved a full redesign: friendly personal developer portfolio, warm white and soft blue-green, dark mode, interactive Nailoong avatar, welcome + selected work, Chinese text, local Markdown content. Source location is `/Users/zhuo/vibe/个人网站`. This agreement supersedes the old centered one-card / Doraemon visual rules below. Preserve accessible keyboard behavior and reduced motion. Native cross-document view transitions use ordinary links intentionally. Do not replace them with client routing without preserving the transition design.
+
+Featured projects are Wenqu, HenuBCI and Momo Reading Assistant. Claims must come from the public repositories. Historical URLs remain archived, not featured. New notes clearly identify repo-based sources. HenuBCI preview is an illustrative capability diagram, not a screenshot. Nailoong is a user-selected fictional character; its generated fan artwork is documented in ASSET-CREDITS.md.
+
+The user authorized implementation and replacement of the existing zhuofan.me site in this conversation. Use the already verified Vercel team and existing project. Build and verify before release, retain rollback evidence. Do not expose private material or invent licenses, performance results or personal history.
+
+---
+## Previous project context (technical and evidence rules remain applicable)
+
 # AGENTS.md
 
 本文记录本仓库的长期项目背景与协作规则。

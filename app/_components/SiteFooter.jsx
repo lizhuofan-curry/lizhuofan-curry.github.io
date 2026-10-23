@@ -1,6 +1,3 @@
-import Link from "next/link";
 import { siteConfig } from "../_data/site";
-
-export function SiteFooter() {
-  return <footer className="site-footer"><div><strong>Zhuo</strong><p>写代码，也把过程写下来。</p></div><div className="footer-links"><Link href="/articles">文章</Link><Link href="/projects">项目</Link><Link href="/about">关于</Link><a href={siteConfig.github} target="_blank" rel="noreferrer">GitHub ↗</a><a href={`mailto:${siteConfig.email}`}>邮件</a></div><small>© {new Date().getFullYear()} Zhuo.</small></footer>;
-}
+import { Icon } from "./Icon";
+export function SiteFooter() { return <footer className="site-footer"><div className="footer-inner"><div><a className="brand" href="/">zhuo<span>.</span></a><p>探索、创造，也认真生活。</p></div><div className="footer-links"><a href={siteConfig.github} target="_blank" rel="noreferrer">GitHub <Icon name="diagonal" size={14}/></a><a href={`mailto:${siteConfig.email}`}>邮件</a><a href="/privacy">隐私与说明</a></div><span className="copyright">© 2026 Zhuo</span></div></footer>; }

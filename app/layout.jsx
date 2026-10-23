@@ -1,3 +1,4 @@
+import { MotionEffects } from "./_components/MotionEffects";
 import "./globals.css";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
@@ -21,7 +22,7 @@ export const metadata = {
     siteName: siteConfig.name,
     title: siteConfig.title,
     description: siteConfig.description,
-    images: [{ url: "/og-image.svg", width: 1200, height: 630, alt: "Zhuo 的个人博客与项目档案" }],
+    images: [{ url: "/og-image.svg", width: 1200, height: 630, alt: "Zhuo 的个人空间" }],
   },
   twitter: {
     card: "summary_large_image",
@@ -34,14 +35,15 @@ export const metadata = {
 export const viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#e9f1fa",
+  themeColor: "#faf9f6",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="zh-CN" suppressHydrationWarning>
+      <head><script dangerouslySetInnerHTML={{ __html: `(function(){try{var t=localStorage.getItem('zhuo-theme');document.documentElement.dataset.theme=t==='dark'?'dark':'light';document.documentElement.dataset.input=sessionStorage.getItem('zhuo-input')||'pointer'}catch(e){}})()` }}/></head>
       <body className={`${GeistSans.variable} ${GeistMono.variable}`}>
-        <ThemeInitializer />
+        <ThemeInitializer /><MotionEffects/>
         <a className="skip-link" href="#main-content">
           跳到主要内容
         </a>

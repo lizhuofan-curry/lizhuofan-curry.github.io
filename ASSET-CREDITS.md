@@ -50,3 +50,21 @@
 - File: `public/profile-avatar.jpg`.
 - Current use: not referenced by the current UI.
 - Source and license: provenance has not yet been confirmed. Keep it out of new UI work until its owner and reuse permission are documented.
+
+
+## 2026-10-23 redesign assets
+
+- `public/images/nailoong.png`: generated using OpenAI built-in imagegen for the user-requested Nailoong avatar; non-official fan illustration. Character IP belongs to 第七印象. Generated art is not a claim of official permission or endorsement. No upstream image was copied.
+- `public/images/wenqu-home.png`: https://github.com/lizhuofan-curry/wenqu/blob/main/docs/product/prototypes/wenqu-v2/01-home-light.png; 未在当前仓库目录树发现 LICENSE 文件；作为网站所有者自己的项目界面素材使用，不宣称具有第三方开放复用许可。 仓库 README 引用的纸上书房首页截图，1440×1000；属于此前视觉基线，不标记为当前 v.5 实时截图。 Downloaded 2026-10-23; unmodified source screenshot.
+- `public/images/momo-workspace.png`: https://github.com/lizhuofan-curry/momo-reading-assistant/blob/main/docs/preview.png; 未在当前仓库目录树发现 LICENSE 文件；README 标示 Private Project。作为网站所有者自己的项目界面素材使用，不宣称具有第三方开放复用许可。 README 引用的自有拾词工作台截图，2561×1469；图片中显示旧免费次数规则，不应据此撰写当前额度文案。 Downloaded 2026-10-23; unmodified source screenshot.
+- HenuBCI preview: original HTML/CSS capability illustration, explicitly labeled as a demonstration, no actual member records.
+
+## Nailoong expression variants · 2026-10-23
+
+Files public/images/nailoong-pet.png, nailoong-feed.png and nailoong-rest.png: generated using built-in imagegen by editing the existing project avatar. Prompts preserve character identity, material, warm lighting and transparent background, changing pose to happy closed eyes, holding a cookie, or asleep sitting. Non-official fan illustration; character IP remains with 第七印象. No claim of endorsement or third-party reuse license.
+
+Web delivery variants: matching .webp files compressed at 720px maximum edge, quality 85. Original generated PNGs retained.
+
+## Site identity icons · 2026-10-23
+
+app/icon.svg: original geometric Z mark drawn in repository-native SVG, warm white on deep green with a yellow dot; no third-party artwork. app/icon.png and app/apple-icon.png rendered from this SVG at 512px. Previous icons preserved in public/legacy-icons/.

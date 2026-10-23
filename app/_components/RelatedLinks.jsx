@@ -1,4 +1,4 @@
-import Link from "next/link";
+
 import { articles } from "../_data/articles";
 import { projects } from "../_data/site-data";
 
@@ -96,14 +96,14 @@ export function RelatedLinks({ current, kind }) {
       <ul className="related-links-list">
         {related.map(({ item, kind: itemKind }) => (
           <li key={`${itemKind}-${item.slug}`}>
-            <Link
+            <a
               className="related-links-card"
               href={`/${itemKind === "project" ? "projects" : "articles"}/${item.slug}`}
             >
               <span className="related-links-type">{itemKind === "project" ? "项目" : "文章"}</span>
               <strong className="related-links-title">{item.title}</strong>
               <span className="related-links-desc">{item.description || item.summary}</span>
-            </Link>
+            </a>
           </li>
         ))}
       </ul>

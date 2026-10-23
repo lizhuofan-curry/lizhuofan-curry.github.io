@@ -1,0 +1,16 @@
+/* Finite interactions; content remains visible with JavaScript disabled. */
+.motion-reading-progress{height:3px;background:linear-gradient(90deg,var(--sea),#d9b44a,var(--sea));transition:none;transform:scaleX(0)}
+@media (prefers-reduced-motion:no-preference) and (hover:hover) and (pointer:fine){
+  .project-card,.related-card,.experiment-card{transition:rotate 300ms cubic-bezier(.16,1,.3,1),transform 300ms cubic-bezier(.16,1,.3,1),box-shadow 300ms ease}
+  .motion-card-active{transform:perspective(1100px) translateY(-4px) rotateX(var(--motion-y,0deg)) rotateY(var(--motion-x,0deg));box-shadow:0 20px 45px #263b3910}
+  .project-card:focus-within,.related-card:focus-within,.experiment-card:focus-within{transform:none}
+  .project-copy h3 svg,.text-link svg,.case-link svg{transition:translate 280ms cubic-bezier(.16,1,.3,1)}
+  .project-card:hover .project-copy h3 svg{translate:3px -3px}
+  .text-link:hover svg,.project-card:hover .case-link svg{translate:4px 0}
+  .note-row{transition:color 220ms ease,padding-inline 300ms cubic-bezier(.16,1,.3,1)}
+  .note-row:hover{padding-inline:8px}
+}
+@media(prefers-reduced-motion:reduce){
+  .motion-card-active{transform:none!important}
+  .motion-reading-progress{display:none}
+}

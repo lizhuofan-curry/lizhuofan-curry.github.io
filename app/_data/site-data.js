@@ -1,78 +1,242 @@
 export const projects = [
   {
+    slug: "agent-book",
+    title: "AI Agent 读书实验",
+    summary: "从搜索循环、上下文工程到记忆与检索，保留分步代码、运行轨迹与核查记录。",
+    category: "学习实验",
+    copy: "从搜索循环、上下文工程到记忆与检索，保留分步代码、运行轨迹与核查记录。",
+    question: "怎样把一个概念拆成可以观察、运行与回看的步骤？",
+    href: "https://github.com/lizhuofan-curry/ai-agents-book-learning",
+    tags: [
+      "Python",
+      "Agent",
+      "检索"
+    ],
+    highlights: [
+      "将搜索 Agent 拆成离线观察、工具回传与真实循环等学习步骤。",
+      "记录上下文压缩、状态栏与记忆格式的局部对照实验。",
+      "保存稠密检索、BM25 与混合检索的小规模学习记录。"
+    ],
+    boundary: "参考《深入理解 AI Agent》的个人学习整理；不同实验范围与完成状态以仓库为准，不视为通用性能结论。",
+    featured: false,
+    accent: "sky"
+  },
+  {
+    slug: "llm-pretrain",
+    title: "LLM 预训练实验室",
+    summary: "从手写 BPE 开始，理解文本怎样变成 token，以及训练系统的资源约束。",
+    category: "学习实验",
+    copy: "从手写 BPE 开始，理解文本怎样变成 token，以及训练系统的资源约束。",
+    question: "怎样把一个概念拆成可以观察、运行与回看的步骤？",
+    href: "https://github.com/lizhuofan-curry/LLM_Pretrain",
+    tags: [
+      "Python",
+      "Tokenizer",
+      "PyTorch"
+    ],
+    highlights: [
+      "手写 SimpleBPE，观察统计、合并、编码与解码。",
+      "使用 Byte-Level BPE，并比较 tiktoken 与 Qwen Tokenizer。",
+      "整理显存、FLOPs、MFU、带宽与 DDP 基础。"
+    ],
+    boundary: "语料管线正在扩展，Transformer 与完整单卡、多卡预训练仍在计划中。",
+    featured: false,
+    accent: "sky"
+  },
+  {
+    slug: "algorithm-templates",
+    title: "算法与易错点手册",
+    summary: "按知识模块整理 C++ 模板、解题思路与容易反复出错的细节。",
+    category: "学习实验",
+    copy: "按知识模块整理 C++ 模板、解题思路与容易反复出错的细节。",
+    question: "怎样把一个概念拆成可以观察、运行与回看的步骤？",
+    href: "https://github.com/lizhuofan-curry/algorithm-templates",
+    tags: [
+      "C++17",
+      "算法",
+      "CI"
+    ],
+    highlights: [
+      "包含基础算法、数据结构、搜索图论与动态规划模块。",
+      "配套学习笔记、总目录与易错点记录。",
+      "提供 Markdown 链接与 C++ 语法检查脚本及 CI。"
+    ],
+    boundary: "来自 AcWing 算法基础课的个人学习整理；数学与贪心模块仍待补充。",
+    featured: false,
+    accent: "sky"
+  }
+,
+  {
     slug: "wenqu",
-    number: "01",
-    eyebrow: "AI READING PRODUCT",
     title: "问渠 Wenqu",
-    summary: "不是另一个 PDF 聊天框，而是一间强调原文证据的 AI 陪读阅读室。",
-    copy: "材料地图、双轨跟读、主动回忆、错因诊断与阅读档案，组成完整学习闭环。",
-    tags: ["React 19", "FastAPI", "DeepSeek", "Supabase"],
-    category: "AI 产品",
+    category: "AI 阅读产品",
+    summary: "从原文证据出发，把阅读、主动回忆与错因诊断连成一段完整的学习过程。",
+    copy: "问渠把阅读拆成可以回看的过程：先建立材料地图，再带着问题阅读，通过复述、理解题和原文证据定位还没有弄懂的地方。",
+    question: "读完一份材料之后，怎样知道自己真正理解了什么？",
+    highlights: [
+      "材料地图与严格轨、陪读轨双轨阅读",
+      "开放式理解题、复述与原文证据诊断",
+      "D1/D3/D7 间隔复习与服务端可信学习档案"
+    ],
+    tags: [
+      "React",
+      "TypeScript",
+      "FastAPI",
+      "Supabase"
+    ],
     href: "https://github.com/lizhuofan-curry/wenqu",
     demo: "https://wenqu.zhuofan.me/",
-    accent: "lime",
-    signal: "LIVE / v.4",
-    question: "如何让 AI 阅读回到原文，并让学习过程留下可复盘的证据？",
-    role: "产品构想 · 全栈实现 · 学习闭环设计",
-    highlights: ["材料地图：先建立全局位置，再进入局部阅读。", "双轨跟读：原文与理解并行，不把回答变成黑箱。", "阅读档案：把过程、错因与下一步学习建议留存下来。"],
+    featured: true,
+    accent: "mint",
+    image: "/images/wenqu-home.png",
+    boundary: "README 当前为 v.5，截图底部为此前视觉基线版本 不宣称已有保持趋势或学习效果提升",
+    eyebrow: "AI 阅读产品",
+    role: "个人项目",
+    signal: ""
   },
   {
-    slug: "shop-vision",
-    number: "02",
-    eyebrow: "COMPUTER VISION SYSTEM",
-    title: "智图寻宝 · Shop Vision",
-    summary: "一次上传串起商品分类、图像去噪、同类检索与 AI 文案。",
-    copy: "它不止训练模型，也把数据、权重、特征库、Web 推理和结果解释接成闭环。",
-    tags: ["PyTorch", "Flask", "U-Net", "KNN"],
-    category: "计算机视觉",
-    href: "https://github.com/lizhuofan-curry/smart-image-treasure-hunt",
-    accent: "orange",
-    signal: "VAL ACC / 99.32%",
-    question: "怎样把多个视觉能力组织成一个可理解、可实际操作的商品探索流程？",
-    role: "视觉模型实验 · 推理服务 · 产品流程串联",
-    highlights: ["上传后依次完成分类、去噪、相似商品检索与文案生成。", "模型权重与特征库进入同一条可运行的 Web 推理路径。", "99.32% 标注为验证集准确率，不将其表述为独立测试集结果。"],
+    slug: "henubci",
+    title: "HenuBCI",
+    category: "实验室协作平台",
+    summary: "把课表、共同空闲、任务与成员工作连接起来，让实验室协作更清楚。",
+    copy: "HenuBCI 面向实验室协作，把成员课表、共同空闲与项目任务放在同一个空间，并用有来源的工作关系图帮助梳理内容之间的联系。",
+    question: "当课表、任务与工作记录分散在不同地方，怎样把协作重新连起来？",
+    highlights: [
+      "课表导入、成员课表与多人共同空闲查询",
+      "项目小组、任务成果验收与私有附件",
+      "具有来源依据的 2D 工作关系图与内容关联反馈"
+    ],
+    tags: [
+      "Next.js",
+      "PostgreSQL",
+      "Docker"
+    ],
+    href: "https://github.com/lizhuofan-curry/lab-schedule",
+    demo: "https://schedule.henubci.cn",
+    featured: true,
+    accent: "sky",
+    image: null,
+    boundary: "当前为 2D 关系图，3D 为后续计划 关系图仅对登录启用成员开放",
+    eyebrow: "实验室协作平台",
+    role: "个人项目",
+    signal: ""
   },
   {
-    slug: "cnn-architectures",
-    number: "03",
-    eyebrow: "MODEL STUDY",
-    title: "CNN × Inception × ResNet",
-    summary: "在 CIFAR-10 上，用同一训练流程观察三种经典视觉网络。",
-    copy: "分支通过 torch.cat 汇合，残差通过 F(x)+x 保留信息；代码、曲线与结论各自保留清晰证据边界。",
-    tags: ["CIFAR-10", "torch.cat", "Residual", "20 epochs"],
-    category: "深度学习",
-    href: "https://github.com/lizhuofan-curry/LiuErDaRenPyTorch/tree/main/Chapter11_AdvancedCNN/CIFAR10_Three_CNN_Architectures",
-    accent: "blue",
-    signal: "3 ARCHITECTURES",
-    question: "当训练条件一致时，网络的连接方式究竟改变了什么？",
-    role: "实验复现 · 结构阅读 · 结果证据整理",
-    highlights: ["同一 CIFAR-10 训练流程下对照 CNN、Inception 与 ResNet。", "Inception 用 torch.cat(..., dim=1) 合并多尺度分支。", "ResNet 用 out += identity 建立残差路径；验证曲线不替代测试结论。"],
+    slug: "momo-reading-assistant",
+    title: "拾词",
+    category: "语境学习工具",
+    summary: "从真实英文材料里筛出值得记住的词，保留语境，经人工审核后同步到墨墨。",
+    copy: "拾词从材料里提取语境，让 AI 提供候选词、释义与筛选理由，再由人审核决定是否加入词本。重点是保留阅读时真正遇见这个词的上下文。",
+    question: "阅读时遇到的词，怎样带着上下文进入复习？",
+    highlights: [
+      "文档、图片、视频与字幕中的语境提取",
+      "按学习目标筛词，保留例句、释义与理由",
+      "跨页面候选箱、人工审核与墨墨云词本同步"
+    ],
+    tags: [
+      "JavaScript",
+      "Browser OCR",
+      "AI API"
+    ],
+    href: "https://github.com/lizhuofan-curry/momo-reading-assistant",
+    demo: "https://momo.zhuofan.me/",
+    featured: true,
+    accent: "lavender",
+    image: "/images/momo-workspace.png",
+    boundary: "非墨墨官方工具，不宣称官方合作或背书 Local-first 不代表所有计算离线，确认后的分析文本会发送给 AI 服务",
+    eyebrow: "语境学习工具",
+    role: "个人项目",
+    signal: ""
+  },
+  {
+    slug: "hello-agents",
+    title: "Hello Agents 学习实验室",
+    category: "Agent 学习与实验",
+    summary: "从规则对话到自制 Agent 框架，用中文笔记、演示与中间状态记录逐渐理解的过程。",
+    copy: "从规则对话到自制 Agent 框架，用中文笔记、演示与中间状态记录逐渐理解的过程。",
+    question: "怎样把学习的过程，变成可以运行和回看的记录？",
+    highlights: [
+      "ELIZA、语言模型与经典 Agent 工作流章节实验",
+      "自制 Message、Tool、Agent 基础组件与工具注册",
+      "33 个阶段性演示与章节中文笔记"
+    ],
+    tags: [
+      "Python",
+      "Agent"
+    ],
+    href: "https://github.com/lizhuofan-curry/hello-agents-learning-lab",
+    featured: false,
+    accent: "mint",
+    boundary: "个人学习实现，参考 Datawhale Hello-Agents，非官方教程 不是每个历史演示均兼容当前接口 Reflection 仅一轮，Plan-and-Solve 尚不动态重规划 Function Calling 网络模型完整端到端流程及异常分支仍待验证",
+    eyebrow: "Agent 学习与实验",
+    role: "个人学习实践",
+    signal: ""
   },
   {
     slug: "llm-fullstack",
-    number: "04",
-    eyebrow: "LLM ENGINEERING LOG",
     title: "LLM FullStack Journey",
-    summary: "从可运行的 AI Study Coach 出发，记录 LLM 工程的迭代过程。",
-    copy: "持续扩展 Provider、测试、CI、RAG 与 Agent 工作流，把想法变成可靠软件。",
-    tags: ["Python", "FastAPI", "LLM", "LangGraph"],
-    category: "LLM 工程",
+    category: "LLM 工程学习",
+    summary: "以可运行的 AI Study Coach API 为起点，练习接口、模型适配、自动化测试与持续集成。",
+    copy: "以可运行的 AI Study Coach API 为起点，练习接口、模型适配、自动化测试与持续集成。",
+    question: "怎样把学习的过程，变成可以运行和回看的记录？",
+    highlights: [
+      "FastAPI AI Study Coach API 与交互式文档",
+      "确定性离线 Provider 与兼容模型 Provider",
+      "接口测试、Ruff 检查与 GitHub Actions CI"
+    ],
+    tags: [
+      "Python",
+      "FastAPI",
+      "CI"
+    ],
     href: "https://github.com/lizhuofan-curry/LLM-FullStack-Journey",
-    accent: "violet",
-    signal: "BUILD → TEST → LEARN",
-    question: "一个 LLM 想法如何从能对话，走向能验证、能维护的系统？",
-    role: "后端工程 · Provider 探索 · 测试与工作流设计",
-    highlights: ["从 AI Study Coach 的可运行原型开始。", "继续补齐 Provider、测试、CI、RAG 与 Agent 工作流。", "用工程记录保存每次构建、检查与学习的上下文。"],
+    featured: false,
+    accent: "mint",
+    boundary: "多轮持久会话、RAG、LangGraph、Docker 与在线 Demo 均在路线图，不能写已实现",
+    eyebrow: "LLM 工程学习",
+    role: "个人学习实践",
+    signal: ""
   },
+  {
+    slug: "shop-vision",
+    title: "智图寻宝 Shop Vision",
+    category: "计算机视觉",
+    summary: "商品分类、去噪、相似检索与多模态文案生成的视觉应用。",
+    copy: "早期项目档案，保留公开实现与实验的入口。",
+    question: "如何把多个视觉任务组织成可以使用的应用？",
+    highlights: [
+      "商品图像分类、去噪与相似检索。",
+      "结合 Kimi 多模态模型生成商品文案。",
+      "实验指标须区分验证集与测试集。"
+    ],
+    tags: [
+      "PyTorch",
+      "Computer Vision"
+    ],
+    href: "https://github.com/lizhuofan-curry/smart-image-treasure-hunt",
+    archived: true,
+    accent: "sky"
+  },
+  {
+    slug: "cnn-architectures",
+    title: "CNN × Inception × ResNet",
+    category: "深度学习实验",
+    summary: "在 CIFAR-10 上，用同一训练流程观察三种经典视觉网络。",
+    copy: "从连接方式出发阅读实现，并把训练曲线与结论分开记录。",
+    question: "不同的网络连接方式，如何改变信息经过模型的路径？",
+    highlights: [
+      "观察 CNN、Inception 与 ResNet 的结构。",
+      "用 torch.cat 合并多尺度分支。",
+      "用 identity 路径理解残差连接。"
+    ],
+    tags: [
+      "PyTorch",
+      "CIFAR-10"
+    ],
+    href: "https://github.com/lizhuofan-curry/LiuErDaRenPyTorch/tree/main/Chapter11_AdvancedCNN/CIFAR10_Three_CNN_Architectures",
+    archived: true,
+    accent: "sky"
+  }
 ];
-
-export const notes = [
-  { number: "01", title: "把 Traceback 变成下一步", tag: "DEBUGGING", lead: "报错信息不是噪音。先定位真正失败的一行，再检查环境、输入形状与调用链。", points: ["先读最后一个异常，再向上回溯。", "用最小前向传播复现，而不是一上来改整段训练。"] },
-  { number: "02", title: "Inception：分支如何汇合", tag: "ARCHITECTURE", lead: "不同感受野同时观察同一输入，最后沿通道维度拼接：torch.cat(branches, dim=1)。", points: ["每条分支的空间尺寸必须对齐。", "拼接后通道数是各分支通道数之和。"] },
-  { number: "03", title: "ResNet：为什么要保留 identity", tag: "ARCHITECTURE", lead: "残差块让网络学习 F(x)，同时保留 x：out += identity。", points: ["当尺寸或通道不匹配时，需要投影分支。", "残差连接是信息路径，不是性能承诺。"] },
-  { number: "04", title: "验证集不是测试集", tag: "EVIDENCE", lead: "验证集用于模型选择与调参；没有独立测试过程，就不把验证指标称为最终泛化结果。", points: ["记录数据划分、随机种子和训练设置。", "让图表、脚本和文字结论彼此可追溯。"] },
-];
-
-export function getProject(slug) {
-  return projects.find((project) => project.slug === slug);
-}
+export const notes = [];
+export function getProject(slug) { return projects.find(p => p.slug === slug); }

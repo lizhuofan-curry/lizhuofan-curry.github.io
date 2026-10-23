@@ -1,2 +1,1 @@
-import Link from "next/link";
-export default function NotFound() { return <main id="main-content" className="not-found"><p>404 / SIGNAL LOST</p><h1>这一页失去了连接。</h1><p>地址可能已经改变。新的内容都整理在文章与项目索引里。</p><div><Link className="primary-action" href="/">返回首页</Link><Link className="text-action" href="/articles">浏览文章 →</Link></div></main>; }
+export default function NotFound(){return <main id="main-content" className="page-shell empty-page"><span className="error-number">404</span><h1>好像走到小路上了。</h1><p>这个页面暂时不在这里，回首页继续逛逛吧。</p><a href="/" className="button primary">回到首页</a></main>;}

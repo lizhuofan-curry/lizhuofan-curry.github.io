@@ -1,17 +1,9 @@
 export const siteConfig = {
-  name: "Zhuo",
-  shortName: "Zhuo",
-  title: "Zhuo 的个人博客与项目档案",
-  description:
-    "记录 Zhuo 在人工智能、计算机视觉、深度学习和软件工程中的文章、项目与成长过程。",
-  siteUrl: "https://www.zhuofan.me",
-  email: "Lizhuofan@henu.edu.cn",
-  github: "https://github.com/lizhuofan-curry",
+  name: "Zhuo", shortName: "Zhuo", title: "Zhuo 的个人空间 · 探索、创造与记录",
+  description: "你好，我是 Zhuo。探索 AI，也把想法做成可用的小工具。在这里看看我的作品、实验和学习笔记。",
+  siteUrl: "https://www.zhuofan.me", email: "Lizhuofan@henu.edu.cn", github: "https://github.com/lizhuofan-curry",
 };
-
 export const navigation = [
-  { href: "/", label: "我" },
-  { href: "/articles", label: "文章" },
-  { href: "/projects", label: "小项目" },
-  { href: "/about", label: "更多" },
+  { href: "/", label: "首页" }, { href: "/projects", label: "作品" },
+  { href: "/articles", label: "笔记" }, { href: "/about", label: "关于" },
 ];
